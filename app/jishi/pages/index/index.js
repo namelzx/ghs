@@ -104,6 +104,9 @@ Page({
   },
   onShow() {
     var that = this;
+    wx.setNavigationBarTitle({
+      title: '果划算',
+    })
     wx.requestSubscribeMessage({
       success:function(e){
           console.log(e)

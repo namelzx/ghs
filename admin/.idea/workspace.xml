@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ffb51f7a-e4bf-4b35-ae06-746677d532a7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../J-code/application/admin/controller/Wechatuser.php" beforeDir="false" afterPath="$PROJECT_DIR$/../J-code/application/admin/controller/Wechatuser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/wechatuser.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/wechatuser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/user/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/user/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/jishi/pages/index/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../app/jishi/pages/index/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/jishi/pages/supplier/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../app/jishi/pages/supplier/index.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -334,12 +332,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1585387879909</updated>
-      <workItem from="1585387883426" duration="11330000" />
+      <workItem from="1585387883426" duration="11440000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11330000" />
+    <option name="totallyTimeSpent" value="11440000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="24" width="1280" height="731" extended-state="6" />
