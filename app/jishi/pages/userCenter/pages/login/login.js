@@ -250,6 +250,7 @@ wx.switchTab({
       });
       let userinfo = wx.getStorageSync('userinfo')
       let data = e.detail.userInfo
+      console.log(data)
       data.id = userinfo.id
       usermodel.PostUserByData(data, res => {
         wx.setStorageSync('userinfo', res)

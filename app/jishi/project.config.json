@@ -244,6 +244,33 @@
 					"pathName": "pages/member/shop/goodsinfo/index",
 					"query": "scene=246",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "供应商",
+					"pathName": "pages/supplier/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "供货商入驻-填写资料",
+					"pathName": "pages/supplier/protocol/datum/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "入驻申请-提交成功",
+					"pathName": "pages/supplier/protocol/hint/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "商家中心-商品管理",
+					"pathName": "pages/member/goods/index",
+					"scene": null
 				}
 			]
 		}

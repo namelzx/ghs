@@ -38,15 +38,12 @@ Page({
 
   afterRead(event) {
     //启用
- 
     var _this=this;
-    
     var { suffix ,type }   = event.currentTarget.dataset
     type = parseInt(type)
     const {
       file
     } = event.detail;
-    
     uploadImage(
       {
         filePath: file.path,
@@ -59,7 +56,6 @@ Page({
             url: base_img+res,
           }
           if(type===1){
-            
             var dtemp=_this.data.pList;
             dtemp.push(temp);
             _this.setData({
@@ -67,16 +63,13 @@ Page({
             })
             console.log(_this.data.pList)
           }
-
           if (type === 2) {
-
             var dtemp = _this.data.vList;
             _this.setData({
               vList: [temp]
             })
             console.log(dtemp)
           }
-
           if (type === 3) {
             var dtemp = _this.data.iList;
             dtemp.push(temp);
@@ -85,7 +78,6 @@ Page({
             })
             console.log(_this.data.iList)
           }
-
         },
         fail: function (res) {
           console.log("上传失败")
@@ -93,7 +85,6 @@ Page({
         }
       })
     // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
-   
   },
   chooseVideo: function () {
     var that = this

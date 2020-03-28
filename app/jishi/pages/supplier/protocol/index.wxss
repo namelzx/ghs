@@ -1,0 +1,49 @@
+/* pages/index/protocol/index.wxss */
+
+.proto-content{
+  padding-bottom: 130rpx;
+  margin: 0 20rpx;
+  color: #909399;
+  font-size: 26rpx;
+}
+.proto-content .title{
+  text-align: center;
+  margin: 20rpx 0;
+  font-size: 32rpx;
+  color: #303030;
+}
+
+.proto-botton{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120rpx;
+  border-top: 1rpx solid #f4f4f4;
+  display: flex;
+  align-items: center;
+}
+.botton-warp{
+  width: 600rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+.botton-warp .noagree{
+  width: 240rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  background: #e5e5e5;
+  border-radius: 5rpx;
+}
+.botton-warp .agree{
+  width: 240rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  background: #fc4444;
+  color: #ffffff;
+  border-radius: 5rpx;
+}

@@ -22,6 +22,7 @@ Page({
     list:[],
     one:0,
     tow:0,
+    avatarUrl:'',
     listQuery: {
       limit: 20,
       page: 1,
@@ -93,46 +94,69 @@ Page({
    
     var that = this;
     var temp = e.detail
+    var userinfo = wx.getStorageSync('userinfo')
+    var nickName = userinfo.nickName
+    var avatarUrl = this.data.avatarUrl
+    console.log(avatarUrl)
+    
+    
   
-    console.log(temp)
+    // console.log(temp)
     var context = wx.createCanvasContext('mycanvas');
 
-    var tpath = "../../../imgs/goodsbg.png";  //详细看onLoad函数注释部分
+    var tpath = "../../../imgs/goodsbg2.png";  //详细看onLoad函数注释部分
     context.drawImage(tpath, 0, 0, 350, 570);  //这里
     let path = temp.path//商品图片
 
 
-
-    context.drawImage(path, 9, 15, 333, 300); //右 上 最后一个是高度
+    context.drawImage(path, 25, 90, 300, 230); //右 上 最后一个是高度
 
     var xccode = temp.code
     //不知道是什么原因，手机环境能正常显示
     // context.save(); // 保存当前context的状态
 
+    //分享用户头像
+    
+    context.drawImage(avatarUrl, 30, 10, 40, 40); //右 上
+
+
+
+    //分享用户
+    context.setFontSize(14);
+    context.setFillStyle('#909399');
+    context.setTextAlign('center');
+    context.fillText(nickName, 100, 35);
+    context.stroke();
+
     //商品名称
-    context.setFontSize(22);
+    context.setFontSize(18);
     context.setFillStyle('#000');
     context.setTextAlign('center');
     let name = temp.name.substring(0, 22)
-    context.fillText(name, 100, 340);
+    context.fillText(name, 60, 340);//距离左边宽度，距离顶部高度
     context.setTextAlign('right');
     context.fillText(temp.name.substring(22, 100), 150, 355);
     context.stroke();
 
     //总价模块
-    context.setFontSize(25);
+    context.setFontSize(20);
     context.setFillStyle('#D92E2E');
     context.setTextAlign('center');
     context.fillText("¥", 30, 380);
     context.stroke();
 
-    context.setFontSize(35);
+    context.setFontSize(30);
     context.setFillStyle('#D92E2E');
     context.setTextAlign('center');
-    context.fillText(temp.price, 140, 380);
+    context.fillText(temp.price, 85, 380);
     context.stroke();
     // 总价模块结束
 
+    
+    
+
+
+    //二维码
     context.drawImage(temp.code, 30, 430, 100, 100); //右 上
     context.stroke();
 
@@ -300,8 +324,23 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
+    var that=this;
     let userinfo = wx.getStorageSync('userinfo')
     this.data.user_id = userinfo.id
+
+    var nickName = userinfo.nickName
+    var avatarUrl = userinfo.avatarUrl
+
+    wx.getImageInfo({
+      src: avatarUrl,
+      success: function (res) {
+        that.setData({
+          avatarUrl: res.path
+        })
+      }
+     
+    })
+    console.log(that.data.avatarUrl)
     this.getlist();
   },
 

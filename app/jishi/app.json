@@ -26,7 +26,12 @@
     "pages/member/shop/withdraw/index",
     "pages/member/shop/withdraw/attestation/index",
     "pages/member/shop/orderinfo/orderinfo",
-    "pages/userCenter/pages/evaluate/index"
+    "pages/userCenter/pages/evaluate/index",
+    "pages/supplier/index",
+    "pages/supplier/protocol/index",
+    "pages/supplier/protocol/phone/index",
+    "pages/supplier/protocol/datum/index",
+    "pages/supplier/protocol/hint/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -51,6 +56,12 @@
         "selectedIconPath": "./imgs/g-1.png",
         "pagePath": "pages/cart/index",
         "text": "购物车"
+      },
+      {
+        "iconPath": "./imgs/supplier-1.png",
+        "selectedIconPath": "./imgs/supplier-2.png",
+        "pagePath": "pages/supplier/index",
+        "text": "供应商"
       },
       {
         "iconPath": "./imgs/hui-2.png",

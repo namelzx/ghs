@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "van-uploader": "../../../../vant-weapp/dist/uploader/index",
+    "van-field": "../../../../vant-weapp/dist/field/index",
+    "van-toast": "../../../../vant-weapp/dist/toast/index",
+    "van-icon": "../../../../vant-weapp/dist/icon/index"
+  }
+}

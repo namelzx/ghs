@@ -1,0 +1,8 @@
+<!-- 入驻申请-提交成功提示 -->
+<view>
+  <view class="hint-icon">
+    <image src="../../../../imgs/icon-withDraw-success.png"></image>
+  </view>
+  <view class="hint-title">您的入驻申请已成功提交！</view>
+  <view class="hint-botton" bindtap="headHome">返回首页</view>
+</view>

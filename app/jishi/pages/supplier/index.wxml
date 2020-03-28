@@ -1,0 +1,41 @@
+<view>
+  <!-- 供货商入驻 -->
+  <view class="enter-banner">
+    <image src="http://img3.imgtn.bdimg.com/it/u=1918615567,2138056118&fm=26&gp=0.jpg"></image>
+  </view>
+
+  
+  <view class="enter-hr"></view>
+  <!-- 入驻流程 -->
+  <view class="enter-contens">
+    <view class="contens-title">入驻流程</view>
+    <view class="flow">
+      <view class="contens-step" wx:for="{{enter}}">
+        <view class="step-icon">
+          <image src="{{item.icon}}"></image>
+        </view>
+        <view class="step-name">
+          <view class="name1">{{item.title}}</view>
+          <view class="name2">{{item.desc}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 立即入驻 -->
+  <view class="enter-botton" bindtap="headShow">立即入驻</view>
+
+  <!-- 弹出输入框 -->
+  <view class="popup" wx:if="{{show}}">
+    <view class="show_warp">
+      <view class="warp_title">请输入开通码</view>
+      <input value="{{code}}" bindinput="bindKeyInput" placeholder="请输入开通码" />
+      <view class="warp_botton">
+        <view class="botton cancel" catchtap="bindCancel">取消</view>
+        <view class="botton oks" catchtap="bindOks">确定</view>
+      </view>
+    </view>
+  </view>
+
+
+</view>

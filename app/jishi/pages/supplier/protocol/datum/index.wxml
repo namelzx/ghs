@@ -1,0 +1,63 @@
+<!-- 填写资料 -->
+<view>
+<van-toast id="van-toast" />
+  <van-cell-group>
+    <van-field
+      value="{{ temp.supplier_name }}"
+      placeholder="请输入供货商名称"
+      border
+      bind:change="onChange"
+      clearable
+      label="供货商名称"
+    />
+    <van-field
+      value="{{ temp.name }}"
+      placeholder="请输入联系人姓名"
+      border
+      bind:change="onChangeName"
+      clearable
+      label="联系人姓名"
+    />
+    <van-field
+      value="{{ temp.phone }}"
+      placeholder="请输入联系人电话"
+      border
+      type="number"
+      bind:change="onChangePhone"
+      clearable
+      label="联系人电话"
+    />
+    <van-field
+      value="{{ temp.addres }}"
+      placeholder="请输入详细地址"
+      border
+      type="number"
+      bind:change="onChangeAddres"
+      clearable
+      label="详细地址"
+    />
+    <van-field
+      value="{{ temp.identity }}"
+      placeholder="请输入身份证号"
+      border
+      type="idcard"
+      bind:change="onChangeID"
+      clearable
+      label="身份证号"
+    />
+</van-cell-group>
+
+<view class="pro-img-list">
+    <view class="list-title">添加身份证正面</view>
+    <van-uploader  data-suffix=".jpg" data-type='1' max-count="1" file-list="{{ pList }}" bind:delete="delPic" bind:after-read="afterRead" />
+  </view>
+
+  <view class="pro-img-list">
+    <view class="list-title">添加身份证反面</view>
+    <van-uploader  data-suffix=".jpg" data-type='2' max-count="1" file-list="{{ fList }}" bind:delete="delPic" bind:after-read="afterRead" />
+  </view>
+
+  <view class="post-bottom">
+    <view class="post-btn" catchtap="checkRequired">提交</view>
+  </view>
+</view>

@@ -1,0 +1,25 @@
+/* pages/supplier/protocol/hint/index.wxss */
+.hint-icon{
+  width: 150rpx;
+  height: 150rpx;
+  margin:  70rpx auto 30rpx;
+}
+.hint-icon image {
+  width: 100%;
+  height: 100%;
+}
+.hint-title{
+  text-align: center;
+  color: #323232;
+  font-size: 28rpx;
+}
+.hint-botton{
+  width: 600rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  color: #ffffff;
+  background: #fc4444;
+  margin: 300rpx auto 0;
+  border-radius: 10rpx;
+}

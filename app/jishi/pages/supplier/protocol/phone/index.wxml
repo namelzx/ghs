@@ -1,0 +1,9 @@
+<!-- 手机认证 -->
+<view>
+  <view class="phone-icon">
+    <image src="../../../../imgs/authenticated.png"></image>
+  </view>
+  <view class="phone-tel">已认证手机号：18156564829</view>
+  <view class="phone-hint">入驻审核结果将会以短信形式发送至您的绑定账号</view>
+  <view class="phone-botton">下一步</view>
+</view>

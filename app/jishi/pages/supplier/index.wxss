@@ -1,0 +1,138 @@
+.enter-banner{
+  width: 100%;
+  height: 400rpx;
+}
+.enter-banner image{
+  width: 100%;
+  height: 100%;
+}
+.enter-hr{
+  margin-top: 50rpx;
+  height: 20rpx;
+  background-color: #f4f4f4;
+}
+.enter-contens{
+  margin: 30rpx 0;
+}
+.contens-title{
+  text-align: center;
+  color: #303133;
+  font-size: 35rpx;
+  font-weight: bold;
+}
+.contens-step{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 380rpx;
+  margin:60rpx auto 0;
+}
+.step-icon{
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #fd4442;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.contens-step:nth-child(2) .step-icon{
+  background-color: #feba35;
+}
+.contens-step:nth-child(3) .step-icon{
+  background-color: #ff7b1c;
+}
+.step-icon image{
+  width: 55rpx;
+  height: 55rpx;
+}
+.step-name{
+  margin-left: 10rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.step-name .name1{
+  color: #909399;
+  font-size: 28rpx;
+  margin-bottom: 10rpx;
+}
+.step-name .name2{
+  color: #303133;
+  font-size: 32rpx;
+}
+
+.enter-botton{
+  position: fixed;
+  bottom: 40%;
+  right: 0;
+  width: 180rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #ffffff;
+  background-color: #fc4444;
+  border-radius: 40rpx 0 0 40rpx;
+}
+
+
+.popup{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+.show_warp{
+  z-index: 100;
+  width: 550rpx;
+  height: 380rpx;
+  overflow: hidden;
+  border-radius: 20rpx;
+  background: #ffffff;
+  margin: 45% auto 0;
+  position: relative;
+}
+.show_warp .warp_title{
+    text-align: center;
+    margin: 20rpx;
+    color: #303133;
+}
+.show_warp input {
+  width: 460rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  margin: 50rpx auto 0;
+  text-align: center;
+  border:2rpx solid #DCDFE6;
+}
+.show_warp .warp_botton{
+  position: absolute;
+  bottom: 20rpx;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 85rpx;
+  line-height: 85rpx;
+  width: 460rpx;
+  margin: 0 auto;
+}
+.warp_botton .botton{
+  width: 200rpx;
+  text-align: center;
+  font-size: 30rpx;
+}
+.warp_botton .cancel {
+  border:1rpx solid #DCDFE6;
+  color: #909399;
+}
+.warp_botton .oks{
+  background: #fc4444;
+  color: #ffffff;
+}
