@@ -35,12 +35,13 @@
     </el-card>
     <el-card class="operate-container" shadow="never">
       <i class="el-icon-tickets"></i>
-      <span>数据列表</span>
+      <span>批量操作</span>
+      <el-button size="small" @click="handleShop()" plain>设店长</el-button>
+      <el-button size="small" @click="handleSalesman()" plain>设业务员</el-button>
     </el-card>
     <div class="table-container">
       <el-table
         v-loading="listLoading"
-        :key="tableKey"
         :data="list"
         stripe
         fit
@@ -49,53 +50,67 @@
         @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55"/>
 
-        <el-table-column label="名称" min-width="80px" fixed="left">
+
+        <el-table-column label="客户信息" align="left" fixed min-width="150px">
           <template slot-scope="scope">
-            <span class="link-type" @click="handleUpdate(scope.$index,scope.row.id)">{{ scope.row.nickName }}</span>
+            <div>
+              <img style="    float: left;" class="headimgurl" :src="scope.row.avatarUrl"/>
+              <div style="margin-left: 10px" class="link-type" @click="handleUpdate(scope.$index,scope.row.id)">{{
+                scope.row.nickName }}
+              </div>
+
+            </div>
           </template>
         </el-table-column>
 
-        <el-table-column label="头像" align="center" min-width="100px">
+        <el-table-column label="累计佣金" min-width="70px">
           <template slot-scope="scope">
-            <img class="headimgurl" :src="scope.row.avatarUrl"/>
-          </template>
-        </el-table-column>
-
-        <el-table-column label="累计佣金" align="center" min-width="70px">
-          <template slot-scope="scope">
-            <span>{{scope.row.cumulative_commission}}</span>
-          </template>
-        </el-table-column>
-
-
-        <el-table-column label="佣金余额" align="center" min-width="70px">
-          <template slot-scope="scope">
-            <span>{{scope.row.available_commission}}</span>
+            <div>{{scope.row.cumulative_commission}}</div>
           </template>
         </el-table-column>
 
 
+        <el-table-column label="当前余额" align="center" min-width="70px">
+          <template slot-scope="scope">
+            <div>{{scope.row.available_commission}}</div>
+          </template>
+        </el-table-column>
+
+        <el-table-column label="邀请用户数" align="center" min-width="120px">
+          <template slot-scope="scope">
+            <div>{{scope.row.invite}}</div>
+          </template>
+        </el-table-column>
         <el-table-column label="是否是商家" align="center" min-width="100px">
           <template slot-scope="scope">
-            {{scope.row.is_business|statusFilter}}
+            <div> {{scope.row.is_business|statusFilter}}</div>
           </template>
         </el-table-column>
 
-
-        <el-table-column label="加入平台时间" align="center" min-width="120px">
+        <el-table-column label="是否是店长" align="center" min-width="100px">
           <template slot-scope="scope">
-            <span>{{scope.row.create_time}}</span>
+            <div> {{scope.row.is_shop|statusFilter}}</div>
           </template>
         </el-table-column>
 
+        <el-table-column label="是否是业务员" align="center" min-width="100px">
+          <template slot-scope="scope">
+            <div> {{scope.row.is_salesman|statusFilter}}</div>
+          </template>
+        </el-table-column>
+        <el-table-column label="加入平台时间" align="center" min-width="140px">
+          <template slot-scope="scope">
+            <div>{{scope.row.create_time}}</div>
+          </template>
+        </el-table-column>
         <el-table-column label="属性" align="center" min-width="120px">
           <template slot-scope="scope">
-            <span>{{scope.row.nature|nature}}</span>
+            <div>{{scope.row.nature|nature}}</div>
           </template>
         </el-table-column>
 
 
-        <el-table-column label="操作" align="center" width="120px" class-name="small-padding">
+        <el-table-column label="操作" fixed="right" align="center" width="120px" class-name="small-padding">
           <template slot-scope="scope">
             <el-button type="text" size="mini"
                        @click="handleUpdate(scope.$index,scope.row.id)">编辑
@@ -145,7 +160,8 @@
   </div>
 </template>
 <script>
-  import { GetDataByList, closeOrder, deleteOrder, GetIdByDel } from '@/api/wechatuser'
+  import { GetDataByList, closeOrder, GetIdByDel,PostRoleByUpdate } from '@/api/wechatuser'
+  import waves from '@/directive/waves'
 
   const defaultListQuery = {
     page: 1,
@@ -155,6 +171,9 @@
   export default {
     name: 'orderList',
     components: {},
+    directives: {
+      waves
+    },
     data() {
       return {
         listQuery: Object.assign({}, defaultListQuery),
@@ -212,11 +231,11 @@
         ],
         operateOptions: [
           {
-            label: '批量发货',
+            label: '设为店长',
             value: 1
           },
           {
-            label: '关闭订单',
+            label: '社会',
             value: 2
           },
           {
@@ -250,6 +269,14 @@
 
     },
     methods: {
+      handleShop() {
+        this.operateType = 1
+        this.handleBatchOperate()
+      },
+      handleSalesman() {
+        this.operateType = 2
+        this.handleBatchOperate()
+      },
       handleResetSearch() {
         this.listQuery = Object.assign({}, defaultListQuery)
       },
@@ -282,36 +309,37 @@
       handleBatchOperate() {
         if (this.multipleSelection == null || this.multipleSelection.length < 1) {
           this.$message({
-            message: '请选择要操作的订单',
+            message: '最少选择一项',
             type: 'warning',
             duration: 1000
           })
           return
         }
+        let ids = []
+        for (let i = 0; i < this.multipleSelection.length; i++) {
+          ids.push(this.multipleSelection[i].id)
+        }
         if (this.operateType === 1) {
-          //批量发货
-          let list = []
-          for (let i = 0; i < this.multipleSelection.length; i++) {
-            if (this.multipleSelection[i].status === 1) {
-              list.push(this.covertOrder(this.multipleSelection[i]))
-            }
+          //设为店长
+
+          var temp={
+            ids,
+            field:'is_shop'
+
           }
-          if (list.length === 0) {
-            this.$message({
-              message: '选中订单中没有可以发货的订单',
-              type: 'warning',
-              duration: 1000
-            })
-            return
-          }
-          this.$router.push({ path: '/oms/deliverOrderList', query: { list: list } })
+          PostRoleByUpdate(temp).then(res=>{
+            this.getList()
+          })
         } else if (this.operateType === 2) {
-          //关闭订单
-          this.closeOrder.orderIds = []
-          for (let i = 0; i < this.multipleSelection.length; i++) {
-            this.closeOrder.orderIds.push(this.multipleSelection[i].id)
+
+          var temp={
+            ids,
+            field:'is_salesman'
+
           }
-          this.closeOrder.dialogVisible = true
+          PostRoleByUpdate(temp).then(res=>{
+            this.getList()
+          })
         } else if (this.operateType === 3) {
           //删除订单
           let ids = []
@@ -397,7 +425,7 @@
     }
   }
 </script>
-<style lang="scss" scoped>
+<style lang="scss" rel="stylesheet/scss" scoped>
   .input-width {
     width: 203px;
   }
@@ -417,9 +445,24 @@
     }
   }
 
+  .app-container > > > thead {
+    color: #595961;
+    font-size: 12px;
+  }
+
+  .app-container > > > .cell {
+    /*display: flex;*/
+    div {
+      color: #595961;
+      font-size: 12px;
+    }
+  }
+
   .headimgurl {
-    width: 60px;
-    height: 60px;
+    width: 36px;
+    height: 36px;
+    border-radius: 4px;
+    margin-right: 10px;
   }
 
 </style>

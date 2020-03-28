@@ -1,4 +1,18 @@
 <!--pages/product/index.wxml-->
+
+
+
+  <view class='has-community-container' wx:if="{{state.communityObj}}">
+    <view class='has-community-content' catchtap='onGoBackHandler'>
+      <image src='{{state.communityObj.avatar}}' class='community-avatar'></image>
+      <view class='has-community-inner'>
+        <view class='community-name'>当前小区:{{state.communityObj.name}}</view>
+        <view class='community-address'>{{state.communityObj.location}}</view>
+      </view>
+      <image src='/imgs/icon-community-address.png' class='icon-community-address'></image>
+    </view>
+  </view>
+
 <view class="product-container">
 <van-toast id="van-toast" />
 
@@ -34,11 +48,6 @@
 
     </van-cell-group>
 
-  
-    <view class="cm">
-      <view class="post-btn" catchtap="community">选择小区</view>
-      <view> {{community_name}}</view>
-    </view>
 
   </view>
 

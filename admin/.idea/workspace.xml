@@ -2,32 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ffb51f7a-e4bf-4b35-ae06-746677d532a7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../J-code/application/admin/controller/Evaluate.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../J-code/application/admin/controller/User.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../J-code/application/admin/model/EvaluateModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../J-code/application/admin/model/UserModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/api/evaluate.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/goods/eva.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/salesman/index.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/supplier/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../J-code/application/admin/controller/Ecshopclass.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../J-code/application/admin/controller/Serviceclass.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../J-code/application/admin/controller/Wechatuser.php" beforeDir="false" afterPath="$PROJECT_DIR$/../J-code/application/admin/controller/Wechatuser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../J-code/application/admin/logic/AuthRule.php" beforeDir="false" afterPath="$PROJECT_DIR$/../J-code/application/admin/logic/AuthRule.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../J-code/application/admin/model/AuthRule.php" beforeDir="false" afterPath="$PROJECT_DIR$/../J-code/application/admin/model/AuthRule.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../J-code/application/admin/model/CarBrandModel.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../J-code/application/admin/model/CarSeriesModel.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../J-code/application/admin/model/EcshopClassModel.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../J-code/application/admin/model/LedClassModel.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../J-code/application/admin/model/OrderModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/../J-code/application/admin/model/OrderModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../J-code/application/admin/model/ProductClassModel.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../J-code/application/admin/model/ProductModel.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../J-code/application/admin/model/ServiceClassModel.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../J-code/application/app/controller/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/../J-code/application/app/controller/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/wechatuser.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/wechatuser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Upload/CoverImage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Upload/CoverImage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/goods/components/ArticleDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/goods/components/ArticleDetail.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/manage/rules.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/manage/rules.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/user/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/user/index.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -50,25 +27,25 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="js" value="5" />
-          <entry key="vue" value="16" />
+          <entry key="vue" value="17" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="JavaScript" value="5" />
-          <entry key="Vue.js" value="16" />
+          <entry key="Vue.js" value="17" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="js" value="16" />
-          <entry key="vue" value="590" />
+          <entry key="js" value="17" />
+          <entry key="vue" value="997" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JavaScript" value="16" />
-          <entry key="Vue.js" value="590" />
+          <entry key="JavaScript" value="17" />
+          <entry key="Vue.js" value="997" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts">
@@ -83,8 +60,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/goods/index.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="181" column="31" selection-start-line="181" selection-start-column="27" selection-end-line="181" selection-end-column="31" />
+            <state relative-caret-position="229">
+              <caret line="439" column="28" lean-forward="true" selection-start-line="439" selection-start-column="7" selection-end-line="439" selection-end-column="28" />
+              <folding>
+                <element signature="e#7408#7483#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -92,8 +72,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/article/index.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="254">
-              <caret line="164" column="25" selection-start-line="164" selection-start-column="20" selection-end-line="164" selection-end-column="25" />
+            <state relative-caret-position="145">
+              <caret line="16" column="38" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -129,15 +109,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/api/banner.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="18" lean-forward="true" selection-end-line="43" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/salesman/index.vue">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="234">
@@ -152,13 +123,25 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/user/index.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="246" column="19" selection-start-line="246" selection-start-column="19" selection-end-line="246" selection-end-column="19" />
+            <state relative-caret-position="302">
+              <caret line="336" column="22" selection-start-line="336" selection-start-column="22" selection-end-line="336" selection-end-column="22" />
               <folding>
                 <element signature="n#style#0;n#div#1;n#el-card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#el-table#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#div#0;n#template#0;n#el-table-column#1;n#el-table#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#el-table-column#1;n#el-table#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="e#4755#4840#0" expanded="true" />
                 <element signature="e#4161#5539#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/App.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
             </state>
           </provider>
         </entry>
@@ -171,8 +154,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/api/wechatuser.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="29" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="29" />
+            <state relative-caret-position="214">
+              <caret line="22" column="32" selection-start-line="22" selection-start-column="16" selection-end-line="22" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -201,9 +184,17 @@
       <find>handleSizeChange</find>
       <find>handleCurrentChange</find>
       <find>listLoading</find>
-      <find>headimgurl</find>
       <find>头像</find>
       <find>statusFilter</find>
+      <find>operateOptions</find>
+      <find>OrderList</find>
+      <find>tableKey</find>
+      <find>waves</find>
+      <find>size</find>
+      <find>components</find>
+      <find>headimgurl</find>
+      <find>handleBatchOperate</find>
+      <find>handleSalesman</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -219,6 +210,7 @@
         <option value="$PROJECT_DIR$/src/views/goods/components/ArticleDetail.vue" />
         <option value="$PROJECT_DIR$/src/api/evaluate.js" />
         <option value="$PROJECT_DIR$/src/views/goods/eva.vue" />
+        <option value="$PROJECT_DIR$/src/App.vue" />
         <option value="$PROJECT_DIR$/src/api/wechatuser.js" />
         <option value="$PROJECT_DIR$/src/views/user/index.vue" />
       </list>
@@ -288,6 +280,13 @@
               <item name="admin" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="goods" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="admin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
               <item name="salesman" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -335,12 +334,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1585387879909</updated>
-      <workItem from="1585387883426" duration="8973000" />
+      <workItem from="1585387883426" duration="11330000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8973000" />
+    <option name="totallyTimeSpent" value="11330000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="24" width="1280" height="731" extended-state="6" />
@@ -463,20 +462,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/article/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="254">
-          <caret line="164" column="25" selection-start-line="164" selection-start-column="20" selection-end-line="164" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/goods/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="181" column="31" selection-start-line="181" selection-start-column="27" selection-end-line="181" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/salesman/index.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
@@ -500,20 +485,47 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/article/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="16" column="38" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/goods/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="229">
+          <caret line="439" column="28" lean-forward="true" selection-start-line="439" selection-start-column="7" selection-end-line="439" selection-end-column="28" />
+          <folding>
+            <element signature="e#7408#7483#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/api/wechatuser.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="29" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="29" />
+        <state relative-caret-position="214">
+          <caret line="22" column="32" selection-start-line="22" selection-start-column="16" selection-end-line="22" selection-end-column="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/user/index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="246" column="19" selection-start-line="246" selection-start-column="19" selection-end-line="246" selection-end-column="19" />
+        <state relative-caret-position="302">
+          <caret line="336" column="22" selection-start-line="336" selection-start-column="22" selection-end-line="336" selection-end-column="22" />
           <folding>
             <element signature="n#style#0;n#div#1;n#el-card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#el-table#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#div#0;n#template#0;n#el-table-column#1;n#el-table#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#el-table-column#1;n#el-table#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#4755#4840#0" expanded="true" />
             <element signature="e#4161#5539#0" />
           </folding>
         </state>

@@ -19,17 +19,10 @@ export function GetOpenidByFind(openid) {
 
 
 
-export function getinfo(id) {
-  return request({
-    url: '/admin/admin/getinfo',
-    method: 'get',
-    params: { id }
-  })
-}
 
-export function modify(data) {
+export function PostRoleByUpdate(data) {
   return request({
-    url: '/admin/admin/modify',
+    url: '/admin/Wechatuser/PostRoleByUpdate',
     method: 'post',
     data
   })

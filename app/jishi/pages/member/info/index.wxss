@@ -82,3 +82,72 @@ height: 75px !important;
 .cm .post-btn{
   margin-left: 0%;
 }
+
+/* 当前小区 */
+
+
+.has-community-container{
+  height: 324rpx;
+  position: relative;
+}
+.has-community-content{
+  padding-top: 68rpx;
+  box-sizing: border-box;
+  position: absolute;
+ top: 10rpx;
+width: 690rpx;
+height: 308rpx;
+  left: 30rpx;
+  background: #FFFFFF;
+  box-shadow: 0 16rpx 30rpx 0 rgba(255,197,4,0.28);
+  border-radius: 20rpx;
+  z-index: 3;
+  text-align: center;
+  padding: 15rpx;
+}
+.has-community-inner{
+  padding-top: 50rpx;
+  width: 100%;
+  height: 100%;
+  border: 1rpx dashed #ddd;
+  border-radius: 4rpx;
+  box-sizing: border-box;
+}
+.community-avatar{
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  position: absolute;
+  top: -50rpx;
+  left: 50%;
+  margin-left: -50rpx;
+  z-index: 3;
+}
+.community-user{
+  color: #AEAEAE;
+  font-size: 26rpx;
+  line-height: 38rpx;
+  font-family: PingFangSC-Medium;
+}
+.community-name{
+  margin-top: 42rpx;
+  font-size: 36rpx;
+  color: #282828;
+  line-height: 50rpx;
+  font-family: PingFangSC-Semibold;
+}
+.community-address{
+  margin-top: 10rpx;
+  font-size: 26rpx;
+  line-height: 38rpx;
+  color: #666;
+  padding: 0 86rpx;
+  font-family: PingFangSC-Medium;
+}
+.icon-community-address{
+  position: absolute;
+  width: 108rpx;
+  height: 88rpx;
+  bottom: 0rpx;
+  right: 56rpx;
+}

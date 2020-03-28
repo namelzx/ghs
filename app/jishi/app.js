@@ -46,7 +46,7 @@ App({
             longitude: res.longitude
           },
           success: function (ret) {
-            console.log(ret)
+        
             if (ret.status === 0 && ret.result) {
               var currentLocation = {
                 city: ret.result.address_component.city,
@@ -61,6 +61,17 @@ App({
                 // 如果本地没有地址，则把当前定位地址 赋值给选择地址 选择定位
                 wx.setStorageSync("locationObj", JSON.stringify(currentLocation))
               }
+
+              let communityObj = wx.getStorageSync("communityObj");
+
+              if (communityObj){
+
+              }else{
+                wx.navigateTo({
+                  url: '/pages/location/index',
+                })
+              }
+            
            
             }
           },

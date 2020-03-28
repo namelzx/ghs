@@ -9,7 +9,6 @@
 namespace app\admin\controller;
 
 
-use app\admin\model\WechatUserModel;
 use app\app\model\UserModel;
 
 class Wechatuser extends System
@@ -30,6 +29,13 @@ class Wechatuser extends System
         if (empty($res)) {
             ajax_return_ok(404, '没有找到');
         }
+        ajax_return_ok($res);
+    }
+
+    public function PostRoleByUpdate()
+    {
+        $data = input('param.');
+        $res = UserModel::where('id', 'in', $data['ids'])->data([$data['field'] => 1])->update();
         ajax_return_ok($res);
     }
 

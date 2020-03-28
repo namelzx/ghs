@@ -31,6 +31,9 @@ Page({
     vList: [],
     actions:[],
     show:false,
+    state:{
+      communityObj:{},
+    },
     community_name:'',
     data: {
       community_id: 0,
@@ -211,8 +214,27 @@ Page({
           'community_name': res.data.community.name
         })
       }
+      if(res.data.community){
+
+        this.setData({
+          "state.communityObj": res.data.community,
+        })
+      
+      }else{
+        let communityObj = wx.getStorageSync("communityObj");
+        let commun = JSON.parse(communityObj)
+
+      
+        if (communityObj) {
+          this.setData({
+            "state.communityObj": commun,
+          })
+          this.data.data.community_id = commun.id
+        }
+      }
       
     })
+
     communityModel.GetDataBylist(res=>{
       _this.setData({
         actions:res.data,
