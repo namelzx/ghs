@@ -1,0 +1,31 @@
+	<view>
+		<!--  商品管理组件  -->
+    <van-toast id="van-toast" />
+
+		<view class="product" wx:for="{{list}}">
+
+			<view class="pr_setace" wx:if="{{base_show}}">
+				<checkbox color="#f10216" style="transform:scale(0.75)" bindtap="handleselectList"   data-index="{{index}}" checked="{{item.selected}}" />
+			</view>
+			<view class="pr_bao" data-item="{{item}}" catchtap="handelTourl">
+				<view class="left_imgs">
+					<image src="{{item.images_url}}"></image>
+				</view>
+        <view  >
+				<view class="pr_main">
+					<view class="title">
+						<text>{{item.name}}</text>
+					</view>
+					<view class="price">
+						<view class="price-nums">
+							<text>¥{{item.price}}</text>
+						</view>
+					</view>
+          </view>
+				</view>
+			</view>
+		</view>
+
+
+	</view>
+

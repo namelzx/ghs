@@ -1,0 +1,66 @@
+<view class="with">
+		<view class="with_money">
+			<view class="money_left">
+				<view class="money_left_a">可提现金额</view>
+				<view class="money_left_b">¥<text>0.00</text></view>
+			</view>
+			<view class="money_right" bindtap="onNotice">提现</view>
+		</view>
+		
+		<!-- 列表 -->
+		<view class="with_ment" bindtap="onAccount">
+			<view class="ment_warp">
+				<view class="ment_name">结算单记录</view>
+				<image src="../../../../imgs/you.png"></image>
+			</view>
+		</view>
+		<view class="with_ment" bindtap="onTogeAttes">
+			<view class="ment_warp">
+				<view class="ment_name">提现认证</view>
+				<view class="ment_right">
+					<view wx:if="{{audhe||audhe.status===2}}">认证中</view>
+          	<view wx:elif="{{audhe||audhe.status===1}}">已认证</view>
+            	<view wx:else>未认证</view>
+					<image src="../../../../imgs/you.png"></image>
+				</view>
+			</view>
+		</view>
+		<view class="with_ment" bindtap="onDeposit">
+			<view class="ment_warp">
+				<view class="ment_name">提现记录</view>
+				<image src="../../../../imgs/you.png"></image>
+			</view>
+		</view>
+	
+		
+		<view class="with_hr"></view>
+		
+		<!-- 结算说明 -->
+		<view class="with_explain">
+			<view class="ex_title">结算单说明</view>
+			<view class="ex_desc">
+				<view class="ex_desc_num">1.</view>
+				<view class="ex_desc_name">当日订单支付完成后第二天计入可提现总金额，用户可以自行提交可提现范围内金额的提现申请，审核通过后1-3个工作日到账</view>
+			</view>
+			<view class="ex_desc">
+				<view class="ex_desc_num">2.</view>
+				<view class="ex_desc_name">会员需要在提前完成<text>提现认证</text>，并审核通过维护完善<text>银行卡信息</text>，否则将影响提现进行。</view>
+			</view>
+			<view class="ex_desc">
+				<view class="ex_desc_num">3.</view>
+				<view class="ex_desc_name">结算收益：订单完成时间在上个月的总收益上个月【已付款】但未完成订单可在下个月提现。</view>
+			</view>
+			<view class="ex_desc">
+				<view class="ex_desc_num">4.</view>
+				<view class="ex_desc_name">可提现金额已扣除各项税费，提现金额需大于1元。</view>
+			</view>
+			<view class="ex_desc">
+				<view class="ex_desc_num">5.</view>
+				<view class="ex_desc_name">本月未提现收益不会清零，会累积到账户余额，下个月合并提现。</view>
+			</view>
+      <view class="ex_desc">
+				<view class="ex_desc_num">6.</view>
+				<view class="ex_desc_name">账户内预留10元作为保证金，提交的提现审核金额需要小于等于账户内可提现总金额减去10元。用户在注销账户且通过审核后，可以把10元保证金退回到微信账户内。</view>
+			</view>
+		</view>
+	</view>

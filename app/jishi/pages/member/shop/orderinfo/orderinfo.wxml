@@ -1,0 +1,253 @@
+<!--page/userCenter/pages/orderDetail/orderDetail.wxml-->
+<!--  导入wxs文件 -->
+<wxs module="toolFr" src="../../../../utils/filter.wxs"></wxs>
+<view class='P-order-detail {{state.isIphoneX?"isIphoneX":""}}' wx:if="{{data.orderDetail.id}}">
+  <van-dialog id="van-dialog" />
+
+ 
+<view class="detail-heeader">
+   <view class="detail-bg">
+       <image class="detail-bg-image" src="/imgs/detail-bg.png"></image>
+    </view>
+    <!-- -1-已取消-->
+  <view wx:if='{{data.orderDetail.status==-1}}' class="detail-zindex-top">
+    <view class='header-tips'>
+      <view class="icon-left">
+            <image class="icon-left-image" src="/imgs/icon-cancelled.png"></image>
+        </view>
+      <view class='header-tips-left'>
+        <view class='header-tips-status'>已取消</view>
+        <view class="subtitle">期待您下次购物</view>
+      </view>
+
+    </view>
+  </view>
+
+  <!-- 0-待支付 -->
+  <view wx:if='{{data.orderDetail.status==1}}' class="detail-zindex-top">
+
+      <view class='header-tips'>
+        <view class="icon-left">
+            <image class="icon-left-image" src="/imgs/icon-obligations.png"></image>
+        </view>
+      <view class='header-tips-left'>
+        <view class='header-tips-status'>待付款</view>
+        <view class="subtitle">请在{{data.countDown}}内付款</view>
+      </view>
+    </view>
+    
+  </view>
+
+  <!-- 2-已支付（待发货/配送)-->
+  <view wx:if='{{data.orderDetail.status==2}}' class="detail-zindex-top">
+      <view class='header-tips'>
+        <view class="icon-left">
+            <image class="icon-left-image" src="/imgs/icon-paid.png"></image>
+        </view>
+      <view class='header-tips-left'>
+        <view class='header-tips-status'>已付款</view>
+        <view class="subtitle">请关注具体商品配送时间</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 3-配送中-->
+  <view wx:if='{{data.orderDetail.status==3}}' class="detail-zindex-top">
+    <view class='header-tips'>
+        <view class="icon-left">
+            <image class="icon-left-image" src="/imgs/details-distribution.png"></image>
+        </view>
+      <view class='header-tips-left'>
+        <view class='header-tips-status'>配送中</view>
+        <view class="subtitle">商品已出库，司机正在配送中</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 4-交易完成-->
+  <view wx:if='{{data.orderDetail.status===4}}' class="detail-zindex-top">
+    <view class='header-tips'>
+      <view class="icon-left">
+            <image class="icon-left-image" src="/imgs/icon-completed.png"></image>
+        </view>
+      <view class='header-tips-left'>
+        <view class='header-tips-status'>已完成</view>
+        <view class="subtitle">感谢您的光临，欢迎您再来</view>
+      </view>
+     </view>
+  </view>
+
+  <!-- 5-已退款-->
+  <view wx:if='{{data.orderDetail.status==5}}' class="detail-zindex-top">
+    <view class="header-tips">
+        <view class="icon-left">
+              <image class="icon-left-image" src="/imgs/icon-paid.png"></image>
+        </view>
+        <view class="header-tips-left">
+           <view class='header-tips-status'>已退款</view>
+           <view class="subtitle">已退款，售后问题请联系客服哦</view>
+        </view>
+    </view>
+  </view>
+
+    <!-- 6-待自提-->
+  <view wx:if='{{data.orderDetail.status===6}}' class="detail-zindex-top">
+    <view class='header-tips'>
+      <view class="icon-left">
+            <image class="icon-left-image" src="/imgs/icon-take delivery.png"></image>
+        </view>
+      <view class='header-tips-left'>
+        <view class='header-tips-status'>待自提</view>
+        <view class="subtitle">到货啦，请尽快到自提点取货哦</view>
+      </view>
+     </view>
+  </view>
+
+
+</view>
+
+  <view class='address-container margin'>
+    <!-- <view class='address-info-item'>
+      <view class='address-item-title-box'>
+         <view class="left-icon" style="top:4rpx;"></view>
+        <view class='address-item-title'>自提地址</view>
+      </view>
+      <view class="store-name">{{data.orderDetail.store_name?data.orderDetail.store_name:"暂无店名  !"}}<text>(团长：{{data.orderDetail.merchant_name?data.orderDetail.merchant_name:"暂无团长!"}})</text></view>
+      <view class='address-info-detail'>{{data.orderDetail.store_address?data.orderDetail.store_address:"暂无提货地址!"}}
+      </view>
+      <view class='address-chater'>
+        <view class='address-chater-call' catchtap='onCallHandler' data-phone="{{data.orderDetail.agent_mobile}}" wx:if='{{data.orderDetail.agent_mobile_mask}}'>
+          <text class='address-chater-phone'>{{data.orderDetail.agent_mobile_mask}}</text>
+          <image src='/imgs/icon-call-active.png'></image>
+          <view>联系团长</view>
+        </view>
+      </view>
+    </view> -->
+    <view class='address-user-tips'>
+      <view class='address-item-title-box'>
+          <view class="left-icon" style="top:4rpx;"></view>
+        <view class='address-item-title'>提货人信息</view>
+      </view>
+      <view class='address-user-detail'>{{data.orderDetail.buyerName}}
+        <text catchtap='onCallHandler' data-phone="{{data.orderDetail.mobile}}">{{data.orderDetail.mobile}}</text>
+      </view>
+      <view class='address-user-detail'>{{data.orderDetail.addressText}}</view>
+         <view class='address-user-detail'>{{data.orderDetail.buyerText}}</view>
+
+    </view>
+  </view>
+
+
+
+  <!--次日达商品-->
+  <view class='order-pro-lists'>
+    <view class='order-pro-title'>
+      <view class="left-icon"></view>
+      <view class="order-pro-conent">
+        <view class="order-pro-left"> 次日达商品 </view>
+         <!-- <view class="order-pro-right">{{data.orderDetail.goods_umber1}}件商品</view> -->
+         <view class="order-pro-left-status cancel" wx:if="{{data.orderDetail.status==-1}}" >已取消</view>
+         <view class="order-pro-left-status" wx:elif="{{itemName[0].status==4}}">已完成</view>
+          <view class="order-pro-left-status" wx:elif="{{itemName[0].status==0}}">待付款</view>
+          <view class="order-pro-left-status" wx:elif="{{itemName[0].status==2}}">待发货</view>
+          <view class="order-pro-left-status" wx:elif="{{itemName[0].status==3}}">配送中</view>
+          <view class="order-pro-left-status" wx:elif="{{itemName[0].status==6}}">待自提</view>
+          <view class="order-pro-left-status cancel" wx:elif="{{itemName[0].status==5}}">已退款</view>
+          <view class="order-pro-left-status" wx:elif="{{data.orderDetail==1}}">待付款</view>
+       </view>
+    </view>
+    <view class='order-pro-item'>
+       <view class="order-pro-list" wx:for="{{data.orderDetail.goods}}" wx:key="{{index}}">
+           <image class="goods-logo" src='{{item.images_url?item.images_url:""}}'></image>
+           <view class="order-pro-list-center">
+              <view class="order-pro-list-title">
+                 {{item.name}}
+              </view>
+              <view class="order-pro-list-info">
+              <text>x{{item.totalBuyNum}}</text>
+              </view>
+           </view>
+           <view class="order-pro-list-right">
+             ¥ {{item.price}}
+           </view>
+       </view>
+    </view>
+  </view>
+
+   <!--订单信息-->
+   <view class="order-message-container">
+        <view class="order-message-header">
+        <view class="left-icon"></view>
+        订单详情
+        </view>
+        <view class="order-message-content">
+           <view class="order-number">
+           <text class="instructions">订单编号</text>
+           <text>{{data.orderDetail.out_trade_no}}</text>
+             <text class='order-btn-copy' bindtap='onCopyHandler' data-no="{{data.orderDetail.no}}">复制</text>
+           </view>
+            <view class="order-time">
+            <text class="instructions">下单时间</text>
+            <text>{{data.orderDetail.create_time}}</text>
+            </view>
+        </view>
+   </view>
+
+
+  <view class='order-footer-container {{state.isIphoneX?"isIphoneX":""}}' wx:if="{{data.orderDetail.status===1||data.orderDetail.status===2||data.orderDetail.status===6||data.orderDetail.status==4||data.orderDetail.status==5}}">
+    <view class='btn-default' data-order-id='{{data.orderDetail.no}}' catchtap='onCancelOrderHandler' wx:if="{{data.orderDetail.status === 1}}">取消订单</view>
+    <view class='btn-default btn-default-delet' data-status='3' data-order-id='{{data.orderDetail.id}}'  catchtap='onSureReciveHandler' wx:if="{{data.orderDetail.status == 2}}">发货</view>
+    <block wx:if="{{data.orderDetail.status===6}}">
+      <view class='expedite-delivery btn-expedite-delivery'>
+       <button open-type='contact'>
+         联系客服
+       </button>
+      </view> 
+      <view class='btn-primary' data-order-id='{{data.orderDetail.no}}' catchtap='onSureReciveHandler'>确认收货</view>
+    </block>
+    <!-- <view class='cancel-order' wx:if="{{data.orderDetail.order_status == 2}}">取消订单</view> -->
+    <form report-submit bindsubmit="formSubmit" wx:if="{{data.orderDetail.status === 0}}" class="form-btn">
+      <button formType="submit" class='btn-active' data-order-id='{{data.orderDetail.no}}'>立即付款</button>
+    </form>
+  </view>
+<!-- 
+  <alertingTips alertingStatus="{{state.alertingStatus}}" alertingWords="{{state.alertingWords}}"></alertingTips> -->
+<!-- 
+  <comfirmTips actionObj="{{state.actionObj}}" bindonsure="{{state.actionObj.submitHandler}}" bindoncancel="{{state.actionObj.cancelHandler}}" wx:if="{{state.comfirmBoxStatus}}"></comfirmTips> -->
+
+
+<van-dialog
+  use-slot
+  title="打赏金额"
+  show="{{ data.show }}"
+  show-cancel-button
+  confirm-button-open-type="getUserInfo"
+  bind:close="onClose"
+  bind:getuserinfo="getUserInfo"
+>
+   <van-field
+    value="{{ data.value }}"
+    placeholder="请输入金额"
+    border="{{ false }}"
+    bind:change="onChange"
+  />
+</van-dialog>
+
+<view class='btn-share-content' catchtap='onChangeShareGroupStatusHandler' wx:if="{{(data.orderDetail.status == 2 || data.orderDetail.status == 3 || data.orderDetail.status == 4) && data.orderDetail.shared == 1 && data.orderDetail.red_package_status}}">
+    <image src='/imgs/icon-share-order-btn.png'></image>
+  </view>
+
+  <view class='share-group-container' wx:if="{{state.shareGroupStatus}}">
+    <view class='share-group-content'>
+      <view class='share-group-inner'>
+        <image src='/imgs/icon-share-package.png' class='icon-share-package'></image>
+        <view class='share-group-title'>恭喜获得分享红包</view>
+        <view class='share-group-desc'>您有一个红包待分享，快发给您的小伙伴吧~</view>
+        <button open-type='share' class='share-group-btn'>立即分享</button>
+      </view>
+      <view class='share-group-close' catchtap='onChangeShareGroupStatusHandler'>
+        <image src='/imgs/icon-close-package-shadow.png'></image>
+      </view>
+    </view>
+  </view>
+</view>

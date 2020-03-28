@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "swiperItems": "../../../components/swiperItems/swiperItems",
+    "van-icon": "../../../../vant-weapp/dist/icon/index"
+  }
+}

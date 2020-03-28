@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+
+    <title>聚鲸网络-博客</title>
+
+    <meta name="HandheldFriendly" content="True"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link rel="stylesheet" type="text/css" href="/static/yz/dependencies.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/yz/style.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!--<link rel="canonical" href="https://tech.youzan.com/tag/front-end/"/>-->
+    <!--<link rel="next" href="https://tech.youzan.com/tag/front-end/page/2/"/>-->
+
+    <!--<meta property="og:site_name" content="有赞技术团队"/>-->
+    <!--<meta property="og:type" content="website"/>-->
+    <!--<meta property="og:title" content="前端 - Page 1 - 有赞技术团队"/>-->
+    <!--<meta property="og:description" content="我们只看脸"/>-->
+    <!--<meta property="og:url" content="https://tech.youzan.com/tag/front-end/"/>-->
+    <!--<meta property="og:image" content="https://tech.youzan.com/content/images/2016/02/css3-code-1.jpg"/>-->
+
+    <!--<meta name="twitter:card" content="summary_large_image"/>-->
+    <!--<meta name="twitter:title" content="前端 - Page 1 - 有赞技术团队"/>-->
+    <!--<meta name="twitter:description" content="我们只看脸"/>-->
+    <!--<meta name="twitter:url" content="https://tech.youzan.com/tag/front-end/"/>-->
+    <!--<meta name="twitter:image:src" content="https://tech.youzan.com/content/images/2016/02/css3-code-1.jpg"/>-->
+
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@type": "Series",
+            "publisher": "有赞技术团队",
+            "url": "https://tech.youzan.com/tag/front-end/",
+            "image": "https://tech.youzan.com/content/images/2016/02/css3-code-1.jpg",
+            "name": "前端",
+            "description": "我们只33看脸"
+        }
+    </script>
+
+    <meta name="generator" content="Ghost 0.6"/>
+    <link rel="alternate" type="application/rss+xml" title="有赞技术团队" href="https://tech.youzan.com/rss/"/>
+    <style>
+        #menu .menu-list .menu-list-item {
+            margin-right: 0.7em;
+        }
+
+        #post-index {
+            max-width: unset;
+        }
+
+        .post > i {
+            display: none;
+            opacity: 0.1;
+            transition: opacity .5s;
+        }
+
+        .post:hover > i {
+            display: none;
+            opacity: 0.5;
+            transition: opacity .5s;
+        }
+
+        .break-line {
+            padding: 0 20px 0;
+            margin: 20px 0;
+            line-height: 1px;
+            border-left: 200px solid #ddd;
+            border-right: 200px solid #ddd;
+            text-align: center;
+        }
+
+        .post .post-header {
+            padding-top: 6em;
+        }
+
+        img {
+            margin-top: 1.5em;
+            margin-bottom: 1.5em;
+        }
+
+        .post-content > h2:first-child {
+            margin-top: 1.286em;
+        }
+
+        p {
+            word-break: break-word;
+        }
+
+        code {
+            white-space: unset;
+        }
+
+        .post-footer .post-tags {
+            max-width: 80%;
+        }
+
+        a.icon-weibo {
+            background-color: #E63917 !important;
+        }
+
+        .menu-hidden #menu {
+            padding-bottom: 0;
+            top: unset;
+            margin-top: unset;
+            height: calc(100vh - 4em);
+            margin-top: 4em;
+        }
+
+        @media (max-width: 480px) {
+            .break-line {
+                padding: 0 20px 0;
+                margin: 20px 0;
+                line-height: 1px;
+                border-left: 60px solid #ddd;
+                border-right: 60px solid #ddd;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body class="tag-template tag-front-end">
+<section id="wrapper">
+    <div id="ajax-container">
+        <nav id="nav" class="nav">
+            <div class="inner">
+                <a id="menu-button" title="Navigation">
+                    <span class="menu-button-bar menu-button-bar-1"></span>
+                    <span class="menu-button-bar menu-button-bar-2"></span>
+                    <span class="menu-button-bar menu-button-bar-3"></span>
+                </a>
+                <div id="menu">
+                    <ul class="menu-list">
+                        {volist name="muen" id="muen"}
+                        {if $id==$muen.id}
+                        <li class="menu-list-item">
+                            <a class="current " href="http://www.jvrentech.cn?id={$muen.id}">
+                                {$muen.title}
+                            </a>
+                        </li>
+                        {else /}
+                        <li class="menu-list-item">
+                            <a class=" " href="http://www.jvrentech.cn?id={$muen.id}">
+                                {$muen.title}
+                            </a>
+                        </li>
+                        {/if}
+                        {/volist}
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+

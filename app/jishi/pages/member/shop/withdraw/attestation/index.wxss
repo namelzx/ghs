@@ -1,0 +1,128 @@
+.at_name{
+		margin-left: 30rpx;
+		border-bottom: 2rpx solid #EEEEEE;
+		height: 100rpx;
+		line-height: 100rpx;
+		display: flex;
+		align-items: center;
+		font-size: 30rpx;
+	}
+	.at_name_left{
+		width: 160rpx;
+	}
+	.at_name input{
+		font-size: 28rpx;
+		width: 500rpx;
+	}
+	.at_sex{
+		margin-left: 30rpx;
+		border-bottom: 2rpx solid #EEEEEE;
+		height: 100rpx;
+		line-height: 100rpx;
+		display: flex;
+		align-items: center;
+		font-size: 30rpx;
+	}
+	.at_sex_left{
+		width: 160rpx;
+	}
+	.at_sex_right{
+		display: flex;
+	}
+	.at_sex_right .custom-class{
+		display: flex !important;
+	}
+	.at_sex_right .custom-class .radio{
+		margin-left: 30rpx;
+	}
+	.at_type{
+		margin-left: 30rpx;
+		border-bottom: 2rpx solid #EEEEEE;
+		height: 100rpx;
+		line-height: 100rpx;
+		display: flex;
+		align-items: center;
+		font-size: 30rpx;
+	}
+	.at_type_left{
+		width: 160rpx;
+	}
+	.at_type_right{
+		width: 530rpx;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		font-size: 28rpx;
+		color: #333333;
+	}
+	.at_type_right .number{
+		color: #999999;
+		font-size: 28rpx;
+	}
+	.at_type_right image{
+		width: 30rpx;
+		height: 30rpx;
+	}
+	.at_photo{
+		border-bottom: 2rpx solid #EEEEEE;
+	}
+	.at_photo .title{
+		height: 100rpx;
+		line-height: 100rpx;
+		margin-left: 30rpx;
+		font-size: 30rpx;
+	}
+	.at_photo .title .title_hint{
+		color: #999999;
+		font-size: 26rpx;
+		margin-left: 30rpx;
+	}
+	.at_photo .photo_up {
+		width: 680rpx;
+		margin: 20rpx auto;
+		display: flex;
+		justify-content: space-between;
+	}
+	.photo_up .van-uploader__preview-image{
+				width: 320rpx !important;
+				height: 200rpx !important;
+	}
+	.up_slot{
+		width: 320rpx;
+		height: 200rpx;
+		border: 2rpx solid #EEEEEE;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+	.up_slot image{
+		margin: 30rpx auto 0;
+		margin-top: 30rpx;
+		width: 120rpx;
+		height: 90rpx;
+	}
+	.up_slot text{
+		display: block;
+		color: #d8dce0;
+		font-size: 30rpx;
+		margin-top: 20rpx;
+		text-align: center;
+	}
+	.up_slot_img image{
+		width: 320rpx;
+		height: 200rpx;
+	}
+	.at_btn{
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: 100rpx;
+		line-height: 100rpx;
+		text-align: center;
+		color: #FFFFFF;
+		font-size: 35rpx;
+		background: #f10216;
+		z-index: 10;
+	}

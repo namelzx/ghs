@@ -1,0 +1,36 @@
+{include file='public/header' /}
+
+
+<main class="content" role="main">
+    <article class="post tag-front-end">
+
+        <div id="push">
+            <header class="post-header">
+                <div class="inner">
+					<span class="post-meta">
+					 <span class="post-date">{$info.create_time|date='Y-m-d  h:s'} <span
+                             class="post-reading-time"> (<span class="word-count">4615</span> words)</span></span>
+					</span>
+                    <div class="clear"></div>
+                    <h1 class="post-title">{$info.title}</h1>
+                    <img src="">
+                </div>
+            </header>
+
+            <div class="inner">
+                <section class="post-content">
+                    <div id="content">
+
+                        {$html|raw}
+                    </div>
+
+                </section>
+
+
+            </div>
+        </div>
+    </article>
+</main>
+
+
+{include file='public/footer' /}

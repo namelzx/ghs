@@ -1,0 +1,24 @@
+<!--pages/product/index.wxml-->
+<view class="product-container">
+<van-toast id="van-toast" />
+
+<view>
+
+
+
+  <view class="pro-detail-wrap">
+    <van-cell-group class="van-cell-group">
+      <van-field autosize  type="textarea"  value="{{ data.data.desc }}"  title-width="70px"  label="评论" placeholder="请输入商品评论" bind:blur="setName" />
+      </van-cell-group>
+  </view>
+
+
+  <view class="pro-video-list md">
+    <view class="list-title">  商品详情图片集</view>
+  <van-uploader   data-suffix=".jpg"  data-type='3' file-list="{{ iList }}" bind:delete="delVdo"  bind:after-read="afterRead" />
+  </view>
+</view>
+  <view class="post-bottom">
+    <view class="post-btn" catchtap="checkRequired">发表</view>
+  </view>
+</view>

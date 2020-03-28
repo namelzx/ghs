@@ -1,0 +1,66 @@
+<!--index.wxml-->
+<header city='{{locationObj.city?locationObj.city:"选择城市"}}'></header>
+<view class="index-container">
+  <!-- 轮播 -->
+  <view class="swiper-wrap">
+    <swiper indicator-dots="{{indicatorDots}}" circular="{{circular}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" bindchange="handleIndexChange">
+      <block wx:for="{{imgList}}" wx:key="*this">
+        <swiper-item catchtap="clickToRecom" data-id="{{item.id}}">
+          <image src="{{item.images_url}}" class="swiper-img"></image>
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class="img-counter">{{curImgIndex}}/{{imgList.length}}</view>
+  </view>
+  <!-- kkarea -->
+  <!-- <kkarea kkarea="{{kkarea}}"></kkarea> -->
+  <!-- <tool></tool> -->
+
+  <view class="news">
+    <view class="tj" bindtap="toShop">
+    <image src="../../imgs/h-1.png"></image>
+    </view>
+    <view class="jc">
+    <view  class="nk">
+    <image src="../../imgs/h-2.png"></image>
+    </view>
+     <view class="nk">
+       <image src="../../imgs/h-3.png"></image>
+     </view>
+    </view>
+  </view>
+  <!-- 品牌 -->
+    <!-- 搜索 -->
+
+    <!-- 爆款推荐  -->
+    <view class="swiper-wrap-hot" wx:if="{{faddish.length>0}}"> 
+      <swiper indicator-dots="{{indicatorDots}}" circular="{{circular}}" autoplay="{{autoplayHot}}" interval="{{intervalHot}}" duration="{{duration}}" >
+      <block wx:for="{{faddish}}"  wx:key="*this" >
+        <swiper-item catchtap="clickToRecom" data-id="{{item.id}}">
+          <image src="{{item.hot_img}}" class="swiper-img-hot"></image>
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class="sw_hot_icon">
+      <view>Hot</view>
+    </view>
+    </view>
+
+    
+     <view class='filter-bar-container'>
+    
+      <view class='scroll-bar-view ' >
+        <scroll-view scroll-x class='filter-bar-container' scroll-with-animation scroll-left="{{data.scrollLeft}}">
+          <view class='filter-item {{index == 0?"short":""}} {{item.id == state.selectFilterId?"active":""}}' catchtap='onSelectFilterHandler' wx:for="{{filters}}" wx:key="{{index}}" data-id='{{item.id}}' data-index='{{index}}'>
+            <view class='filter-item-text'>{{item.name}}</view>
+            <view class='filter-item-bottom' wx:if="{{item.id == ac}}"></view>
+          </view>
+        </scroll-view>
+      </view>
+    </view>
+
+
+     
+  <!-- 为你推荐 -->
+  <recom recom="{{recom}}"></recom>
+</view>

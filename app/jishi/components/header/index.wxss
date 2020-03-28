@@ -1,0 +1,114 @@
+/* components/header/index.wxss */
+
+/* 头部样式 */
+.header-container{
+  background-color: #fff;
+  display: flex;
+  justify-content: row;
+  align-items: center;
+  /* align-items: center;
+  justify-content: space-between; */
+  /* height: 110rpx; */
+  padding: 0 25rpx;
+  font-family: PingFangSC-Medium;
+  height: 100rpx;
+  position: relative;
+}
+.header-bg image{
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 70rpx;
+  z-index: 1;
+  width: 100%;
+}
+.header-content{
+  /* position: absolute; */
+  top: 40rpx;
+  left: 30rpx;
+  width: 700rpx;
+  height: 92rpx;
+  /* flex: 1; */
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+}
+.header-content-left{
+  flex: 1;
+  width: 1;
+  display: flex;
+  align-items: center;
+  margin-right: 30rpx;
+  overflow: hidden;
+}
+
+.location-content{
+  display: flex;
+  align-items: center;
+  font-size: 0rpx;
+  /* flex: 1; */
+  overflow: hidden;
+}
+.location-content image{
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  margin-right: 12rpx;
+}
+.location-content view{
+  font-size: 28rpx;
+  color: #000000;
+  flex: 1;
+  width: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.icon-arrow-bottom{
+  margin-left: 8rpx;
+  width: 16rpx;
+  height: 8rpx;
+}
+.chat-btn{
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  color: #333333;
+}
+.chat-btn image{
+  width: 44rpx;
+  height: 44rpx;
+  margin-right: 4rpx
+}
+.btn-search{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width:100%;
+  height: 65rpx;
+  background: #F5F5F5;
+  border-radius: 30rpx;
+}
+.btn-search image{
+  width: 31rpx;
+  height: 31rpx;
+  margin-right: 4rpx;
+}
+.btn-search-text{
+  font-family: PingFangSC-Regular;
+  font-size: 26rpx;
+  color: #999999;
+}
+
+.head-title{
+  width: 30%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 28rpx;
+}

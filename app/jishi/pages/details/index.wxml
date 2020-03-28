@@ -1,0 +1,279 @@
+<!--page/productDetail/productDetail.wxml-->
+<scroll-view scroll-y="{{!state.shopCartBoxStatus}}" class='product-detail-scroll'>
+  <view class='product-detail-page'>
+    <view class='big-pic-container'>
+      <swiperItems imgsList="{{data.productDetail.img_banner}}" domain="{{data.qiniuDomain}}" widthSize="750" userDots="proDetail" heightSize="{{750}}" ></swiperItems>
+      <view class='black-tips-shadow' wx:if="{{data.productDetail.status ==2}}">
+        <view class=''>结束</view>
+        <view class=''>Close</view>
+      </view>
+      <view class='black-tips-shadow' wx:if="{{data.productDetail.inventory-data.productDetail.sales == 0}}">
+        <view class=''>售罄</view>
+        <view class=''>Sell out</view>
+      </view>
+
+      <view class='pro-tips-box {{data.productDetail.images.length >1 ?"bottom":""}}'>
+        <view class='pro-sell-count' >已售{{data.productDetail.sales}}件</view>
+     
+        <view catchtap='onChangeShareBoxHandler' class='btn-pro-share'>
+          <image src='/imgs/icon-share-active.png'></image>
+        </view>
+      </view>
+    </view>
+
+    <view class='pro-nav-container'>
+      <view class='pro-nav-left {{state.activityEnd ? "shadow":""}}'>
+        <view class='pro-nav-price'>
+          <view class='pro-nav-price-new'>¥<text>{{data.productDetail.price}}</text></view>
+       
+          <view class='pro-nav-label num' wx:if="{{data.type == 1}}">团购价</view>
+          <view class='pro-nav-label num' wx:if="{{data.type == 2}}">预售价</view>
+          <view class='pro-nav-label flash' wx:if="{{data.type == 3}}">限时秒杀</view>
+        </view>
+        <view class='pro-nav-price-old'>¥<text>{{data.productDetail.line_price}}</text></view>
+        
+      </view>
+    
+      <view class='pro-nav-right ' >
+        <image src='/imgs/icon-trangle-left-black.png'  class='pro-nav-right-inner'>
+        </image>
+        <view class='pro-status-end' wx:if="{{data.productDetail.inventory-data.productDetail.sales>0}}" >
+          <view class='pro-status-end-text-eng'>ongoing</view>
+          <view class='pro-status-end-text-ch'>正在销售中</view>
+        </view>
+
+         <view class='pro-status-end' wx:else >
+          <view class='pro-status-end-text-eng'>end</view>
+          <view class='pro-status-end-text-ch'>售罄</view>
+        </view>
+      </view>
+    </view>
+    
+
+
+    <view class='card-content'>
+      <view class='pro-desc-container'>
+        <view class='pro-desc-title-box'>
+          <view class='pro-desc-title two-ellipsis'>{{data.productDetail.name}}</view>
+          <view class='pro-desc-share-box' catchtap='onChangeShareBoxHandler'>
+            <image src='/imgs/icon-share-new.png'></image>
+            <view class='pro-desc-share-text'>分享</view>
+          </view>
+        </view>
+     
+      
+        <view class='pro-desc-item-box' >
+          <view class='pro-desc-item-text'>销量</view>
+          <view class='pro-desc-item-value'>已售{{data.productDetail.sales}}件，仅剩<text>{{data.productDetail.inventory-data.productDetail.sales}}</text>件</view>
+        </view>
+        
+      </view>
+    </view>
+
+
+    <!-- 评价 -->
+
+    <view class="evaluate"  wx:if="{{eva.length>0}}">
+      <view class="evaluate-title">
+        <view class="evaluate-title-name">商品评论</view>
+        <view class="evaluate-title-right">
+          <view>查看更多</view>
+          <view class="icon"><van-icon name="arrow" /></view>
+        </view>
+      </view>
+      <!-- 评论列表 -->
+      <view class="eva-warp" wx:for="{{eva}}">
+        <view class="eva-content">
+              <view class="eva-content-imgs"><image src="{{item.user.avatarUrl}}"></image></view>
+              <view class="eva-content-right">
+                <view>{{item.user.nickName}}</view>
+                <view class="desc">{{item.desc}}</view>
+                <view class="right-imgs">
+
+
+                  <view class="imgs" wx:for="{{item.img_list}}" wx:for-item="val"><image src="{{val}}"></image></view>
+                
+                </view>
+              </view>
+        </view>
+      </view>
+
+  <!-- 评论列表结束 -->
+    </view>
+
+    
+
+    
+    <!-- 当开团产品有推荐拼团时，显示 -->
+
+    <view class='pro-pic-container'>
+      <view class='pro-pic-title-box'>
+        <view class='pro-pic-title'>商品详情</view>
+        <view class='pro-pic-title-border'></view>
+      </view>
+      
+      <view class='pro-pic-desc-content'>
+
+        <view class='pro-pic-desc-top' >
+          <view class='pro-pic-desc-top-intro'>商品特色</view>
+          <view class='pro-pic-desc-maohao'>
+            <image src='/imgs/icon-pro-maohao.png'></image>
+          </view>
+          <view class='pro-pic-desc-text'>{{data.productDetail.sellpoint}}</view>
+        </view>
+        
+      
+        
+      </view>
+
+
+      <view class='pro-pic-lists'>
+
+
+ <view class='pro-pic-lists' wx:if="{{data.productDetail.videosrc}}">
+        <video  src="{{data.productDetail.videosrc}}"></video>
+      </view>
+      <view class='pro-pic-lists'>
+        <image src='{{item}}' wx:for="{{data.productDetail.img_list}}" wx:key="{{index}}" mode='widthFix' lazy-load='{{true}}'></image>
+      </view>
+ 
+      </view>
+    </view>
+
+    <!-- 商品状态提示  即将开始 活动已结束 商品已抢完 -->
+    <view  wx:if="{{data.productDetail.status ==2}}" class='pro-status-text-content {{state.isIphoneX?"isIphoneX":""}} {{state.featureActivity?"feature":""}}'>
+  
+      <text >商品已下架</text>
+    </view>
+
+      <view  wx:if="{{data.productDetail.inventory-data.productDetail.sales == 0}}" class='pro-status-text-content {{state.isIphoneX?"isIphoneX":""}} {{state.featureActivity?"feature":""}}'>
+  
+      <text >商品已售罄</text>
+    </view>
+    
+    <!-- 返回团长端按钮 -->
+    <naviBackBtn  isIphoneX="{{state.isIphoneX}}"></naviBackBtn>
+
+    <!-- 底部按钮footer container-->
+    <view class='pro-footer-container {{state.isIphoneX?"isIphoneX-nav-footer":""}}'>
+    
+      <block >
+        <view class='btn-home' catchtap='onGoToHomePageHandler'>
+          <image class='btn-home-icon' src='/imgs/icon-home-default.png'></image>
+          <view class='btn-home-text'>首页</view>
+        </view>
+        <view class='btn-home' catchtap='onGoToCartPageHandler'>
+          <view class='cart-icon-box'>
+            <image class='btn-home-icon' src='/imgs/icon-cart-default.png'></image>
+            <view class='cart-tips-circle' wx:if="{{totalCount>0}}">
+              {{totalCount}}
+            </view>
+          </view>
+          <view class='btn-home-text'>购物车</view>
+        </view>
+        
+        <!-- 团购商品，库存大于0，活动未结束，活动已开始 -->
+        <block >
+          <view class='btn-add-cart' catchtap='onOpenShopCartBoxStatusHandler'>加入购物车</view>
+          <view class='btn-buy-now' catchtap='onNowBuyHandler' >
+            立即购买
+          </view>
+        </block>
+
+      </block>
+      
+    </view>
+<!-- 弹出框 -->
+    <view class='pro-shop-car-container' wx:if="{{shopCartBoxStatus}}">
+      <view class='pro-shop-car-content'>
+        <image class='pro-shop-car-close' src='/imgs/icon-close-new.png' catchtap='onOpenShopCartBoxStatusHandler'></image>
+        <view class='pro-shop-info'>
+          <image src='{{data.productDetail.images_url}}' alt="暂无缩略图"></image>
+          <view class='pro-shop-desc'>
+            <view class='pro-shop-desc-price'><text>¥</text><text class='pro-shop-desc-price-big'>{{data.productDetail.price}}</text></view>
+            <!-- <view class='pro-shop-sku-name'>{{data.productDetail.sku_name}}</view> -->
+            <view class='pro-shop-sku-name'>库存：{{data.productDetail.inventory}}件</view>
+            <!-- <view class='pro-sell-count margin' wx:if="{{data.productDetail.sell_count > 0 }}">已售{{data.productDetail.sell_count}}件</view> -->
+          </view>
+        </view>
+
+        <view class='pro-shop-new-shu-content'>
+          <view class='pro-shop-new-shu-title'>商品规格</view>
+          <view class='pro-shop-new-shu-items'>
+            <view class='pro-shop-new-shu-item active'>{{data.productDetail.sku_name}}</view>
+          </view>
+        </view>
+
+        <view class='pro-shop-buy-num'>
+          <view class='pro-shop-buy-num-text'>购买数量
+            <!-- <text>{{"库存"+data.productDetail.stock}}</text> -->
+          </view>
+          <view class='pro-shop-buy-tips'>
+            <view class='limit-buy-text' wx:if="{{data.productDetail.limit_buy==state.totalBuyNum}}">每人限购{{data.productDetail.limit_buy}}件</view>
+            <view class='pro-shop-buy-actions'>
+              <view class='action-desc-box' data-index="{{index}}" catchtap='onNumDescHandler'>
+                <view class='action-desc'>-</view>
+              </view>
+              <view class='action-num'>{{state.totalBuyNum}}</view>
+              <view class='action-add-box' data-index="{{index}}" catchtap='{{data.productDetail.limit_buy==state.totalBuyNum?"":"onNumAddHandler"}}'>
+                <view class='action-add {{data.productDetail.limit_buy==state.totalBuyNum?"disabled":""}}'>+</view>
+              </view>
+              
+            </view>
+          </view>
+          
+        </view>
+
+
+        <!-- <view class='pro-shop-total-price'>
+          <view class='pro-shop-buy-num-text'>商品金额
+            <text>{{state.totalPrice}}</text>
+          </view>
+        </view> -->
+
+        <view class='pro-shop-buy-btn {{state.isIphoneX?"isIphoneX":""}}' catchtap='addCart'>
+          确定
+        </view>
+
+      </view>
+    </view>
+
+    <!-- 分享选择框 -->
+    <view class='share-type-container' wx:if="{{shareBoxStatus}}">
+      <image class='icon-share-close' src='/imgs/icon-close-default.png' catchtap='onChangeShareBoxHandler'></image>
+      <view class='share-type-content'>
+        <button class='share-type-item' open-type='share'>
+          <image src='/imgs/icon-wechat-active.png'></image>
+          <view class='share-type-item-text'>分享给微信好友</view>
+        </button>
+        <button class='share-type-item' id="QRCODE" catchtap='onOpenSavePicStatus'>
+          <image src='/imgs/icon-moment-active.png'></image>
+          <view class='share-type-item-text'>生成海报</view>
+        </button>
+      </view>
+    </view>
+
+    <!-- 海报展示框 -->
+    <view class='invite-poster-container' hidden="{{!state.savePicBoxStatus}}" catchtap='onCloseSavePicStatus'>
+      <view class='invite-poster-content'>
+        <view class='invite-poster-close'>
+          <image  src='/imgs/icon-close-default.png'></image>
+        </view>
+        <canvas canvas-id="mycanvas" class='invite-poster' catchtap='onPreventHandler'>
+        
+          <!-- <image src=''></image> -->
+        </canvas>
+        
+        <button open-type='openSetting' bindopensetting="openSettingHandler" class='invite-save-poster' wx:if="{{state.needOpenSettingBtn}}">
+          保存到手机
+        </button>
+        <view class='invite-save-poster' wx:else catchtap='saveWeChatPicHandler'>
+          保存到手机
+        </view>
+      </view>
+    </view>
+  </view>
+
+</scroll-view>
+
+<image></image>

@@ -1,0 +1,220 @@
+<template>
+  <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
+    <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 100%; height: 50vh;overflow-y: scroll;">
+      <el-form-item label="上级" prop="pid">
+        <el-cascader v-model="pid" :options="getRulesList" :props="props_pid" placeholder="请选择" change-on-select @change="handleChange"/>
+      </el-form-item>
+      <el-form-item label="名称" prop="title">
+        <el-input v-model="temp.title" clearable/>
+      </el-form-item>
+      <el-form-item label="标识" prop="name">
+        <el-input v-model="temp.name" clearable/>
+      </el-form-item>
+
+      <el-form-item label="排序" prop="sorts">
+        <!--数值越大越在后面，从小到大排序-->
+        <el-input v-model="temp.sorts"  clearable/>
+      </el-form-item>
+
+      <el-form-item label="图标" prop="icon">
+        <el-input v-model="temp.icon" clearable/>
+      </el-form-item>
+      <el-form-item label="路径" prop="path">
+        <el-input v-model="temp.path" clearable/>
+      </el-form-item>
+      <el-form-item label="组件" prop="component">
+        <el-input v-model="temp.component" clearable/>
+      </el-form-item>
+      <el-form-item label="跳转" prop="redirect">
+        <el-input v-model="temp.redirect" clearable/>
+      </el-form-item>
+      <el-form-item label="状态">
+        <el-radio-group v-model="temp.status">
+          <el-radio :label="1">正常</el-radio>
+          <el-radio :label="0">禁用</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="隐藏">
+        <el-radio-group v-model="temp.hidden">
+          <el-radio :label="1">是</el-radio>
+          <el-radio :label="0">否</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="缓存">
+        <el-radio-group v-model="temp.noCache">
+          <el-radio :label="0">是</el-radio>
+          <el-radio :label="1">否</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="展示">
+        <el-radio-group v-model="temp.alwaysShow">
+          <el-radio :label="1">是</el-radio>
+          <el-radio :label="0">否</el-radio>
+        </el-radio-group>
+      </el-form-item>
+    </el-form>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="dialogFormVisible = false">取消</el-button>
+      <el-button :loading="btnLoading" type="primary" @click="saveData()">保存</el-button>
+    </div>
+  </el-dialog>
+</template>
+
+<script>
+import { getinfo, save } from '@/api/rules'
+import tree from '@/utils/tree'
+export default {
+  name: 'RulesForm',
+  components: {},
+  props: {
+    ruleList: {
+      type: Array,
+      default: []
+    }
+  },
+  data() {
+    return {
+      btnLoading: false,
+      ruleTop: [{ 'id': 0, 'title': '顶级' }],
+      pid: [],
+      props_pid: { 'label': 'title', 'value': 'id' },
+      temp: {
+        id: 0,
+        pid: 0,
+        title: '',
+        name: '',
+        status: 1,
+        icon: '',
+        path: '',
+        sorts:99,
+        component: 'layout',
+        hidden: 0,
+        noCache: 1,
+        alwaysShow: 1,
+        redirect: 'noredirect'
+      },
+      dialogFormVisible: false,
+      dialogStatus: '',
+      textMap: {
+        update: '编辑',
+        create: '添加'
+      },
+      rules: {
+        title: [{ required: true, message: '名称必填', trigger: 'blur' }],
+        name: [{ required: true, message: '标识必填', trigger: 'blur' }],
+        sorts: [{ required: true, message: '排序必填', trigger: 'blur' }],
+        icon: [{ required: true, message: '图标必填', trigger: 'blur' }],
+        path: [{ required: true, message: '路径必填', trigger: 'blur' }],
+        component: [{ required: true, message: '组件必填', trigger: 'blur' }]
+      }
+    }
+  },
+  computed: {
+    getRulesList() {
+      return this.ruleTop.concat(tree.listToTreeMulti(this.ruleList))
+    }
+  },
+  watch: {
+    dialogFormVisible: function() {
+      this.resetTemp()
+    },
+    temp: {
+      handler(newVal, oldVal) {},
+      immediate: true,
+      deep: true
+    }
+  },
+  created() {
+
+  },
+  destroyed() {
+
+  },
+  methods: {
+    resetTemp() {
+      this.temp = {
+        id: 0,
+        pid: 0,
+        title: '',
+        name: '',
+        status: 1,
+        icon: '',
+        path: '',
+        component: 'layout/Layout',
+        hidden: 0,
+        noCache: 1,
+        sorts:99,
+        alwaysShow: 1,
+        redirect: 'noredirect'
+      }
+    },
+    handleCreate() {
+      this.dialogStatus = 'create'
+      this.dialogFormVisible = true
+      this.currentIndex = -1
+      this.pid = []
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
+      })
+    },
+    handleUpdate(id) {
+      this.dialogStatus = 'update'
+      this.dialogFormVisible = true
+      const _this = this
+      getinfo(id).then(response => {
+        if (response.status === 1) {
+          _this.temp.id = response.data.id
+          _this.temp.pid = response.data.pid
+          _this.temp.title = response.data.title
+          _this.temp.name = response.data.name
+          _this.temp.status = response.data.status
+          _this.temp.icon = response.data.icon
+          _this.temp.path = response.data.path
+          _this.temp.component = response.data.component
+          _this.temp.hidden = response.data.hidden
+          _this.temp.noCache = response.data.noCache
+          _this.temp.alwaysShow = response.data.alwaysShow
+          _this.temp.redirect = response.data.redirect
+          _this.temp.sorts = response.data.sorts
+
+          _this.pid = tree.getParentsId(this.ruleList, id)
+        }
+      })
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
+      })
+    },
+    saveData() {
+      this.btnLoading = true
+      this.$refs['dataForm'].validate((valid) => {
+        if (valid) {
+          const _this = this
+          const d = this.temp
+          save(d).then(response => {
+            if (response.status === 1) {
+              if (!d.id) {
+                d.id2 = response.data.id
+              }
+              this.$emit('updateRow', d)
+              _this.dialogFormVisible = false
+              _this.$message.success(response.msg)
+            } else {
+              _this.$message.error(response.msg)
+            }
+            _this.btnLoading = false
+          }).catch((error) => {
+            this.btnLoading = false
+          })
+        } else {
+          this.btnLoading = false
+        }
+      })
+    },
+    handleChange(value) {
+      if (value.length) {
+        this.temp.pid = value[value.length - 1]
+      }
+    }
+  }
+}
+</script>

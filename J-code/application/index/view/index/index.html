@@ -1,0 +1,60 @@
+{include file='public/header' /}
+
+
+<header id="header" class="header">
+    <div class="inner">
+		<span class="header-title">
+			<h1 class="header-name">前端 <em>52</em></h1>
+				<span class="header-description">我们只看脸</span>
+		</span>
+    </div>
+</header>
+<div id="post-index" class="container">
+
+    <main class="content" role="main">
+
+        <div class="post-list">
+
+            <div id="push">
+
+                {volist name="article" id="article"}
+                <article class="post tag-front-end">
+                    <i style="width: 100%;
+    z-index: -1;
+    height: 100%;
+    position: absolute;
+    background: url('') no-repeat center center;
+    background-size: cover;
+"></i>
+                    <div class="inner">
+		<span class="post-meta">
+			<span class="post-date">{$article.create_time}</span>
+		</span>
+                        <h2 class="post-title"><a href="http://www.jvrentech.cn/index/index/info/?id={$article.id}">{$article.title}</a>
+                        </h2>
+                        <p class="post-excerpt">{$article.desc}</p>
+                        <span class="post-more"><a href="http://www.jvrentech.cn/index/index/info/?id={$article.id}">Read More <i
+                                class="icon-arrow-right"></i></a></span>
+                    </div>
+                </article>
+                {/volist}
+
+
+            </div>
+
+        </div>
+
+        <nav id="pagination" class="pagination" role="pagination">
+            <div class="inner">
+                <span class="pagination-info">Page 1 of 11</span>
+                <a class="pagination-item pagination-prev" href="/tag/front-end/page/2/"><span>Older Posts</span> <i
+                        class="icon-arrow-right"></i></a>
+                <div class="clear"></div>
+            </div>
+        </nav>
+
+    </main>
+
+</div>
+
+{include file='public/footer' /}

@@ -1,0 +1,49 @@
+<!--pages/product/index.wxml-->
+<view class="product-container">
+<van-toast id="van-toast" />
+
+
+<view>
+
+<van-action-sheet
+  show="{{ show }}"
+  actions="{{ actions }}"
+  bind:close="community"
+  bind:select="onSelect"
+/>
+
+
+  <view class="pro-img-list">
+    <view class="list-title">店铺背景图</view>
+    <van-uploader    max-count="1"
+  data-suffix=".jpg" data-type='1' file-list="{{ pList }}" bind:delete="delPic" bind:after-read="afterRead" />
+  </view>
+</view>
+
+
+  <view class="pro-detail-wrap">
+    <van-cell-group>
+      <van-field value="{{ data.name }}"  title-width="70px" clearable label="店铺名称"placeholder="店铺名称" bind:blur="setName" />
+
+      <van-field value="{{data.tel }}" title-width="70px" type="number" label="联系电话"   bind:change="checkTel" bind:blur="setTel"	/>
+
+      <van-field value="{{ data.desc }}" title-width="70px" clearable label="店铺简介" placeholder="选填，输入对店铺的简介" bind:blur="setDesc"/>
+
+
+ <van-field value="{{ data.address }}" title-width="70px" clearable label="店铺地址" placeholder="选填，输入店铺地址" bind:blur="setaddress"/>
+
+    </van-cell-group>
+
+  
+    <view class="cm">
+      <view class="post-btn" catchtap="community">选择小区</view>
+      <view> {{community_name}}</view>
+    </view>
+
+  </view>
+
+  <view class="post-bottom">
+    <view class="post-btn" catchtap="checkRequired">发布</view>
+  </view>
+
+</view>

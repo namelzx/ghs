@@ -1,0 +1,85 @@
+<!-- 商品管理 -->
+<van-toast id="van-toast" />
+
+<view class="man_top">
+  <view class="man_tabs">
+    <view class="tabs_title {{tabs_id==1?'tabs_title_active':''}}" data-id="1" catchtap="onTabs">
+
+    在售中
+    ({{one}})
+    
+					<view class="active_hr"></view>
+    </view>
+    <view class="tabs_title {{tabs_id==2?'tabs_title_active':''}}" data-id="2" catchtap="onTabs">
+    仓库中({{tow}})
+    	<view class="active_hr"></view>
+    </view>
+  </view>
+</view>
+<view class="management">
+  
+
+
+  <!-- 商品 -->
+  <view class="man_list">
+    <shopgoods list="{{list}}" base_show="{{base_show}}" bind:inselect="inselect" bind:handelhaibai="createNewImg" bind:inlist="inlist" />
+  </view>
+
+
+
+  <!-- 底部栏 -->
+  <view class="man_base" wx:if="{{!base_show}}">
+    <view class="base_warp base_a" bindtap="handelBack">
+      <image src="/static/imgs/return-icon.png"></image>
+      <text>返回店铺</text>
+    </view>
+    <view class="base_warp base_b" bindtap="onOption">
+      <image src="/static/imgs/meang_icon.png"></image>
+      <text>批量管理</text>
+    </view>
+    <view class="base_warp base_c" catchtap="toAdd">
+      <image src="/static/imgs/add-icon.png"></image>
+      <text>添加商品</text>
+    </view>
+  </view>
+
+
+
+
+  <!-- 底部全选按钮，移至顶部等 -->
+  <view class="man_btn" wx:else>
+    <view class="btn_option">
+      <view class="btn_option-a">
+        <view bindtap="selectAll">
+          <checkbox color="#f10216" style="transform:scale(0.75)" value="cb" checked="{{selectAllStatus}}" />
+          <text>全选</text>
+
+        </view>
+      </view>
+      <view class="btn_option-b">
+        <image src="/static/imgs/move-icon.png"></image>
+        <text>移至顶部</text>
+      </view>
+      <view class="btn_option-b" bindtap="onEntrepot">
+        <image src="/static/imgs/warehouse-icon.png"></image>
+        <text wx:if="{{tabs_id===1}}">放入仓库</text>
+        <text wx:else>上架店铺</text>
+      </view>
+      <view class="btn_option-c" catchtap="deleteList">
+        <image src="/static/imgs/delete-icon.png"></image>
+        <text>删除</text>
+      </view>
+    </view>
+    <view class="btn_accomplish" bindtap="onAccomplish">完成</view>
+  </view>
+</view>
+
+
+<view class='imagePathBox' bindtap="handelbox" hidden="{{hbHidden == false}}">
+  <image src="{{imagePath}}" class='shengcheng'></image>
+  <button class='baocun' bindtap='baocun'>保存相册，分享到朋友圈</button>
+</view>
+<view hidden="{{hbHidden == false}}" class="mask"></view>
+<view class="canvas-box">
+  <canvas style="width: 375px;height: 600px;position:fixed;top:9999px" canvas-id="mycanvas" />
+</view>

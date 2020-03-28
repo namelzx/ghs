@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "recom": "/components/recom/index",
+        "header": "/components/header/index",
+        "rushBuyingItem": "/components/BuyingItem/BuyingItem"
+  }
+}

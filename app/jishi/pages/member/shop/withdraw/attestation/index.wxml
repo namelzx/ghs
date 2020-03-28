@@ -1,0 +1,90 @@
+
+
+<view class="attestation">
+		<view class="at_name">
+			<view class="at_name_left">真实姓名</view>
+			<input bindinput="inputUser" data-filed="realName" value="{{temp.realName}}" placeholder="请填写提现人真实姓名,否者影响提现" />
+		</view>
+		
+		<view class="at_name">
+			<view class="at_name_left">证件号</view>
+			<input type="idcard" bindinput="inputcard" value="{{temp.card_number}}" placeholder="请填写有效证件号码" />
+		</view>
+		<view class="at_name">
+			<view class="at_name_left">手机号</view>
+			<input type="number" bindinput="inputphone" value="{{temp.phone}}" placeholder="联系手机号" />
+		</view>
+		
+		<view class="at_photo">
+			<view class="title">
+				<text>有效证件照片</text>
+				<text class="title_hint">请上传清晰有效证件正反面照片</text>
+			</view>
+			<view class="photo_up">
+				<view>
+					<van-uploader
+					 file-list="{{fileList}}"
+					 max-count="1"
+           data-type='1'
+					 bind:after-read="afterRead"
+					 bind:delete="afterDelete"
+					>
+						<view class="up_slot">
+							<image src="/../../../../imgs/id_1.png"></image>
+							<text>上传证件照正面</text>
+						</view>
+					</van-uploader>
+				</view>
+				<view>
+					<van-uploader
+					 max-count="1"
+             data-type='2'
+					 file-list="{{fileList2}}"
+					 bind:after-read="afterRead"
+					 bind:delete="afterDelete"
+					>
+						<view class="up_slot">
+							<image src="/../../../imgs/id_2.png"></image>
+							<text>上传证件照反面</text>
+						</view>
+					</van-uploader>
+				</view>
+			</view>
+			
+		</view>
+		
+
+		<view class="at_btn" bindtap="onSubmit">认证</view>
+		
+		
+		<!-- 证件类型弹出 -->
+		<van-popup
+		  show="{{show}}"
+		  position="bottom"
+		  bind:close="onClose"
+		>
+			<van-picker
+			  show-toolbar
+			  columns="{{columns}}"
+			  bind:cancel="onCancel"
+			  bind:confirm="onConfirm"
+			/>
+		</van-popup>
+		
+		<!-- 证件类型弹出 -->
+		<van-popup
+		  show="{{showDate}}"
+		  position="bottom"
+		  bind:close="onClosedate"
+		>
+			<van-datetime-picker
+			  type="date"
+			  value="{{currentDate}}"
+			   min-date="{{minDate}}"
+			   max-date="{{maxDate}}"
+			  formatter="{{formatter}}"
+			  bindcancel="onCanceldate"
+			  bindconfirm="onConfirmdate"
+			/>
+		</van-popup>
+	</view>

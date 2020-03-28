@@ -1,0 +1,91 @@
+/* pages/product/index.wxss */
+
+page {
+  background: #f7f7f7;
+}
+
+.product-container {
+  background: #fff;
+}
+
+.list-title {
+  margin-bottom: 24rpx;
+  font-size: 32rpx;
+  color: #3c3c3c;
+}
+.image-video{
+  width: 150rpx;
+  height: 150rpx;
+  border: 1px dashed #fdaa5a;
+  box-sizing: border-box;
+border-radius: 4px;
+position: relative;
+}
+.image-video van-icon{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+.image-video video{
+  width: 150rpx;
+  height: 150rpx;
+}
+
+.pro-img-list {
+  padding: 20rpx 30rpx;
+}
+
+.pro-video-list {
+  padding: 20rpx 30rpx;
+}
+
+.product-container .van-uploader__upload {
+  border-color: #fdaa5a;
+  background: #fefdfb;
+}
+
+.product-container .van-uploader__upload .van-icon-plus {
+  color: #fdaa5a;
+}
+
+.product-container .van-cell__title {
+  font-size: 32rpx;
+}
+
+
+
+
+.post-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  padding: 28rpx 0;
+  z-index: 9;
+  box-shadow: 0 0 10rpx 0 #d5d5d5;
+}
+
+.post-btn {
+  width: 30%;
+  margin-left: 35%;
+  background: #fdaa5a;
+  text-align: center;
+  padding: 8px 0;
+  border-radius: 10rpx;
+  color: #fff;
+  font-size: 28rpx;
+}
+
+.van-uploader__preview-image{
+  width: 75px !important;
+height: 75px !important;
+
+}
+.van-uploader__upload{
+  width: 75px !important;
+   height: 75px !important;
+}

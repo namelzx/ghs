@@ -1,0 +1,20 @@
+<view class='header-container'>
+    <view class="head-title" bindtap="toCity">
+
+   {{city}}
+        <image src='/imgs/icon-arrow-bottom-black.png' class='icon-arrow-bottom'></image>
+    </view>
+    <view class='header-content'>
+     
+      <!-- <view class='chat-container'>
+        <button open-type='contact' class='chat-btn'>
+          <image src='/imgs/icon-customer-active.png'></image>
+          联系客服
+        </button>
+      </view> -->
+      <view class='btn-search' catchtap='onGoToSearchPageHandler'>
+        <image src='/imgs/icon-search-black.png'></image>
+        <view class='btn-search-text'>搜索</view>
+      </view>
+    </view>
+  </view>

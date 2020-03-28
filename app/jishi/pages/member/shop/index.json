@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+        "recom": "../../components/shoprecom/index"
+  }
+}

@@ -1,0 +1,64 @@
+<!--page/tabBar/userCenter/userCenter.wxml-->
+<view class='P-user-center {{state.needAuthorize?"P-user-center-bg":""}}'>
+
+ <view class="user-center-bg" >
+      <image class='center-bg' src='/imgs/center-bg.png'></image>
+ </view>
+   <view class='user-info-container' >
+    <view class='user-info-content user-info-flex'>
+      <image src='{{data.userInfo.avatarUrl}}' class='user-avatar'></image>
+      <view class="user-info-content-right">
+      <view class='user-name'>{{data.userInfo.nickName}}</view>
+      <view class='user-phone' wx:if="{{data.userInfo.mobile}}" catchtap='onGoToDebugPageHandler'>{{data.userInfo.canSeedPhone}}</view>
+      </view>
+    </view>
+    
+
+    <view class='user-order-content'>
+      <view class='user-order-header' catchtap='onGoToOrders' data-type="">
+        <view class='user-order-title'>我的订单</view>
+        <view class='user-order-tips'>
+          <text>全部订单</text>
+          <image class='icon-arrow-right' src='/imgs/icon-arrow-default.png'></image>
+        </view>
+      </view>
+      <view class='user-order-status-items'>
+        <view class='user-order-status-item' catchtap='onGoToOrders' data-type="waitpay">
+          <view class='user-order-status-img-box'>
+            <view class='order-status-num-circle' wx:if="{{data.orderNumObj.unpaid>0}}">{{data.orderNumObj.unpaid}}</view>
+            <image class='payments' src='/imgs/payments.png'></image>
+          </view>
+          <view class='user-order-status-text'>待付款</view>
+        </view>
+        <view class='user-order-status-item' catchtap='onGoToOrders' data-type='shipping'>
+          <view class='user-order-status-img-box delivery-box'>
+            <view class='order-status-num-circle' wx:if="{{data.orderNumObj.waiting_for_ship>0}}">{{data.orderNumObj.waiting_for_ship}}</view>
+            <image class='delivery' src='/imgs/delivery.png'></image>
+          </view>
+          <view class='user-order-status-text'>待发货</view>
+        </view>
+        <view class='user-order-status-item' catchtap='onGoToOrders' data-type='shipped'>
+          <view class='user-order-status-img-box'>
+            <view class='order-status-num-circle' wx:if="{{data.orderNumObj.shipping>0}}">{{data.orderNumObj.shipping}}</view>
+            <image class='distribution' src='/imgs/distribution.png'></image>
+          </view>
+          <view class='user-order-status-text'>配送中</view>
+        </view>
+        <view class='user-order-status-item' catchtap='onGoToOrders' data-type="success">
+          <view class='user-order-status-img-box'>
+            <view class='order-status-num-circle' wx:if="{{data.orderNumObj.reached>0}}">{{data.orderNumObj.reached}}</view>
+            <image class='introduction' src='/imgs/introduction.png'></image>
+          </view>
+          <view class='user-order-status-text'>待自提</view>
+        </view>
+      </view>
+    </view>
+
+
+    
+  </view>
+
+
+
+
+</view>

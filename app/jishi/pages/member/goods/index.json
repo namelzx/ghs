@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+
+    "shopgoods": "../../../components/shopgoods/index",
+      "van-toast": "../../../vant-weapp/dist/toast/index"
+  }
+}

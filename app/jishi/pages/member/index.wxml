@@ -1,0 +1,101 @@
+<!--pages/order/index.wxml-->
+
+<view class="boutique">
+		<view class="boutique_top">
+			<view class="boutique_top_warp">
+				<view class="bou_look">
+					<!-- <view>分享店铺</view> -->
+					<view class="bou_look_hr"></view>
+					<view bindtap="toShop">查看店铺</view>
+				</view>
+				<view class="bou_head">
+					<view class="bou_head_left">
+						<view class="head_imgs">
+							<view class="imgs">
+								<image src="{{info.avatarUrl}}"></image>
+							</view>
+							<!-- <view class="head_kuang">更换头像</view> -->
+						</view>
+						<view class="head_name">{{info.nickName}}的店铺</view>
+					</view>
+					<view class="bou_head_right">
+						<view class="bou_head_right_imgs" bindtap="onCompile">编辑</view>
+					</view>
+				</view>
+				<view></view>
+			</view>
+		</view>
+		
+		<!-- 预益 -->
+		<view class="boutique_rec">
+			<view class="rec_warp">
+				<view class="earnings">
+					<view class="earnings_he">
+						<view>今日预估收益</view>
+						<view class="earnings_he_money">¥<text>{{shopinfo.expect}}</text></view>
+					</view>
+					<view class="earnings_he">
+						<view>累计总收益</view>
+						<view class="earnings_he_money">¥<text>{{shopinfo.cumulative*100}}</text></view>
+					</view>
+				</view>
+				<view class="earnings">
+					<view class="earnings_he">
+						<view>今日新增/全部未完成</view>
+						<view class="earnings_he_num">{{shopinfo.day_no_order}}<text>/{{shopinfo.no_order}}</text></view>
+					</view>
+					<view class="earnings_he">
+						<view>今日新增/全部完成订单</view>
+						<view class="earnings_he_num">{{shopinfo.day_sucss_order}}<text>/{{shopinfo.sucss_order}}</text></view>
+					</view>
+				</view>
+			</view>
+		</view>
+	
+		<view class="boutique_management">
+			<view class="man_warp" bindtap="onManagement">
+				<image class="imgs" style="background:#fef0e9" src="/imgs/ico/1.png"></image>
+				<text>商品管理</text>
+			</view>
+			<view class="man_warp" bindtap="onCompile">
+				<image class="imgs" style="background:#eff5fe"  src="/imgs/ico/2.png"></image>
+				<text>店铺管理</text>
+			</view>
+			<view class="man_warp" bindtap="onOrder">
+				<image class="imgs" style="background:#eef9fd"   src="/imgs/ico/3.png"></image>
+				<text>订单管理</text>
+			</view>
+			<view class="man_warp" bindtap="onGroup">
+				<image class="imgs" style="background:#eff5fe"    src="/imgs/ico/4.png"></image>
+				<text>我的团队</text>
+			</view>
+			<!-- <view class="man_warp">
+				<image class="imgs" src="/static/imgs/shop-cicon.png"></image>
+				<text>收益数据</text>
+			</view> -->
+			<view class="man_warp" bindtap="onWith">
+				<image class="imgs" style="background:#fef0e9"  src="/imgs/ico/5.png"></image>
+				<text>收益提现</text>
+			</view>
+			<!-- <view class="man_warp">
+				<image class="imgs" src="/static/imgs/shop-cicon.png"></image>
+				<text>砸金蛋</text>
+			</view> -->
+		</view>
+		
+		
+		
+		<!-- 编辑名字弹出层 -->
+		<!-- <van-overlay :show="show">
+		  <view class="wrapper">
+		    <view class="wrapper_warp">
+				<view class="wrapper_warp_title">编辑</view>
+				<input type="text" v-model="name_edit" placeholder="请输入修改内容" />
+				<view class="wrapper_warp_button">
+					<view class="button_cancel" @click="onClickShow">取消</view>
+					<view class="button_confirm" @click="onSbtn">确定</view>
+				</view>
+			</view>
+		  </view>
+		</van-overlay> -->
+	</view>

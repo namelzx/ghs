@@ -1,0 +1,11 @@
+.DS_Store
+node_modules/
+dist/
+J-code/.idea
+J-code/.vscode
+/vendor
+*.log
+J-code/thinkphp/
+admin/node_modules/
+.env
+.DS_Store

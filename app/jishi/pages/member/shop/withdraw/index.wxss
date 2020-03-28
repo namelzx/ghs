@@ -1,0 +1,91 @@
+.with_money{
+	width: 680rpx;
+	height: 240rpx;
+	border-radius: 30rpx;
+	margin: 20rpx auto;
+	box-shadow: 0 0 25rpx 20rpx #f6f6f6;
+	display: flex;
+	justify-content: space-between;
+}
+	
+.with_money .money_left{
+	margin-left: 30rpx;
+}
+	
+.money_left_a{
+	margin-top: 50rpx;
+	color: #333333;
+	font-size: 35rpx;
+}
+.money_left_b{
+	margin-top: 50rpx;
+	color: #f10216;
+	font-size: 38rpx;
+	font-weight: 600;
+}
+.money_left_b text{
+	margin-left: 20rpx;	
+}
+.money_right{
+	margin-top: 100rpx;
+	border-radius: 50rpx;
+	border:1px solid #f10216;
+	color: #f10216;
+	font-size: 30rpx;
+	text-align: center;
+	width: 180rpx;
+	height: 60rpx;
+	line-height: 60rpx;
+	margin-right: 30rpx;
+}
+.ment_warp{
+	width: 680rpx;
+	margin: 0 auto;
+	height: 120rpx;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 35rpx;
+	color: #333333;
+	border-bottom: 2rpx solid #f8f8f8;
+}
+.ment_right{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.ment_right view{
+	margin-right: 10rpx;
+	color: #999999;
+	font-size: 28rpx;
+}
+.ment_warp image{
+	width: 30rpx;
+	height: 30rpx;
+}
+.with_hr{
+	height: 20rpx;
+	background: #F8F8F8;
+}
+.with_explain{
+	width: 680rpx;
+	margin: 30rpx auto;
+}
+.with_explain .ex_title{
+	font-size: 35rpx;
+	color: #666666;
+}
+	
+.with_explain .ex_desc{
+	margin-top: 20rpx;
+	display: flex;
+	color: #999999;
+	font-size: 28rpx;
+}
+.ex_desc_num{
+	margin-right: 10rpx;
+}
+.ex_desc text{
+	color: #f10216;
+	margin: 0 5rpx;
+}

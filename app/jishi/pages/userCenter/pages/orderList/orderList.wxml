@@ -1,0 +1,84 @@
+<!--page/user/pages/orderList/orderList.wxml-->
+  <van-dialog id="van-dialog" />
+
+<view class='P-oder-list'>
+  <!-- <scroll-view scroll-x="true" class='nav-bar' scroll-into-view="{{state.selectedLabel}}"> -->
+  <scroll-view scroll-x="true" class='nav-bar'>
+    <view class="item {{index == state.selectedFilterItemIndex ? 'active' : ''}}" data-item="{{item}}" catchtap="onNavBarItemPress" wx:key="item-{{index}}" wx:for="{{state.filters}}" data-index="{{index}}" id='{{item.type}}'>
+      <view class='word'>{{item.label}}</view>
+      <view class='nav-active-bottom' wx:if="{{index == state.selectedFilterItemIndex}}"></view>
+      <text class='num' wx:if="{{item.num > 0}}">{{item.num}}</text>
+    </view>
+  </scroll-view>
+
+  <scroll-view scroll-y scroll-top="{{state.scrollTop}}" class='order-items'  bindscrolltolower="onReachBottom">
+    <view class="order-items-wraper">
+     
+      <view class='order-item-container' wx:for="{{orders}}" wx:key="{{index}}" data-order-id="{{item.id}}" catchtap='onOrderItemPress'>
+        <view class='order-item-status-box'>
+         
+
+          <!-- <block  wx:if="{{item.type==0}}"> -->
+            <view class='order-item-time'>下单时间:
+              <text>{{item.create_time}}</text> 
+            </view>
+          <!-- </block> -->
+         
+          
+          <view class='order-item-status cancel-font' wx:if='{{item.status===-1}}'>已取消</view>
+          <view class='order-item-status' wx:elif='{{item.status===1}}'>待付款</view>
+          <view class='order-item-status' wx:elif='{{item.status===2}}'>已付款</view>
+       
+          <view class='order-item-status' wx:elif='{{item.status===3}}'>配送中</view>
+          <view class='order-item-status ' wx:elif='{{item.status===4}}'>已收货</view>
+          <view class='order-item-status ' wx:elif='{{item.status===5}}'>已评价</view>
+          <view class='order-item-status ' wx:elif='{{item.status===6}}'>已完成</view>
+              <view class='order-item-status check-detail-font' wx:elif="{{item.status==-1}}">已取消</view>
+              <view class='order-item-status check-detail-font' wx:elif="{{item.status==0}}">待付款</view>
+              <view class='order-item-status check-detail-font' wx:else>查看详情</view>
+      
+        </view>
+        <view class='order-item-pros'>
+          
+          <view class="order-item-product-left">
+            <view class="order-item-product" wx:for="{{item.goods}}" wx:for-item="itemObj" wx:key='goods' wx:for-index="idx" >
+                <image src='{{itemObj.images_url}}' ></image>
+            </view>
+          </view>
+          <view class="order-item-product-right">
+              <text> 共{{item.goods.length}}件</text>
+          </view>
+
+     
+        </view>
+        <view class="order-clum-bottom">
+        <view class='order-item-info-num-price'>
+          合计：
+          <text>¥{{item.totalPrice}}</text>
+        </view>
+        <view class='order-item-actions' catchtap='onPreventDefaultHandler'>
+          <view class='btn-active' data-order-id='{{item.id}}' catchtap='onSureReciveHandler' data-status='4' wx:if='{{item.status===3}}'>确认收货</view>
+
+          <form report-submit bindsubmit="formSubmit" wx:if='{{item.status===0}}'>
+            <button formType="submit" class='btn-active' data-order-id='{{item.no}}'>去付款</button>
+          </form>
+
+        </view>
+      </view>
+      </view>
+      <view class='load-more-container'>
+        <loadMore loadMoreStatus="{{data.totalPage > state.page}}"></loadMore>
+      </view>
+      
+    </view>
+  </scroll-view>
+  
+  <view class='empty-tips' wx:if="{{data.allData[state.selectedLabel].orders.length == 0 && !state.loading}}">
+    <image src='/imgs/no-order.png'></image>
+    <view class='tips'>您还没有相关订单~</view>
+  </view>
+
+  <alertingTips alertingStatus="{{state.alertingStatus}}" alertingWords="{{state.alertingWords}}"></alertingTips>
+
+  <comfirmTips actionObj="{{state.actionObj}}" bindonsure="{{state.actionObj.submitHandler}}" bindoncancel="{{state.actionObj.cancelHandler}}" wx:if="{{state.comfirmBoxStatus}}"></comfirmTips>
+</view>

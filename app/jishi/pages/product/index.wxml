@@ -1,0 +1,56 @@
+<!--pages/product/index.wxml-->
+<view class="product-container">
+<van-toast id="van-toast" />
+
+
+<view>
+
+
+  <view class="pro-img-list">
+    <view class="list-title">添加商品图</view>
+    <van-uploader  data-suffix=".jpg" data-type='1' file-list="{{ pList }}" bind:delete="delPic" bind:after-read="afterRead" />
+  </view>
+
+
+ 
+  <view class="pro-video-list">
+    <view class="list-title">添加商品视频</view>
+            <!-- <view class="image-plus-text" bindtap="chooseVideo">添加视频</view> -->
+    <view class="image-video"  bindtap="chooseVideo">
+      <van-icon name="plus"  wx:if="{{vList.length<1}}" color="#fdaa5a" size="24" />
+      <video src="{{vList[0].url}}" wx:else></video>
+    </view>
+  </view>
+  
+
+
+
+<view class="pro-video-list md">
+    <view class="list-title">  商品详情图片集</view>
+  <van-uploader   data-suffix=".jpg"  data-type='3' file-list="{{ iList }}" bind:delete="delVdo"  bind:after-read="afterRead" />
+  </view>
+</view>
+
+
+  <view class="pro-detail-wrap">
+    <van-cell-group>
+      <van-field value="{{ data.setlinePrice }}"  title-width="70px" clearable label="名称"placeholder="请输入商品名称" bind:blur="setName" />
+
+      <van-field value="{{data.price }}" title-width="70px" type="number" label="价格" placeholder="0.01 - 5000.00" bind:change="checkNumber" bind:blur="setPrice"	/>
+
+   <van-field value="{{data.line_price }}" title-width="70px" type="number" label="市场价格" placeholder="0.01 - 5000.00" bind:change="checkNumber" bind:blur="setlinePrice"	/>
+
+      
+
+      <van-field value="{{ data.sellpoint }}" title-width="70px" clearable label="商品特色" placeholder="选填，输入对商品的描述" bind:blur="setDesc"/>
+
+      <van-field value="{{ data.inventory }}" title-width="50px" clearable label="库存" placeholder="选填，默认为9999+" border="{{ false }}" bind:blur="setStock"/>
+    </van-cell-group>
+
+  </view>
+
+  <view class="post-bottom">
+    <view class="post-btn" catchtap="checkRequired">发布</view>
+  </view>
+
+</view>

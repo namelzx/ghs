@@ -1,0 +1,223 @@
+page {
+  background: #f4f2f7;
+}
+
+.boutique .boutique_top {
+  width: 100%;
+  background: #edf2f9;
+}
+
+.boutique_top .boutique_top_warp {
+  width: 700rpx;
+  margin: 0 auto;
+}
+
+.boutique_top_warp .bou_look {
+  height: 120rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  color: #f10216;
+  font-size: 28rpx;
+}
+
+.bou_look .bou_look_hr {
+  height: 30rpx;
+  width: 1px;
+  background: #c3c5c9;
+  margin: 0 30rpx;
+}
+
+.bou_head {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-bottom: 30rpx;
+}
+
+.bou_head .bou_head_left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.bou_head_left .head_imgs {
+  position: relative;
+}
+
+.head_imgs .imgs {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.head_imgs .imgs image {
+  width: 100%;
+  height: 100%;
+}
+
+.head_imgs .head_kuang {
+  position: absolute;
+  bottom: 0;
+  width: 120rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+  color: #fff;
+  font-size: 20rpx;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 20rpx;
+}
+
+.bou_head_left .head_name {
+  margin-left: 20rpx;
+  color: #333;
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+.bou_head_right {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.bou_head_right .bou_head_right_imgs {
+  border-radius: 15rpx;
+  width: 100rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  text-align: center;
+  background: #f10216;
+  color: #fff;
+  font-size: 25rpx;
+}
+
+.boutique_rec {
+  width: 700rpx;
+  height: 360rpx;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 20rpx;
+}
+
+.rec_warp {
+  margin: 20rpx;
+}
+
+.earnings {
+  height: 180rpx;
+  border-bottom: 2rpx solid #efefef;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.earnings_he {
+  flex: 1;
+  height: 120rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  color: #999;
+  font-size: 28rpx;
+}
+
+earnings_he:nth-child(1) {
+  border-right: 2rpx solid #efefef;
+}
+
+.earnings_he_money {
+  font-size: 38rpx;
+  color: #f10216;
+  font-weight: bold;
+}
+
+.earnings_he_num {
+  font-size: 38rpx;
+  color: #f10216;
+  font-weight: bold;
+}
+
+.earnings_he_num text {
+  color: #333333;
+}
+
+.boutique_management {
+  background: #fff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 30rpx 0;
+  padding: 30rpx 0;
+}
+
+.man_warp {
+  width: 25%;
+  height: 150rpx;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  color: #333;
+  font-size: 24rpx;
+  margin-bottom: 20rpx;
+}
+
+.man_warp .imgs {
+  margin: 15rpx auto;
+  width: 100rpx;
+  height: 100rpx;
+  background: yellow;
+  border-radius: 64%;
+}
+
+/* .wrapper{
+	display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  height: 100%;
+	.wrapper_warp{
+		width: 600rpx;
+		background: #FFFFFF;
+		border-radius: 20rpx;
+		.wrapper_warp_title{
+			height: 70rpx;
+			line-height: 70rpx;
+			text-align: center;
+			border-bottom: 2rpx solid #EEEEEE;
+			width: 560rpx;
+			margin: 0 auto;
+		}
+		input {
+			width: 560rpx;
+			height: 100rpx;
+			margin: 30rpx auto;
+		}
+		.wrapper_warp_button{
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			height: 100rpx;
+			line-height: 100rpx;
+			border-top: 2rpx solid #EEEEEE;
+			.button_cancel{
+				width: 50%;
+				text-align: center;
+				border-right: 2rpx solid #EEEEEE;
+				color: #999999;
+			}
+			.button_confirm{
+				width: 50%;
+				text-align: center;
+				color: #007AFF;
+			}
+		}
+	}
+} */
