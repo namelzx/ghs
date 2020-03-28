@@ -22,7 +22,7 @@
                     v-model="postForm.name"
                     :rows="1"
                     autosize
-                    placeholder="Please enter the content"
+                    placeholder="请输入商品名称"
                   />
                 </el-form-item>
               </el-col>
@@ -35,13 +35,39 @@
                     v-model="postForm.price"
                     :rows="1"
                     autosize
-                    placeholder="Please enter the content"
+                    placeholder="请输入销售价"
                   />
                 </el-form-item>
               </el-col>
             </el-row>
 
+            <el-row :gutter="20">
+              <el-col :span="8">
+                <el-form-item label-width="100px" label="团长佣金:">
+                  <el-input
+                    size="mini"
+                    v-model="postForm.head_price"
+                    :rows="1"
+                    autosize
+                    placeholder="请输入团长佣金(默认0)"
+                  />
+                </el-form-item>
+              </el-col>
+            </el-row>
 
+            <el-row :gutter="20">
+              <el-col :span="8">
+                <el-form-item label-width="100px" label="业务经理佣金:">
+                  <el-input
+                    size="mini"
+                    v-model="postForm.manager_price"
+                    :rows="1"
+                    autosize
+                    placeholder="输入业务经理佣金(默认0)"
+                  />
+                </el-form-item>
+              </el-col>
+            </el-row>
             <el-row :gutter="20">
               <el-col :span="8">
                 <el-form-item label-width="100px" label="销量:">
@@ -50,7 +76,7 @@
                     v-model="postForm.sales"
                     :rows="1"
                     autosize
-                    placeholder="Please enter the content"
+                    placeholder="输入销量(默认0)"
                   />
                 </el-form-item>
               </el-col>
@@ -66,7 +92,7 @@
                     v-model="postForm.cost_price"
                     :rows="1"
                     autosize
-                    placeholder="Please enter the content"
+                    placeholder="请输入成本价 (默认0)"
                   />
                 </el-form-item>
               </el-col>
@@ -80,7 +106,7 @@
                     v-model="postForm.line_price"
                     :rows="1"
                     autosize
-                    placeholder="Please enter the content"
+                    placeholder="请输入市场价(默认0)"
                   />
                 </el-form-item>
               </el-col>
@@ -94,7 +120,7 @@
                     v-model="postForm.inventory"
                     :rows="1"
                     autosize
-                    placeholder="Please enter the content"
+                    placeholder="请输入市场价 (默认0,低于1将会下架)"
                   />
                 </el-form-item>
               </el-col>
@@ -129,7 +155,7 @@
                     type="textarea"
                     class="article-textarea"
                     autosize
-                    placeholder="Please enter the content"
+                    placeholder="输入商品特色"
                   />
                 </el-form-item>
 

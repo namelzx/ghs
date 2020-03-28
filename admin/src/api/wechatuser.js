@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function getList(query) {
+export function GetDataByList(query) {
   return request({
     url: '/admin/Wechatuser/GetDataByList',
     method: 'get',

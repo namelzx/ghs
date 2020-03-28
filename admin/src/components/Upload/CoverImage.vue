@@ -89,7 +89,7 @@
     color: #8c939d;
     width: 100px;
     height: 100px;
-    line-height: 108px;
+    line-height: 100px  !important;
     text-align: center;
   }
   .avatar {

@@ -13,15 +13,15 @@ use think\Model;
 
 class OrderModel extends Model
 {
-    protected $table = 'tp_order';
+    protected $table = 'ee_order';
     protected $createTime = 'create_time';
     protected $updateTime = 'update_time';
 
-    public function getStatusAttr($value)
-    {
-        $status = [0 => '待处理', 1 => '待确认(业务)', 2 => '待确认(门店)', 3 => '待安装', 4 => '已安装', 5 => '财审1', 6 => '财审2', 7 => '待结算', 8 => '已结算', 9 => '驳回', 10 => '退货', 11 => '删除', 12 => '已评价'];
-        return $status[$value];
-    }
+//    public function getStatusAttr($value)
+//    {
+//        $status = [0 => '待处理', 1 => '待确认(业务)', 2 => '待确认(门店)', 3 => '待安装', 4 => '已安装', 5 => '财审1', 6 => '财审2', 7 => '待结算', 8 => '已结算', 9 => '驳回', 10 => '退货', 11 => '删除', 12 => '已评价'];
+//        return $status[$value];
+//    }
 
     //车型
     public function carmodel()

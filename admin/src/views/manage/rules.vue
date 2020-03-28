@@ -29,8 +29,11 @@
       :data="list"
       style="width: 100%;margin-bottom: 20px;"
       border
+      row-key="id"
+
+      :tree-props="{children: 'children'}"
     >
-      <el-table-column label="标识" width="150px" align="center">
+      <el-table-column label="标识" width="150px" >
       <template slot-scope="scope">
       <span>{{ scope.row.name }}</span>
       </template>
@@ -53,6 +56,14 @@
       <span>{{ scope.row.path }}</span>
       </template>
       </el-table-column>
+
+      <el-table-column label="排序" min-width="150px" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.sorts }}</span>
+        </template>
+      </el-table-column>
+
+
       <el-table-column label="组件" min-width="150px" align="center">
       <template slot-scope="scope">
       <span>{{ scope.row.component }}</span>

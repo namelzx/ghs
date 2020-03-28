@@ -75,7 +75,8 @@ class User extends Base
     public function PostUserByData()
     {
         $data = input('param.');
-        $res = UserModel::where('id', $data['id'])->update($data);
+        $data['nature'] = 1;
+        UserModel::where('id', $data['id'])->update($data);
         $info = UserModel::where('id', $data['id'])->find();
         return json($info);
     }

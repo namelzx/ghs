@@ -63,7 +63,8 @@ class AuthRule extends Model
         if ($status != -1) {
             $where .= " and a.status =  " . $status;
         }
-        return Db::name('auth_rule')->alias('a')->field('a.*')->where($where)->order($myorder)->select();
+//        $where.=" and a.pid = 0 ";
+        return Db::name('auth_rule')->alias('a')->field('a.*')->where($where)->order('a.id asc a.sorts asc ')->select();
     }
 
     /**

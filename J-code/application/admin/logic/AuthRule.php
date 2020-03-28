@@ -2,9 +2,9 @@
 
 namespace app\admin\logic;
 
-use \think\Model;
-use app\common\CommonConstant;
 use app\common\util\TreeUtil;
+use think\Db;
+use think\Model;
 
 /**
  * 权限操作
@@ -40,9 +40,9 @@ class AuthRule extends Model
         }
 
         $ruleIds = explode(',', $group['rules']);
-        $rules   = my_model('AuthRule', 'model', 'admin')->getRuleByIds($ruleIds);
+        $rules = my_model('AuthRule', 'model', 'admin')->getRuleByIds($ruleIds);
 
-        $rules   = TreeUtil::listToTreeMulti($rules, 0, 'id', 'pid', 'children');
+        $rules = TreeUtil::listToTreeMulti($rules, 0, 'id', 'pid', 'children');
         return $rules;
     }
 
@@ -92,9 +92,19 @@ class AuthRule extends Model
     /**
      * 获取列表
      */
-    public function getLists($title = '', $status = -1, $myorder = 'a.id desc')
+    public function getLists($title = '', $status = -1, $myorder = 'a.sorts desc')
     {
-        return my_model('AuthRule', 'model', 'admin')->getLists($title, $status, $myorder);
+        $res = my_model('AuthRule', 'model', 'admin')->getLists($title, $status, $myorder);
+//
+//        foreach ($res as $i => $item) {
+//            $res[$i]['children']=Db::name('auth_rule')->where('pid',$item['id'])->select();
+//
+//            foreach (  $res[$i]['children'] as $k=>$itemk){
+//                $res[$i]['children'][$k]['children']=Db::name('auth_rule')->where('pid',$itemk['id'])->select();
+//
+//            }
+//        }
+        return $res;
     }
 
     /**
@@ -154,7 +164,7 @@ class AuthRule extends Model
     public function change($val, $field, $value)
     {
         $table = 'auth_rule';
-        $id    = 'id';
+        $id = 'id';
         return model('Admin')->change($table, $id, $val, $field, $value);
     }
 

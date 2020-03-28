@@ -2,24 +2,23 @@
 /**
  * Created by PhpStorm.
  * User: lzx
- * Date: 2020-03-04
- * Time: 01:57
+ * Date: 2020-03-28
+ * Time: 23:13
  */
 
 namespace app\admin\controller;
 
 
-use app\admin\model\WechatUserModel;
 use app\app\model\UserModel;
 
-class Wechatuser extends System
+class User extends System
 {
 
     public function GetDataByList()
     {
         $data = input('param.');
         $where = [];
-        $res = UserModel::where($where)->order('nature asc')->paginate($data['limit'], false, ['query' => [$data['page']]]);
+        $res = UserModel::where($where)->paginate($data['limit'], false, ['query' => [$data['page']]]);
         ajax_return_ok($res);
     }
 
@@ -32,5 +31,6 @@ class Wechatuser extends System
         }
         ajax_return_ok($res);
     }
+
 
 }
