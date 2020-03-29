@@ -321,20 +321,20 @@
         }
         if (this.operateType === 1) {
           //设为店长
-
           var temp={
             ids,
-            field:'is_shop'
+            field:'is_shop',
+            status:1
 
           }
           PostRoleByUpdate(temp).then(res=>{
             this.getList()
           })
         } else if (this.operateType === 2) {
-
           var temp={
             ids,
-            field:'is_salesman'
+            field:'is_salesman',
+            status:1
 
           }
           PostRoleByUpdate(temp).then(res=>{

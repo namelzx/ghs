@@ -40,12 +40,12 @@ Page({
     //   selectIds: [],
     //   moveState: false,
       allPrice: 0,//总价格
-    //   favouredPrice: 0,//优惠价格
-    //   marketPrice: 0,//市场价格
-    //   deleteComfirm: false,
-    //   isDeleteOne: false,
-    //   deleteIndex: 0,
-    //   isLoading: true
+      favouredPrice: 0,//优惠价格
+      marketPrice: 0,//市场价格
+      deleteComfirm: false,
+      isDeleteOne: false,
+      deleteIndex: 0,
+      isLoading: true
     },
     others: {
       pageUrl: "cartPage"
@@ -82,7 +82,6 @@ Page({
           "state.needAuthorize": false
         })
 
-        // this.onComputePriceAndCheckAll();
         this.setData({
           products: car
         })
@@ -373,7 +372,7 @@ Page({
       setTimeout(() => {
         _this.setData({
           "state.allPrice": allPrice,
-          "state.favouredPrice": ((marketPrice - allPrice) / 100).toFixed(2),
+          "state.favouredPrice": ((marketPrice - allPrice) ).toFixed(2),
           "state.marketPrice": marketPrice,
           "state.selectAllStatus": selectAllStatus,
           "state.selectIds": selectIds,
@@ -546,30 +545,7 @@ Page({
           'state.needAuthorize':true,
         })
       })
-      
-    //   userMs.request(data).then(res => {
-    //     const { data, code } = res.data;
-    //     if (code === 10000) {
-
-    //       if (data) {
-
-    //         wx.setNavigationBarColor({
-    //           frontColor: '#000000',
-    //           backgroundColor: '#fed402',
-    //         });
-
-
-
-    //       }
-    //     }
-    //   }).catch(err => {
-    //     this.alertHandler(err);
-    //     console.log(err)
-    //   })
-    //     .finally(res => {
-    //       wx.hideLoading()
-    //     })
-
+    
     }
   },
   onPreventDefault: function () {

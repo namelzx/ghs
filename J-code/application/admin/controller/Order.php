@@ -13,8 +13,10 @@ use app\common\model\OrderBuyoutModel;
 use app\common\model\OrderCourierModel;
 use app\common\model\OrderModel;
 
-class Order extends Base
+class Order extends System
 {
+
+
     /**
      * 获取数据列表
      */
@@ -56,11 +58,8 @@ class Order extends Base
     public function GetIdByDetails()
     {
         $data = input('param.');
-        $res = OrderModel::with(['getGoods', 'getLeaseModel', 'getLease', 'getPay', 'getAddress', 'getPeriods' => function ($query) {
-            $query->where('status', 2);
-        }, 'getUserCoupon' => ['getCounpon'], 'getUser', 'suk',
-            'getCourier' => ['Courier']
-        ])->where('id', $data['id'])->find();
+        $res = OrderModel::with(['goods'])->where('id', $data['id'])->find();
+        ajax_return_ok($res);
         $logistics = "";
         if (!empty($res['get_courier'])) {
 
@@ -98,6 +97,19 @@ class Order extends Base
         $data['close_time'] = time();
         $res = OrderModel::where('id', $data['id'])->data($data)->update();
         return json(['msg' => '结算成功', 'data' => $res, 'code' => 20000]);
+
+    }
+
+    /**
+     * 发货
+     */
+    public function deliveryOrder()
+    {
+        $data = input('param.');
+        $data['status'] = 3;
+        $data['deliveryTime'] = time();
+        $res = OrderModel::where('id', $data['id'])->data($data)->update();
+        ajax_return_ok($res);
 
     }
 }

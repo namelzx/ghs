@@ -200,7 +200,6 @@ let pageObj = {
         wx.hideLoading();
       })
   },
-
   // 获取可用红包请求
   onFetchPackageAbleListHandler: function() {
     if (!this.data.state.address) {
@@ -289,19 +288,6 @@ let pageObj = {
 
   },
 
-  // alert 提示function
-  alertHandler: function(alertText) {
-    const _this = this;
-    _this.setData({
-      "state.alertingStatus": true,
-      "state.alertingWords": alertText
-    })
-    setTimeout(function() {
-      _this.setData({
-        "state.alertingStatus": false
-      })
-    }, 2000)
-  },
   formSubmit: function(e) {
     this.formId = e.detail.formId;
     // this.onGotoProductDetail();
@@ -338,20 +324,20 @@ let pageObj = {
     console.log('form发生了submit事件，携带数据为：', e)
   },
 
-  // 判断字段是否合法
+  // 判断订单提交字段是否合法
   onCheckValueHandler: function() {
 
 
     if (!this.data.data.buyerName) {
       wx.showToast({
-        title: '请填写提货人姓名',
+        title: '请填写收货人姓名',
         icon: 'none'
       })
       return;
     }
     if (!this.data.data.buyerPhone) {
       wx.showToast({
-        title: '请填写提货人电话',
+        title: '请填写收货人电话',
         icon: 'none'
       })
       return;
@@ -380,6 +366,8 @@ let pageObj = {
     let userinfo = wx.getStorageSync('userinfo')
     this.payingStatus = true;
     let cart = wx.getStorageSync('buy')
+    
+    let shop=wx.getStorageSync('is_shop')
     let queryObj = {
       pay_type: 1,
       totalPrice: this.data.state.goodsPrice,
@@ -390,6 +378,9 @@ let pageObj = {
       addressText: this.data.data.addressText, //收货地址
       buyerText: this.data.data.buyerText, //订单备注
       openid:userinfo.openid
+    }
+    if (shop.is_shop===true){
+      queryObj.dis_id=shop.user_id
     }
     orderModel.PostDataBycreateOrder(queryObj, res => {
 

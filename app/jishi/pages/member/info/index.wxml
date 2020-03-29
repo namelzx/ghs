@@ -7,8 +7,10 @@
       <image src='{{state.communityObj.avatar}}' class='community-avatar'></image>
       <view class='has-community-inner'>
         <view class='community-name'>当前小区:{{state.communityObj.name}}</view>
-        <view class='community-address'>{{state.communityObj.location}}</view>
-      </view>
+        <view class='community-address' wx:if="{{state.communityObj.location}}">{{state.communityObj.location}}</view>
+
+  <view class='community-address' bindtap="toCommunity" wx:else>点我选择小区</view>
+        </view>
       <image src='/imgs/icon-community-address.png' class='icon-community-address'></image>
     </view>
   </view>

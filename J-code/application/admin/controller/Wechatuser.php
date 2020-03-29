@@ -35,7 +35,7 @@ class Wechatuser extends System
     public function PostRoleByUpdate()
     {
         $data = input('param.');
-        $res = UserModel::where('id', 'in', $data['ids'])->data([$data['field'] => 1])->update();
+        $res = UserModel::where('id', 'in', $data['ids'])->data([$data['field'] => $data['status']])->update();
         ajax_return_ok($res);
     }
 

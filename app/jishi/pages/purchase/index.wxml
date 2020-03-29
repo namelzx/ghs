@@ -12,12 +12,12 @@
   <view class='card-content'>
     <view class='card-content-title-box'>
       <view class='card-content-title-icon'></view>
-      <view class='card-content-title'>提货人信息</view>
+      <view class='card-content-title'>收货人信息</view>
     </view>
     <view class='buyer-info'>
       <view class='buyer-info-item'>
         <!-- <image src='/imgs/icon-buyer-address-tips.png'></image> -->
-        <view class='buyer-info-item-text'>提货人</view>
+        <view class='buyer-info-item-text'>联系人</view>
         <input class='buyer-info-item-value' bindinput='onInputBuyerNameHandler' placeholder-class='buyer-info-item-value-holder' placeholder='请填写姓名' value='{{data.buyerName}}' wx:if="{{!state.onComfirmBoxStatus}}"></input>
         <view class='buyer-info-item-value' wx:else>{{data.buyerName}}</view>
       </view>
@@ -53,7 +53,7 @@
       <view class='order-pro-title-box'>
        <!--本订单由小区店主为您代收配送-->
         <view class='order-pro-title'>
-          预计{{itemName[0].expected_reach_time}}可提货
+          <!-- 预计{{itemName[0].expected_reach_time}}可提货 -->
         </view>
         <!-- <view wx:for="{{itemName}}">{{data.productsAllNum}}件商品</view> -->
       </view>

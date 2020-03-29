@@ -79,50 +79,57 @@
         <el-table-column label="编号" width="80" align="center">
           <template slot-scope="scope">{{scope.row.id}}</template>
         </el-table-column>
-        <el-table-column label="订单编号" width="180" align="center">
-          <template slot-scope="scope">{{scope.row.orderSn}}</template>
+        <el-table-column label="微信流水单号" width="180" align="center">
+          <template slot-scope="scope">{{scope.row.out_trade_no}}</template>
+        </el-table-column>
+
+        <el-table-column label="下单人" width="180" align="center">
+          <template slot-scope="scope">{{scope.row.buyerName}}</template>
         </el-table-column>
         <el-table-column label="提交时间" width="180" align="center">
-          <template slot-scope="scope">{{scope.row.createTime | formatCreateTime}}</template>
-        </el-table-column>
-        <el-table-column label="用户账号" align="center">
-          <template slot-scope="scope">{{scope.row.memberUsername}}</template>
+          <template slot-scope="scope">{{scope.row.create_time}}</template>
         </el-table-column>
         <el-table-column label="订单金额" width="120" align="center">
-          <template slot-scope="scope">￥{{scope.row.totalAmount}}</template>
+          <template slot-scope="scope">￥{{scope.row.totalPrice}}</template>
         </el-table-column>
         <el-table-column label="支付方式" width="120" align="center">
-          <template slot-scope="scope">{{scope.row.payType | formatPayType}}</template>
-        </el-table-column>
-        <el-table-column label="订单来源" width="120" align="center">
-          <template slot-scope="scope">{{scope.row.sourceType | formatSourceType}}</template>
+          <template slot-scope="scope">微信支付</template>
         </el-table-column>
         <el-table-column label="订单状态" width="120" align="center">
-          <template slot-scope="scope">{{scope.row.status | formatStatus}}</template>
+          <template slot-scope="scope">{{scope.row.status|stStrstatus}}</template>
         </el-table-column>
-        <el-table-column label="操作" width="200" align="center">
+        <el-table-column label="操作" fixed="right" width="200" align="center">
           <template slot-scope="scope">
             <el-button
               size="mini"
+              type="text"
               @click="handleViewOrder(scope.$index, scope.row)"
-            >查看订单</el-button>
+            >查看订单
+            </el-button>
             <el-button
               size="mini"
+              type="text"
               @click="handleCloseOrder(scope.$index, scope.row)"
-              v-show="scope.row.status===0">关闭订单</el-button>
+              v-show="scope.row.status===0">关闭订单
+            </el-button>
             <el-button
               size="mini"
+              type="text"
               @click="handleDeliveryOrder(scope.$index, scope.row)"
-              v-show="scope.row.status===1">订单发货</el-button>
+              v-show="scope.row.status===2">订单发货
+            </el-button>
             <el-button
               size="mini"
+              type="text"
               @click="handleViewLogistics(scope.$index, scope.row)"
-              v-show="scope.row.status===2||scope.row.status===3">订单跟踪</el-button>
+              v-show="scope.row.status===3||scope.row.status===4||scope.row.status===5">订单跟踪
+            </el-button>
             <el-button
               size="mini"
-              type="danger"
+              type="text"
               @click="handleDeleteOrder(scope.$index, scope.row)"
-              v-show="scope.row.status===4">删除订单</el-button>
+              v-show="scope.row.status===5">删除订单
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -153,8 +160,8 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         layout="total, sizes,prev, pager, next,jumper"
-        :current-page.sync="listQuery.pageNum"
-        :page-size="listQuery.pageSize"
+        :current-page.sync="listQuery.page"
+        :page-size="listQuery.limit"
         :page-sizes="[5,10,15]"
         :total="total">
       </el-pagination>
@@ -179,22 +186,23 @@
   </div>
 </template>
 <script>
-  import {fetchList,closeOrder,deleteOrder} from '@/api/order'
-  import {formatDate} from '@/utils/date';
-  // import LogisticsDialog from '@/views/oms/order/components/logisticsDialog';
+  import { GetDataByList, closeOrder, GetIdByDel, PostRoleByUpdate } from '@/api/order'
+  import waves from '@/directive/waves'
+  import LogisticsDialog from './components/logisticsDialog'
+
   const defaultListQuery = {
-    pageNum: 1,
-    pageSize: 10,
-    orderSn: null,
-    receiverKeyword: null,
-    status: null,
-    orderType: null,
-    sourceType: null,
-    createTime: null,
-  };
+    page: 1,
+    limit: 10
+
+  }
   export default {
-    name: "orderList",
-    components:{},
+    name: 'orderList',
+    components: {
+      LogisticsDialog
+    },
+    directives: {
+      waves
+    },
     data() {
       return {
         listQuery: Object.assign({}, defaultListQuery),
@@ -203,27 +211,27 @@
         total: null,
         operateType: null,
         multipleSelection: [],
-        closeOrder:{
-          dialogVisible:false,
-          content:null,
-          orderIds:[]
+        closeOrder: {
+          dialogVisible: false,
+          content: null,
+          orderIds: []
         },
         statusOptions: [
           {
             label: '待付款',
-            value: 0
-          },
-          {
-            label: '待发货',
             value: 1
           },
           {
-            label: '已发货',
+            label: '已支付',
             value: 2
           },
           {
-            label: '已完成',
+            label: '已发货',
             value: 3
+          },
+          {
+            label: '已完成',
+            value: 4
           },
           {
             label: '已关闭',
@@ -252,141 +260,139 @@
         ],
         operateOptions: [
           {
-            label: "批量发货",
+            label: '设为店长',
             value: 1
           },
           {
-            label: "关闭订单",
+            label: '社会',
             value: 2
           },
           {
-            label: "删除订单",
+            label: '删除订单',
             value: 3
           }
         ],
-        logisticsDialogVisible:false
+        logisticsDialogVisible: false
       }
     },
     created() {
-      this.getList();
+      this.getList()
     },
     filters: {
-      formatCreateTime(time) {
-        let date = new Date(time);
-        return formatDate(date, 'yyyy-MM-dd hh:mm:ss')
-      },
-      formatPayType(value) {
+
+      nature(value) {
         if (value === 1) {
-          return '支付宝';
-        } else if (value === 2) {
-          return '微信';
+          return '正式用户'
         } else {
-          return '未支付';
+          return '游客'
         }
       },
-      formatSourceType(value) {
+      stStrstatus(value) {
         if (value === 1) {
-          return 'APP订单';
+          return '待付款'
+        }
+        if (value === 2) {
+          return '已付款'
+        }
+        if (value === 3) {
+          return '已发货'
+        }
+        if (value === 4) {
+          return '订单完成'
         } else {
-          return 'PC订单';
+          return '订单完成'
         }
       },
-      formatStatus(value) {
+
+      statusFilter(value) {
         if (value === 1) {
-          return '待发货';
-        } else if (value === 2) {
-          return '已发货';
-        } else if (value === 3) {
-          return '已完成';
-        } else if (value === 4) {
-          return '已关闭';
-        } else if (value === 5) {
-          return '无效订单';
+          return '是'
         } else {
-          return '待付款';
+          return '否'
         }
-      },
+      }
+
     },
     methods: {
       handleResetSearch() {
-        this.listQuery = Object.assign({}, defaultListQuery);
+        this.listQuery = Object.assign({}, defaultListQuery)
       },
       handleSearchList() {
-        this.listQuery.pageNum = 1;
-        this.getList();
+        this.listQuery.page = 1
+        this.getList()
       },
-      handleSelectionChange(val){
-        this.multipleSelection = val;
+      handleSelectionChange(val) {
+        this.multipleSelection = val
       },
-      handleViewOrder(index, row){
-        this.$router.push({path:'/oms/orderDetail',query:{id:row.id}})
+      handleViewOrder(index, row) {
+        this.$router.push({ path: '/order/orderDetail', query: { id: row.id } })
       },
-      handleCloseOrder(index, row){
-        this.closeOrder.dialogVisible=true;
-        this.closeOrder.orderIds=[row.id];
+      handleCloseOrder(index, row) {
+        this.closeOrder.dialogVisible = true
+        this.closeOrder.orderIds = [row.id]
       },
-      handleDeliveryOrder(index, row){
-        let listItem = this.covertOrder(row);
-        this.$router.push({path:'/oms/deliverOrderList',query:{list:[listItem]}})
+      handleDeliveryOrder(index, row) {
+        let listItem = this.covertOrder(row)
+        this.$router.push({ path: '/order/deliver', query: { list: [listItem] } })
       },
-      handleViewLogistics(index, row){
-        this.logisticsDialogVisible=true;
+      handleViewLogistics(index, row) {
+        this.logisticsDialogVisible = true
       },
-      handleDeleteOrder(index, row){
-        let ids=[];
-        ids.push(row.id);
-        this.deleteOrder(ids);
+      handleDeleteOrder(index, row) {
+        let ids = []
+        ids.push(row.id)
+        this.deleteOrder(ids)
       },
-      handleBatchOperate(){
-        if(this.multipleSelection==null||this.multipleSelection.length<1){
+      handleBatchOperate() {
+        if (this.multipleSelection == null || this.multipleSelection.length < 1) {
           this.$message({
             message: '请选择要操作的订单',
             type: 'warning',
             duration: 1000
-          });
-          return;
+          })
+          return
         }
-        if(this.operateType===1){
+        if (this.operateType === 1) {
           //批量发货
-          let list=[];
-          for(let i=0;i<this.multipleSelection.length;i++){
-            if(this.multipleSelection[i].status===1){
-              list.push(this.covertOrder(this.multipleSelection[i]));
+          let list = []
+          for (let i = 0; i < this.multipleSelection.length; i++) {
+            if (this.multipleSelection[i].status === 1) {
+              list.push(this.covertOrder(this.multipleSelection[i]))
             }
           }
-          if(list.length===0){
+          if (list.length === 0) {
             this.$message({
               message: '选中订单中没有可以发货的订单',
               type: 'warning',
               duration: 1000
-            });
-            return;
+            })
+            return
           }
-          this.$router.push({path:'/oms/deliverOrderList',query:{list:list}})
-        }else if(this.operateType===2){
+          this.$router.push({ path: '/oms/deliverOrderList', query: { list: list } })
+        } else if (this.operateType === 2) {
           //关闭订单
-          this.closeOrder.orderIds=[];
-          for(let i=0;i<this.multipleSelection.length;i++){
-            this.closeOrder.orderIds.push(this.multipleSelection[i].id);
+          this.closeOrder.orderIds = []
+          for (let i = 0; i < this.multipleSelection.length; i++) {
+            this.closeOrder.orderIds.push(this.multipleSelection[i].id)
           }
-          this.closeOrder.dialogVisible=true;
-        }else if(this.operateType===3){
+          this.closeOrder.dialogVisible = true
+        } else if (this.operateType === 3) {
           //删除订单
-          let ids=[];
-          for(let i=0;i<this.multipleSelection.length;i++){
-            ids.push(this.multipleSelection[i].id);
+          let ids = []
+          for (let i = 0; i < this.multipleSelection.length; i++) {
+            ids.push(this.multipleSelection[i].id)
           }
-          this.deleteOrder(ids);
+          this.deleteOrder(ids)
         }
       },
-      handleSizeChange(val){
-        this.listQuery.pageNum = 1;
-        this.listQuery.pageSize = val;
-        this.getList();
+      handleSizeChange(val) {
+        this.listQuery.page = 1
+        this.listQuery.limit = val
+        this.getList()
       },
-      handleCurrentChange(val){
-        this.listQuery.pageNum = val;
-        this.getList();
+      handleCurrentChange(val) {
+        this.listQuery.page = val
+        this.getList()
       },
       handleCloseOrderConfirm() {
         if (this.closeOrder.content == null || this.closeOrder.content === '') {
@@ -394,70 +400,105 @@
             message: '操作备注不能为空',
             type: 'warning',
             duration: 1000
-          });
-          return;
+          })
+          return
         }
-        let params = new URLSearchParams();
-        params.append('ids', this.closeOrder.orderIds);
-        params.append('note', this.closeOrder.content);
-        closeOrder(params).then(response=>{
-          this.closeOrder.orderIds=[];
-          this.closeOrder.dialogVisible=false;
-          this.getList();
+        let params = new URLSearchParams()
+        params.append('ids', this.closeOrder.orderIds)
+        params.append('note', this.closeOrder.content)
+        closeOrder(params).then(response => {
+          this.closeOrder.orderIds = []
+          this.closeOrder.dialogVisible = false
+          this.getList()
           this.$message({
             message: '修改成功',
             type: 'success',
             duration: 1000
-          });
-        });
+          })
+        })
       },
       getList() {
-        this.listLoading = true;
-        fetchList(this.listQuery).then(response => {
-          this.listLoading = false;
-          this.list = response.data.list;
-          this.total = response.data.total;
-        });
+        this.listLoading = true
+        GetDataByList(this.listQuery).then(response => {
+          this.listLoading = false
+          this.list = response.data.data
+          this.total = response.data.total
+        })
       },
-      deleteOrder(ids){
+      deleteOrder(ids) {
         this.$confirm('是否要进行该删除操作?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          let params = new URLSearchParams();
-          params.append("ids",ids);
-          deleteOrder(params).then(response=>{
+          let params = new URLSearchParams()
+          params.append('ids', ids)
+          deleteOrder(params).then(response => {
             this.$message({
               message: '删除成功！',
               type: 'success',
               duration: 1000
-            });
-            this.getList();
-          });
+            })
+            this.getList()
+          })
         })
       },
-      covertOrder(order){
-        let address=order.receiverProvince+order.receiverCity+order.receiverRegion+order.receiverDetailAddress;
-        let listItem={
-          orderId:order.id,
-          orderSn:order.orderSn,
-          receiverName:order.receiverName,
-          receiverPhone:order.receiverPhone,
-          receiverPostCode:order.receiverPostCode,
-          address:address,
-          deliveryCompany:null,
-          deliverySn:null
-        };
-        return listItem;
+      covertOrder(order) {
+        let listItem = {
+          id: order.id,
+          out_trade_no: order.out_trade_no,
+          buyerName: order.buyerName,
+          mobile: order.mobile,
+          addressText: order.addressText,
+          deliveryCompany: null,
+          deliverySn: null
+        }
+        return listItem
       }
     }
   }
 </script>
-<style scoped>
+<style lang="scss" rel="stylesheet/scss" scoped>
   .input-width {
     width: 203px;
   }
+
+  .search > > > .el-form-item__label {
+    font-size: 12px;
+  }
+
+  .search {
+
+  }
+
+  .el-form-item {
+    label {
+      font-weight: 400 !important;
+      font-size: 12px;
+    }
+  }
+
+  .app-container > > > thead {
+    color: #595961;
+    font-size: 12px;
+  }
+
+  .app-container > > > .cell {
+    /*display: flex;*/
+    div {
+      color: #595961;
+      font-size: 12px;
+    }
+  }
+
+  .headimgurl {
+    width: 36px;
+    height: 36px;
+    border-radius: 4px;
+    margin-right: 10px;
+  }
+
 </style>
+
 
 

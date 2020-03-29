@@ -24,17 +24,30 @@ class Pay extends Base
             'totalPrice' => $data['totalPrice'],
             'user_id' => $data['user_id'],
             'buyerName' => $data['buyerName'],
-
             'mobile' => $data['mobile'],
+            'order_no' => time(),
             'addressText' => $data['addressText'],
             'buyerText' => $data['buyerText'],
             'create_time' => time()
         ];
+        if (!empty($data['dis_id'])) {
+            $temp['dis_id'] = $data['dis_id'];
+        }
         if (!empty($data['shop_id'])) {
             $temp['shop_id'] = $data['shop_id'];
         }
+
+        $temp['head_price'] = 0;
+        $temp['manager_price'] = 0;
+        foreach ($data['items'] as $i => $item) {
+            $temp['head_price'] = $temp['head_price'] + floatval($item['head_price']);
+            $temp['manager_price'] = $temp['manager_price'] + floatval($item['manager_price']);
+        }
+
         $res = OrderModel::create($temp);
         $goods = [];
+
+
         foreach ($data['items'] as $i => $item) {
             $goods[$i]['order_id'] = $res['id'];
             $goods[$i]['images_url'] = $item['images_url'];
@@ -44,6 +57,7 @@ class Pay extends Base
             $goods[$i]['goods_id'] = $item['goods_id'];
             GoodsModel::where('id', $item['goods_id'])->setDec('inventory', $item['totalBuyNum']);
         }
+
         Db::name('order_goods')->insertAll($goods);
         $config = [
             // 必要配置

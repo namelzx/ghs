@@ -96,17 +96,6 @@ Route::group('api/admin/', function () {
      * 订单板块
      */
 
-    Route::rule('order/GetDataByList', 'admin/order/GetDataByList'); /* 获取列表*/
-    Route::rule('order/PostDataByCancel', 'admin/order/PostDataByCancel'); /* 更新或保存数据*/
-//    Route::rule('goods/getOrderIdByData', 'order/order/getOrderIdByData'); /* 删除数据*/
-    Route::rule('order/GetIdByDetails', 'admin/order/GetIdByDetails'); /* 商品详情*/
-
-    Route::rule('order/postCourier', 'admin/order/postCourier'); /* 提交订单快递信息*/
-
-    Route::rule('order/postOrderClose', 'admin/order/postOrderClose'); /* 订单结算*/
-
-    Route::rule('order/GetBuyoutByList', 'admin/order/GetBuyoutByList'); /* 买断订单*/
-
 
 
 

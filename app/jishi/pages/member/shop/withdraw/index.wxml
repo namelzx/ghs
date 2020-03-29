@@ -44,7 +44,7 @@
 			</view>
 			<view class="ex_desc">
 				<view class="ex_desc_num">2.</view>
-				<view class="ex_desc_name">会员需要在提前完成<text>提现认证</text>，并审核通过维护完善<text>银行卡信息</text>，否则将影响提现进行。</view>
+				<view class="ex_desc_name">会员需要在提前完成<text>提现认证</text>，并审核通过维护完善<text>认证信息</text>，否则将影响提现进行。</view>
 			</view>
 			<view class="ex_desc">
 				<view class="ex_desc_num">3.</view>

@@ -13,7 +13,7 @@ use think\Model;
 
 class UserModel extends Model
 {
-    protected $table = 'gg_user';
+    protected $table = 'ee_user';
     protected $createTime = 'ucreate_time';
 
     public static function GetDataByList($data)

@@ -1,29 +1,6 @@
 <!--page/cart/cart.wxml-->
 <view class='P-cart {{!state.isLoading && state.needAuthorize?"P-cart-bg":""}}'>
 
-<!-- 
-  <view class="needAuthorize-page" wx:if="{{!state.isLoading && state.needAuthorize}}">
-    <view class="needAuthorize-header">
-            <image src='/imgs/needAuthorize-bg.png' class='needAuthorize-bg'></image>
-            <image class="needAuthorize-logo" src='/imgs/needAuthorize-logo.png'></image>
-    </view>
-    <button class="login-btn" open-type="getUserInfo" bindgetuserinfo="userInfoHandler">
-         <image class="weixin-logo" src='/imgs/weixin.png'></image>
-         <text>微信一键登录</text>
-    </button>
-    <view class="join-container">
-       <view class="join-limit" catchtap='onGoToMiniProgram'>
-         <text>限时加盟</text>
-         <image src="/imgs/user-right.png" class="user-right"></image>
-       </view>
-        <view class="join-limit-title">©2020果划算</view>
-    </view>
-  </view> -->
-
-
-
-  <!-- 不是请求状态，并且不需要登录 -->
-  <!-- <block wx:if="{{state.isLoading && state.needAuthorize}}"> -->
        <!-- 购物车凑单 -->
       
 
@@ -50,7 +27,7 @@
           
           <view class='cart-pro-info' style="border-bottom:{{index==(data.prosNow.length-1)?'0rpx':'1rpx solid #EEEEEE'}};">
             <view>
-              <!-- <image class='icon-delete' src='/imgs/icon-close-default.png' catchtap='onDeleteOnehandler' data-index='{{index}}' data-type='now'></image> -->
+           
               <view class='cart-pro-title'>
                 <text>{{item.name}}</text>
               </view>
@@ -63,9 +40,6 @@
               </view>
               
               <view class='cart-pro-actions-content'>
-                <!-- <view class='cart-pro-limit' wx:if="{{item.num==item.limit_buy}}">每人限购{{item.limit_buy}}件</view> -->
-
-                 <!--{{item.num>1?"onNumDescHandler":""}}--->
                 <view class='cart-pro-actions'>
                   <view class='action-desc {{item.totalBuyNum==1?"disabled":" "}}' data-index="{{index}}" data-type='now' catchtap='onNumDescHandler'>-</view>
                   <view class='action-num'>{{item.totalBuyNum}}</view>
@@ -127,10 +101,10 @@
         <view wx:if="{{!state.manageStatus}}" class='footer-right'>
           <view class='footer-total-price'>
             <view class="total-price-top">
-               合计:¥{{state.allPrice/100}}
+               合计:¥{{state.allPrice}}
             </view>
             <view class="total-price-optimization">
-              总额:￥{{state.marketPrice/100}},已优惠￥{{state.favouredPrice}}
+              总额:￥{{state.marketPrice}},已优惠￥{{state.favouredPrice}}
             </view>
             
           </view>

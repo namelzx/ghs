@@ -54,13 +54,24 @@ Page({
     })
   },
 
-  onChangeShareBoxHandler: function() {
-    this.setData({
-      shareBoxStatus: !this.data.shareBoxStatus
-    })
-  },
+  
   onLoad: function(e) {
-    
+    console.log(e.user_id)
+    let user_id = e.user_id;
+    if (user_id===undefined){
+      console.log('普通进入')
+      var temp={
+        is_shop:false,
+        user_id
+      }
+      wx.setStorageSync('is_shop', temp)
+    }else{
+      var temp = {
+        is_shop: true,
+        user_id
+      }
+      wx.setStorageSync('is_shop', temp)
+    }
     this.data.carArray = wx.getStorageSync('cart');
     this.data.goods_id = e.id
     this.getInfo();
@@ -148,6 +159,8 @@ Page({
     var images_url = data.images_url
     var name = data.name;
     var mark = goods_id
+    var head_price = data.head_price
+    var manager_price = data.manager_price
 
     var obj = {
       goods_id,
@@ -159,7 +172,9 @@ Page({
       images_url,
       selected:false,
       moveState:false,
-       is_store: data.is_store
+       is_store: data.is_store,
+      head_price,
+      manager_price
     };
 
     var carArray1 = this.data.carArray.filter(item => item.goods_id != goods_id)
@@ -245,6 +260,8 @@ Page({
     var is_store = data.is_store
     var name = data.name;
     var mark = goods_id
+    var head_price = data.head_price
+    var manager_price = data.manager_price
 
     var obj = {
       goods_id,
@@ -257,6 +274,8 @@ Page({
       images_url,
       selected: false,
       moveState: false,
+      head_price,
+      manager_price
     };
 
     let queryObj = {
@@ -590,9 +609,11 @@ Page({
   },
   onShareAppMessage() {
     let goods_id = this.data.goods_id
+    let user=wx.getStorageSync('userinfo')
+    console.log(user)
     return {
       title: this.data.data.productDetail.name,
-      path: 'pages/details/index?id=' + goods_id
+      path: 'pages/details/index?id=' + goods_id+'&user_id='+user.id
     }
   }
 

@@ -9,19 +9,16 @@
                 style="width: 100%;"
                 :data="list" border>
         <el-table-column label="订单编号" width="180" align="center">
-          <template slot-scope="scope">{{scope.row.orderSn}}</template>
+          <template slot-scope="scope">{{scope.row.out_trade_no}}</template>
         </el-table-column>
         <el-table-column label="收货人" width="180" align="center">
-          <template slot-scope="scope">{{scope.row.receiverName}}</template>
+          <template slot-scope="scope">{{scope.row.buyerName}}</template>
         </el-table-column>
         <el-table-column label="手机号码" width="160" align="center">
-          <template slot-scope="scope">{{scope.row.receiverPhone}}</template>
-        </el-table-column>
-        <el-table-column label="邮政编码" width="160" align="center">
-          <template slot-scope="scope">{{scope.row.receiverPostCode}}</template>
+          <template slot-scope="scope">{{scope.row.mobile}}</template>
         </el-table-column>
         <el-table-column label="收货地址" align="center">
-          <template slot-scope="scope">{{scope.row.address}}</template>
+          <template slot-scope="scope">{{scope.row.addressText}}</template>
         </el-table-column>
         <el-table-column label="配送方式" width="160" align="center">
           <template slot-scope="scope">
@@ -51,7 +48,7 @@
 </template>
 <script>
   import {deliveryOrder} from '@/api/order'
-  const defaultLogisticsCompanies=["顺丰快递","圆通快递","中通快递","韵达快递"];
+  const defaultLogisticsCompanies=["顺丰快递","圆通快递","中通快递","韵达快递",'门店自提'];
   export default {
     name: 'deliverOrderList',
     data() {
@@ -62,6 +59,7 @@
     },
     created(){
       this.list= this.$route.query.list;
+      console.log(this.list)
     },
     methods:{
       cancel(){
@@ -73,7 +71,7 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          deliveryOrder(this.list).then(response=>{
+          deliveryOrder(this.list[0]).then(response=>{
             this.$router.back();
             this.$message({
               type: 'success',

@@ -50,6 +50,11 @@ Page({
     desc: '',
     stock: '',
   },
+  toCommunity(){
+    wx.navigateTo({
+      url: '/pages/location/index',
+    })
+  },
 
   afterRead(event) {
     var _this = this;

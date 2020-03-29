@@ -61,7 +61,7 @@ class Shop extends Base
     public function GetUserIdByInfo()
     {
         $data = input('param.');
-        $res = ShopModel::with(['community'])->where('user_id', $data['user_id'])->find();
+        $res = ShopModel::with(['community','user'])->where('user_id', $data['user_id'])->find();
         ajax_return_ok($res);
     }
 

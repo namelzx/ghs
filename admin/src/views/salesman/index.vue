@@ -1,5 +1,6 @@
 <template> 
   <div class="app-container">
+    <!--模块开发中-->
     <el-card class="filter-container" shadow="never">
       <div>
         <i class="el-icon-search"></i>
@@ -21,111 +22,106 @@
       <div style="margin-top: 15px" class="search">
         <el-form :inline="true" :model="listQuery" size="small" label-width="80px">
           <el-form-item label="输入搜索：">
-            <el-input v-model="listQuery.orderSn" size="mini" class="input-width" placeholder="订单编号"></el-input>
+            <el-input v-model="listQuery.out_trade_no" size="mini" class="input-width" placeholder="订单编号"></el-input>
           </el-form-item>
-          <el-form-item label="收货人：">
-            <el-input v-model="listQuery.receiverKeyword" class="input-width" placeholder="收货人姓名/手机号码"></el-input>
+          <el-form-item label="评价昵称：">
+            <el-input v-model="listQuery.nickName" class="input-width" placeholder="用户昵称"></el-input>
           </el-form-item>
-          <el-form-item label="提交时间：">
-            <el-date-picker
-              class="input-width"
-              v-model="listQuery.createTime"
-              value-format="yyyy-MM-dd"
-              type="date"
-              placeholder="请选择时间">
-            </el-date-picker>
-          </el-form-item>
-          <el-form-item label="订单状态：">
-            <el-select v-model="listQuery.status" class="input-width" placeholder="全部" clearable>
-              <el-option v-for="item in statusOptions"
-                         :key="item.value"
-                         :label="item.label"
-                         :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="订单分类：">
-            <el-select v-model="listQuery.orderType" class="input-width" placeholder="全部" clearable>
-              <el-option v-for="item in orderTypeOptions"
-                         :key="item.value"
-                         :label="item.label"
-                         :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="订单来源：">
-            <el-select v-model="listQuery.sourceType" class="input-width" placeholder="全部" clearable>
-              <el-option v-for="item in sourceTypeOptions"
-                         :key="item.value"
-                         :label="item.label"
-                         :value="item.value">
-              </el-option>
-            </el-select>
+
+          <el-form-item label="评价内容：">
+            <el-input v-model="listQuery.desc" class="input-width" placeholder="评价内容"></el-input>
           </el-form-item>
         </el-form>
       </div>
     </el-card>
     <el-card class="operate-container" shadow="never">
       <i class="el-icon-tickets"></i>
-      <span>数据列表</span>
+      <span>批量操作</span>
+      <el-button size="small" @click="handleSalesman()" plain>取消业务员业</el-button>
     </el-card>
     <div class="table-container">
-      <el-table ref="orderTable"
-                :data="list"
-                style="width: 100%;"
-                @selection-change="handleSelectionChange"
-                v-loading="listLoading" border>
-        <el-table-column type="selection" width="60" align="center"></el-table-column>
-        <el-table-column label="编号" width="80" align="center">
-          <template slot-scope="scope">{{scope.row.id}}</template>
-        </el-table-column>
-        <el-table-column label="订单编号" width="180" align="center">
-          <template slot-scope="scope">{{scope.row.orderSn}}</template>
-        </el-table-column>
-        <el-table-column label="提交时间" width="180" align="center">
-          <template slot-scope="scope">{{scope.row.createTime | formatCreateTime}}</template>
-        </el-table-column>
-        <el-table-column label="用户账号" align="center">
-          <template slot-scope="scope">{{scope.row.memberUsername}}</template>
-        </el-table-column>
-        <el-table-column label="订单金额" width="120" align="center">
-          <template slot-scope="scope">￥{{scope.row.totalAmount}}</template>
-        </el-table-column>
-        <el-table-column label="支付方式" width="120" align="center">
-          <template slot-scope="scope">{{scope.row.payType | formatPayType}}</template>
-        </el-table-column>
-        <el-table-column label="订单来源" width="120" align="center">
-          <template slot-scope="scope">{{scope.row.sourceType | formatSourceType}}</template>
-        </el-table-column>
-        <el-table-column label="订单状态" width="120" align="center">
-          <template slot-scope="scope">{{scope.row.status | formatStatus}}</template>
-        </el-table-column>
-        <el-table-column label="操作" width="200" align="center">
+      <el-table
+        v-loading="listLoading"
+        :data="list"
+        stripe
+        fit
+        highlight-current-row
+        style="width: 100%;"
+        @selection-change="handleSelectionChange">
+        <el-table-column type="selection" width="55"/>
+
+
+        <el-table-column label="客户信息" align="left" fixed min-width="150px">
           <template slot-scope="scope">
-            <el-button
-              size="mini"
-              @click="handleViewOrder(scope.$index, scope.row)"
-            >查看订单</el-button>
-            <el-button
-              size="mini"
-              @click="handleCloseOrder(scope.$index, scope.row)"
-              v-show="scope.row.status===0">关闭订单</el-button>
-            <el-button
-              size="mini"
-              @click="handleDeliveryOrder(scope.$index, scope.row)"
-              v-show="scope.row.status===1">订单发货</el-button>
-            <el-button
-              size="mini"
-              @click="handleViewLogistics(scope.$index, scope.row)"
-              v-show="scope.row.status===2||scope.row.status===3">订单跟踪</el-button>
-            <el-button
-              size="mini"
-              type="danger"
-              @click="handleDeleteOrder(scope.$index, scope.row)"
-              v-show="scope.row.status===4">删除订单</el-button>
+            <div>
+              <img style="    float: left;" class="headimgurl" :src="scope.row.avatarUrl"/>
+              <div style="margin-left: 10px" class="link-type" @click="handleUpdate(scope.$index,scope.row.id)">{{
+                scope.row.nickName }}
+              </div>
+
+            </div>
+          </template>
+        </el-table-column>
+
+        <el-table-column label="累计佣金" min-width="70px">
+          <template slot-scope="scope">
+            <div>{{scope.row.cumulative_commission}}</div>
+          </template>
+        </el-table-column>
+
+
+        <el-table-column label="当前余额" align="center" min-width="70px">
+          <template slot-scope="scope">
+            <div>{{scope.row.available_commission}}</div>
+          </template>
+        </el-table-column>
+
+        <el-table-column label="邀请用户数" align="center" min-width="120px">
+          <template slot-scope="scope">
+            <div>{{scope.row.invite}}</div>
+          </template>
+        </el-table-column>
+        <el-table-column label="是否是商家" align="center" min-width="100px">
+          <template slot-scope="scope">
+            <div> {{scope.row.is_business|statusFilter}}</div>
+          </template>
+        </el-table-column>
+
+        <el-table-column label="是否是店长" align="center" min-width="100px">
+          <template slot-scope="scope">
+            <div> {{scope.row.is_shop|statusFilter}}</div>
+          </template>
+        </el-table-column>
+
+        <el-table-column label="是否是业务员" align="center" min-width="100px">
+          <template slot-scope="scope">
+            <div> {{scope.row.is_salesman|statusFilter}}</div>
+          </template>
+        </el-table-column>
+        <el-table-column label="加入平台时间" align="center" min-width="140px">
+          <template slot-scope="scope">
+            <div>{{scope.row.create_time}}</div>
+          </template>
+        </el-table-column>
+        <el-table-column label="属性" align="center" min-width="120px">
+          <template slot-scope="scope">
+            <div>{{scope.row.nature|nature}}</div>
+          </template>
+        </el-table-column>
+
+
+        <el-table-column label="操作" fixed="right" align="center" width="120px" class-name="small-padding">
+          <template slot-scope="scope">
+            <el-button type="text" size="mini"
+                       @click="handleUpdate(scope.$index,scope.row.id)">编辑
+            </el-button>
+            <el-button v-waves :loading="scope.row.delete" type="text" size="mini"
+                       @click="handleDelete(scope.$index,scope.row.id)">删除
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
+
     </div>
     <div class="batch-operate-container">
       <el-select
@@ -153,48 +149,33 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         layout="total, sizes,prev, pager, next,jumper"
-        :current-page.sync="listQuery.pageNum"
-        :page-size="listQuery.pageSize"
+        :current-page="listQuery.page"
+        :page-size="listQuery.limit"
         :page-sizes="[5,10,15]"
         :total="total">
       </el-pagination>
     </div>
-    <el-dialog
-      title="关闭订单"
-      :visible.sync="closeOrder.dialogVisible" width="30%">
-      <span style="vertical-align: top">操作备注：</span>
-      <el-input
-        style="width: 80%"
-        type="textarea"
-        :rows="5"
-        placeholder="请输入内容"
-        v-model="closeOrder.content">
-      </el-input>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="closeOrder.dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="handleCloseOrderConfirm">确 定</el-button>
-      </span>
-    </el-dialog>
+
     <!--<logistics-dialog v-model ="logisticsDialogVisible"></logistics-dialog>-->
   </div>
 </template>
 <script>
-  import {fetchList,closeOrder,deleteOrder} from '@/api/order'
-  import {formatDate} from '@/utils/date';
-  // import LogisticsDialog from '@/views/oms/order/components/logisticsDialog';
+  import { GetDataByList, closeOrder, GetIdByDel } from '@/api/salesman'
+  import { PostRoleByUpdate } from '@/api/wechatuser'
+
+  import waves from '@/directive/waves'
+
   const defaultListQuery = {
-    pageNum: 1,
-    pageSize: 10,
-    orderSn: null,
-    receiverKeyword: null,
-    status: null,
-    orderType: null,
-    sourceType: null,
-    createTime: null,
-  };
+    page: 1,
+    limit: 10
+
+  }
   export default {
-    name: "orderList",
-    components:{},
+    name: 'orderList',
+    components: {},
+    directives: {
+      waves
+    },
     data() {
       return {
         listQuery: Object.assign({}, defaultListQuery),
@@ -203,10 +184,10 @@
         total: null,
         operateType: null,
         multipleSelection: [],
-        closeOrder:{
-          dialogVisible:false,
-          content:null,
-          orderIds:[]
+        closeOrder: {
+          dialogVisible: false,
+          content: null,
+          orderIds: []
         },
         statusOptions: [
           {
@@ -252,141 +233,121 @@
         ],
         operateOptions: [
           {
-            label: "批量发货",
+            label: '设为店长',
             value: 1
           },
           {
-            label: "关闭订单",
+            label: '社会',
             value: 2
           },
           {
-            label: "删除订单",
+            label: '删除订单',
             value: 3
           }
         ],
-        logisticsDialogVisible:false
+        logisticsDialogVisible: false
       }
     },
     created() {
-      this.getList();
+      this.getList()
     },
     filters: {
-      formatCreateTime(time) {
-        let date = new Date(time);
-        return formatDate(date, 'yyyy-MM-dd hh:mm:ss')
-      },
-      formatPayType(value) {
+
+      nature(value) {
         if (value === 1) {
-          return '支付宝';
-        } else if (value === 2) {
-          return '微信';
+          return '正式用户'
         } else {
-          return '未支付';
+          return '游客'
         }
       },
-      formatSourceType(value) {
+
+      statusFilter(value) {
         if (value === 1) {
-          return 'APP订单';
+          return '是'
         } else {
-          return 'PC订单';
+          return '否'
         }
-      },
-      formatStatus(value) {
-        if (value === 1) {
-          return '待发货';
-        } else if (value === 2) {
-          return '已发货';
-        } else if (value === 3) {
-          return '已完成';
-        } else if (value === 4) {
-          return '已关闭';
-        } else if (value === 5) {
-          return '无效订单';
-        } else {
-          return '待付款';
-        }
-      },
+      }
+
     },
     methods: {
+      handleShop() {
+        this.operateType = 1
+        this.handleBatchOperate()
+      },
+      handleSalesman() {
+        this.operateType = 2
+        this.handleBatchOperate()
+      },
       handleResetSearch() {
-        this.listQuery = Object.assign({}, defaultListQuery);
+        this.listQuery = Object.assign({}, defaultListQuery)
       },
       handleSearchList() {
-        this.listQuery.pageNum = 1;
-        this.getList();
+        this.listQuery.page = 1
+        this.getList()
       },
-      handleSelectionChange(val){
-        this.multipleSelection = val;
+      handleSelectionChange(val) {
+        this.multipleSelection = val
       },
-      handleViewOrder(index, row){
-        this.$router.push({path:'/oms/orderDetail',query:{id:row.id}})
+      handleViewOrder(index, row) {
+        this.$router.push({ path: '/oms/orderDetail', query: { id: row.id } })
       },
-      handleCloseOrder(index, row){
-        this.closeOrder.dialogVisible=true;
-        this.closeOrder.orderIds=[row.id];
+      handleCloseOrder(index, row) {
+        this.closeOrder.dialogVisible = true
+        this.closeOrder.orderIds = [row.id]
       },
-      handleDeliveryOrder(index, row){
-        let listItem = this.covertOrder(row);
-        this.$router.push({path:'/oms/deliverOrderList',query:{list:[listItem]}})
+      handleDeliveryOrder(index, row) {
+        let listItem = this.covertOrder(row)
+        this.$router.push({ path: '/oms/deliverOrderList', query: { list: [listItem] } })
       },
-      handleViewLogistics(index, row){
-        this.logisticsDialogVisible=true;
+      handleViewLogistics(index, row) {
+        this.logisticsDialogVisible = true
       },
-      handleDeleteOrder(index, row){
-        let ids=[];
-        ids.push(row.id);
-        this.deleteOrder(ids);
+      handleDeleteOrder(index, row) {
+        let ids = []
+        ids.push(row.id)
+        this.deleteOrder(ids)
       },
-      handleBatchOperate(){
-        if(this.multipleSelection==null||this.multipleSelection.length<1){
+      handleBatchOperate() {
+        if (this.multipleSelection == null || this.multipleSelection.length < 1) {
           this.$message({
-            message: '请选择要操作的订单',
+            message: '最少选择一项',
             type: 'warning',
             duration: 1000
-          });
-          return;
+          })
+          return
         }
-        if(this.operateType===1){
-          //批量发货
-          let list=[];
-          for(let i=0;i<this.multipleSelection.length;i++){
-            if(this.multipleSelection[i].status===1){
-              list.push(this.covertOrder(this.multipleSelection[i]));
-            }
+        let ids = []
+        for (let i = 0; i < this.multipleSelection.length; i++) {
+          ids.push(this.multipleSelection[i].id)
+        }
+       if (this.operateType === 2) {
+          var temp={
+            ids,
+            field:'is_salesman',
+            status:2
+
           }
-          if(list.length===0){
-            this.$message({
-              message: '选中订单中没有可以发货的订单',
-              type: 'warning',
-              duration: 1000
-            });
-            return;
-          }
-          this.$router.push({path:'/oms/deliverOrderList',query:{list:list}})
-        }else if(this.operateType===2){
-          //关闭订单
-          this.closeOrder.orderIds=[];
-          for(let i=0;i<this.multipleSelection.length;i++){
-            this.closeOrder.orderIds.push(this.multipleSelection[i].id);
-          }
-          this.closeOrder.dialogVisible=true;
-        }else if(this.operateType===3){
+          PostRoleByUpdate(temp).then(res=>{
+            this.getList()
+          })
+        } else if (this.operateType === 3) {
           //删除订单
-          let ids=[];
-          for(let i=0;i<this.multipleSelection.length;i++){
-            ids.push(this.multipleSelection[i].id);
+          let ids = []
+          for (let i = 0; i < this.multipleSelection.length; i++) {
+            ids.push(this.multipleSelection[i].id)
           }
-          this.deleteOrder(ids);
+          this.deleteOrder(ids)
         }
       },
-      handleSizeChange(val){
-        this.listQuery.pageNum = 1;
-        this.listQuery.pageSize = val;
-        this.getList();
+      handleSizeChange(val) {
+        this.listQuery.page = 1
+        this.listQuery.limit = val
+        this.getList()
       },
-      handleCurrentChange(val){
-        this.listQuery.pageNum = val;
-        this.getList();
+      handleCurrentChange(val) {
+        this.listQuery.page = val
+        this.getList()
       },
       handleCloseOrderConfirm() {
         if (this.closeOrder.content == null || this.closeOrder.content === '') {
@@ -394,82 +355,105 @@
             message: '操作备注不能为空',
             type: 'warning',
             duration: 1000
-          });
-          return;
+          })
+          return
         }
-        let params = new URLSearchParams();
-        params.append('ids', this.closeOrder.orderIds);
-        params.append('note', this.closeOrder.content);
-        closeOrder(params).then(response=>{
-          this.closeOrder.orderIds=[];
-          this.closeOrder.dialogVisible=false;
-          this.getList();
+        let params = new URLSearchParams()
+        params.append('ids', this.closeOrder.orderIds)
+        params.append('note', this.closeOrder.content)
+        closeOrder(params).then(response => {
+          this.closeOrder.orderIds = []
+          this.closeOrder.dialogVisible = false
+          this.getList()
           this.$message({
             message: '修改成功',
             type: 'success',
             duration: 1000
-          });
-        });
+          })
+        })
       },
       getList() {
-        this.listLoading = true;
-        fetchList(this.listQuery).then(response => {
-          this.listLoading = false;
-          this.list = response.data.list;
-          this.total = response.data.total;
-        });
+        this.listLoading = true
+        GetDataByList(this.listQuery).then(response => {
+          this.listLoading = false
+          this.list = response.data.data
+          console.log(this.list)
+          this.total = response.data.total
+        })
       },
-      deleteOrder(ids){
+      deleteOrder(ids) {
         this.$confirm('是否要进行该删除操作?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          let params = new URLSearchParams();
-          params.append("ids",ids);
-          deleteOrder(params).then(response=>{
+          let params = new URLSearchParams()
+          params.append('id', ids)
+          GetIdByDel(params).then(response => {
             this.$message({
               message: '删除成功！',
               type: 'success',
               duration: 1000
-            });
-            this.getList();
-          });
+            })
+            this.getList()
+          })
         })
       },
-      covertOrder(order){
-        let address=order.receiverProvince+order.receiverCity+order.receiverRegion+order.receiverDetailAddress;
-        let listItem={
-          orderId:order.id,
-          orderSn:order.orderSn,
-          receiverName:order.receiverName,
-          receiverPhone:order.receiverPhone,
-          receiverPostCode:order.receiverPostCode,
-          address:address,
-          deliveryCompany:null,
-          deliverySn:null
-        };
-        return listItem;
+      covertOrder(order) {
+        let address = order.receiverProvince + order.receiverCity + order.receiverRegion + order.receiverDetailAddress
+        let listItem = {
+          orderId: order.id,
+          orderSn: order.orderSn,
+          receiverName: order.receiverName,
+          receiverPhone: order.receiverPhone,
+          receiverPostCode: order.receiverPostCode,
+          address: address,
+          deliveryCompany: null,
+          deliverySn: null
+        }
+        return listItem
       }
     }
   }
 </script>
-<style lang="scss"  scoped>
+<style lang="scss" rel="stylesheet/scss" scoped>
   .input-width {
     width: 203px;
   }
-  .search>>> .el-form-item__label{
+
+  .search > > > .el-form-item__label {
     font-size: 12px;
   }
-  .search{
+
+  .search {
 
   }
 
-  .el-form-item{
-    label{
+  .el-form-item {
+    label {
       font-weight: 400 !important;
       font-size: 12px;
     }
+  }
+
+  .app-container > > > thead {
+    color: #595961;
+    font-size: 12px;
+  }
+
+  .app-container > > > .cell {
+    /*display: flex;*/
+    div {
+      color: #595961;
+      font-size: 12px;
+    }
+  }
+
+  .headimgurl {
+    width: 36px;
+    height: 36px;
+    border-radius: 4px;
+    margin-right: 10px;
   }
 
 </style>

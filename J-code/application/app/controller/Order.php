@@ -35,7 +35,9 @@ class Order extends Base
                 $where[] = ['status', 'eq', $data['status']];
             }
         }
-        $res = OrderModel::with(['goods'])->where($where)->paginate($data['limit'], false, ['query' => $data['page']]);
+        $res = OrderModel::with(['goods'])
+            ->order('id desc')
+            ->where($where)->paginate($data['limit'], false, ['query' => $data['page']]);
         ajax_return_ok($res);
     }
 
@@ -51,6 +53,7 @@ class Order extends Base
                 $order['out_trade_no'] = $data['out_trade_no'];
             }
         }
+        $order['paymentTime'] = time();
         OrderModel::where($where)->data($order)->update();
         ajax_return_ok($data['id']);
     }
@@ -69,8 +72,8 @@ class Order extends Base
         $res = OrderModel::where('id', $data['id'])->data(['status' => $data['status']])->update();
         $order = OrderModel::where('id', $data['id'])->find();
         if ((int)$data['status'] === 4) {
-            dump(1);
-            ShopModel::where('id',$order['shop_id'])->setInc('balance',$order['totalPrice']);
+            OrderModel::where('id', $data['id'])->data(['receiveTime' => time()])->update();
+            ShopModel::where('id', $order['shop_id'])->setInc('balance', $order['totalPrice']);
         }
         ajax_return_ok($res);
     }
@@ -80,7 +83,7 @@ class Order extends Base
     {
         $data = input('param.');
         $res = EvaluateModel::create($data);
-        OrderModel::where('id', $data['order_id'])->data(['status' => 5])->update();
+        OrderModel::where('id', $data['order_id'])->data(['status' => 5,'commentTime'=>time()])->update();
         ajax_return_ok($res);
     }
 
