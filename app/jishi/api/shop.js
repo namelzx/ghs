@@ -13,6 +13,18 @@ class ShopModel extends HTTP {
     this.request(params)
   }
 
+  PostDataByWithdrawal(data, res) {
+    var params = {
+      url: 'shop/PostDataByWithdrawal',//接口路径
+      method: 'post', //请求方式
+      data,
+      success: res
+    }
+    this.request(params)
+  }
+
+  
+
   GetUserIdByInfo(user_id, res) {
     var params = {
       url: 'shop/GetUserIdByInfo',//接口路径

@@ -1,4 +1,5 @@
 <!--pages/order/index.wxml-->
+<van-dialog id="van-dialog" />
 
 <view class="boutique">
 		<view class="boutique_top">

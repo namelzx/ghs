@@ -14,6 +14,7 @@ use app\app\model\UserModel;
 class User extends System
 {
 
+
     public function GetDataByList()
     {
         $data = input('param.');

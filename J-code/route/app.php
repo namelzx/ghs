@@ -67,6 +67,13 @@ Route::group('api/app/', function () {
     Route::post('user/PostdataByDel', 'app/user/PostdataByDel');//删除商品
 
 
+    Route::get('user/GetUserCommissByInfo', 'app/user/GetUserCommissByInfo');//获取用户佣金体系
+
+    Route::post('user/GetUserWithdrawlByList', 'app/user/GetUserWithdrawlByList');//获取用户佣金体系
+
+
+
+
     /**
      * 城市管理
      */
@@ -106,6 +113,8 @@ Route::group('api/app/', function () {
 
     Route::rule('shop/PostAudheByAdd', 'app/Shop/PostAudheByAdd');//用户提现信息认证
     Route::rule('shop/CheUserByAudhe', 'app/Shop/CheUserByAudhe');//用户提现信息认证
+
+    Route::rule('shop/PostDataByWithdrawal', 'app/Shop/PostDataByWithdrawal');//用户提现
 
 
     /**

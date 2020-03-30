@@ -65,6 +65,18 @@ class UserModel extends HTTP {
     }
     this.request(params)
   }
+
+  GetUserCommissByInfo(id, res) {
+    var params = {
+      url: 'user/GetUserCommissByInfo',//接口路径
+      method: 'get', //请求方式
+      data: { id },
+      success: res
+    }
+    this.request(params)
+  }
+
+  
   GetUserGoodsByList(query, res) {
     var params = {
       url: 'user/GetUserGoodsByList',//接口路径
@@ -95,6 +107,18 @@ class UserModel extends HTTP {
   }
 
 
+  GetUserWithdrawlByList(data, res) {
+    var params = {
+      url: 'user/GetUserWithdrawlByList',//接口路径
+      method: 'post', //请求方式
+      data,
+      success: res
+    }
+    this.request(params)
+  }
+
+
+  
   
   
 }

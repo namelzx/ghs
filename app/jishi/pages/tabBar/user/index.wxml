@@ -58,6 +58,18 @@
     
   </view>
 
+  <view class='bar-menu'>
+    <view  class='bar-menu-item' catchtap="toUrl" data-url="/pages/tabBar/user/invite/invite">
+    
+      <view class='bar-menu-item-left'>
+       
+        <text>佣金</text>
+      </view>
+      <view class='bar-menu-item-right'>></view>
+    </view>
+    
+  </view>
+
 
 
 

@@ -12,6 +12,8 @@ namespace app\app\controller;
 use app\app\model\OrderModel;
 use app\app\model\ShopModel;
 use app\app\model\UserAudheModel;
+use app\app\model\UserModel;
+use app\common\model\WithdrawalModel;
 
 class Shop extends Base
 {
@@ -61,7 +63,7 @@ class Shop extends Base
     public function GetUserIdByInfo()
     {
         $data = input('param.');
-        $res = ShopModel::with(['community','user'])->where('user_id', $data['user_id'])->find();
+        $res = ShopModel::with(['community', 'user'])->where('user_id', $data['user_id'])->find();
         ajax_return_ok($res);
     }
 
@@ -102,6 +104,7 @@ class Shop extends Base
         $data = input('param.');
         $cheaudhe = UserAudheModel::where('user_id', $data['user_id'])->count();
         if ($cheaudhe < 1) {
+            $data['status'] = 1;
             $res = UserAudheModel::create($data);
             ajax_return_ok($res);
         }
@@ -116,5 +119,17 @@ class Shop extends Base
         $data = input('param.');
         $cheaudhe = UserAudheModel::where('user_id', $data['user_id'])->find();
         ajax_return_ok($cheaudhe);
+    }
+
+    public function PostDataByWithdrawal()
+    {
+        $data = input('param.');
+        $res = WithdrawalModel::create($data);
+        if ($data['type'] === 1) {
+            ShopModel::where('user_id', $data['user_id'])->setDec('balance', $data['money']);
+        } else {
+            UserModel::where('id', $data['user_id'])->setDec('available_commission', $data['money']);
+        }
+        ajax_return_ok($res);
     }
 }

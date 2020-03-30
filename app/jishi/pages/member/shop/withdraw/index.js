@@ -13,6 +13,7 @@ Page({
    */
   data: {
     audhe:{},
+    info:{},
   },
 
   /**
@@ -23,19 +24,9 @@ Page({
   },
 
   onNotice() {
-
-    if (this.data.audhe) {
-      if (this.data.audhe.status === 2) {
-        wx.showToast({
-          title: '您的认证正在审核中',
-          icon: 'none'
-        })
-      }
-    }else{
-      wx.navigateTo({
-        url: '/pages/notice/index'
-      })
-    }
+    wx.navigateTo({
+      url: '/pages/member/shop/withdraw/withdraw/index?type=1'
+    })
    
   },
   onAccount() {
@@ -50,7 +41,7 @@ Page({
   },
   onTogeAttes() {
     if(this.data.audhe){
-      if (this.data.audhe.status===2){
+      if (this.data.audhe.status===1){
         wx.showToast({
           title: '您的认证正在审核中',
           icon:'none'
@@ -80,6 +71,14 @@ Page({
         audhe:res.data
       })
     })
+
+    shopmodel.GetUserIdByInfo(userinfo.id, res => {
+      console.log(res)
+      this.setData({
+        info: res.data
+      })
+    })
+    
   },
 
   /**

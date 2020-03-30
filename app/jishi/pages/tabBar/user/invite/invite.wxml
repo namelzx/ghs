@@ -1,0 +1,42 @@
+<!--pages/invite/invite.wxml-->
+
+<view class="data-box">
+      <view class="data-box-tx"><image src="{{userinfo.avatarUrl}}" style='border-radius:50%;'></image></view>
+      <text>{{userinfo.nickName}}</text>
+
+      <view class='gow' catchtap='wanr'>去提现</view>
+</view>
+
+
+<view class="money-box">
+     <view class="item"> 
+          <view>总佣金</view>
+          <text>￥{{commission.cumulative_commission}}</text>
+     </view>
+     <view class="item">
+          <view>待审核金额</view>
+          <text>￥{{commission.auditcommiss}}</text>
+     </view>
+     <view class="item">
+          <view>已提现</view>
+          <text>￥{{commission.succscommiss}}</text>
+     </view>
+     <view class="item-x"></view>
+     <view class="item">
+          <view>可提现</view>
+          <text>￥{{commission.available_commission}}</text>
+     </view>
+</view>
+
+
+<view class="list-box">
+     
+     <!-- <navigator class="list-item" url='../invite/commission/commission'>
+       <text>佣金明细</text> -->
+     <!-- </navigator> -->
+
+     <navigator class="list-item" url='../invite/withdrawalsrecord/index'>
+       <text>提现记录</text>
+     </navigator>
+
+</view>

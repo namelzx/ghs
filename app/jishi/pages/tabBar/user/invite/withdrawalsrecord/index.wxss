@@ -1,0 +1,40 @@
+/* pages/invite/withdrawalsrecord/withdrawalsrecord.wxss */
+
+.item{
+   border-bottom: 3rpx solid #eee;
+   width: 100%;
+   box-sizing: border-box;
+   padding:  20rpx;
+   
+}
+.item > view{
+   display: flex;
+   justify-content: space-between;
+}
+
+.item-h1{
+    font-size: 28rpx;
+    color:#333;
+}
+
+.item-jg{
+   font-size: 26rpx;
+   color:#f2202d;
+}
+
+.item-sj{
+   font-size: 24rpx;
+   color:#929292;
+   margin-top: 10rpx;
+}
+
+.green{
+  color: green;
+}
+.gray{
+  color: #ccc;
+}
+.nolog{
+  text-align: center;
+  color: #666
+}

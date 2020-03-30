@@ -88,7 +88,6 @@ class Community extends System
 
     }
 
-
     public function getCoord($address)
     {
         $url = 'https://apis.map.qq.com/ws/geocoder/v1/?address=' . $address . '&key=XB2BZ-J7PW3-DIZ3P-YC34A-BWFW7-ELBOI';
@@ -97,5 +96,15 @@ class Community extends System
             return $res['message'];
         }
         return $res['result']['location'];
+    }
+
+    /**
+     * 获取所有的小区
+     */
+    public function GetCommunityByall()
+    {
+        $res = CommunityModel::all();
+        ajax_return_ok($res);
+
     }
 }

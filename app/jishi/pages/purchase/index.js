@@ -368,6 +368,7 @@ let pageObj = {
     let cart = wx.getStorageSync('buy')
     
     let shop=wx.getStorageSync('is_shop')
+    console.log(cart.products)
     let queryObj = {
       pay_type: 1,
       totalPrice: this.data.state.goodsPrice,
@@ -377,7 +378,8 @@ let pageObj = {
       mobile: this.data.data.buyerPhone, //手机号码
       addressText: this.data.data.addressText, //收货地址
       buyerText: this.data.data.buyerText, //订单备注
-      openid:userinfo.openid
+      openid:userinfo.openid,
+      type:1
     }
     if (shop.is_shop===true){
       queryObj.dis_id=shop.user_id

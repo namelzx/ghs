@@ -13,6 +13,9 @@ use app\app\model\EvaluateModel;
 use app\app\model\GoodsModel;
 use app\app\model\OrderModel;
 use app\app\model\ShopModel;
+use app\app\model\UserModel;
+use app\common\model\CommissionModel;
+use app\common\model\OrderGoodsModel;
 
 class Order extends Base
 {
@@ -73,17 +76,35 @@ class Order extends Base
         $order = OrderModel::where('id', $data['id'])->find();
         if ((int)$data['status'] === 4) {
             OrderModel::where('id', $data['id'])->data(['receiveTime' => time()])->update();
-            ShopModel::where('id', $order['shop_id'])->setInc('balance', $order['totalPrice']);
-        }
-        ajax_return_ok($res);
-    }
+            ShopModel::where('user_id', $order['shop_id'])->setInc('balance', $order['totalPrice']);
 
+
+            $is_shop = UserModel::where('id', $order['dis_id'])->value('is_shop');
+
+            if (!empty($is_shop) && $is_shop) {
+                UserModel::where('id', $order['dis_id'])->setInc('available_commission', (float)$order['head_price']);
+                UserModel::where('id', $order['dis_id'])->setInc('cumulative_commission', (float)$order['head_price']);
+                $temp = [
+                    'title' => '分享佣金',
+                    'order_id' => $data['id'],
+                    'price' => $order['head_price'],
+                    'user_id' => $order['dis_id'],
+                ];
+                CommissionModel::create($temp);
+            }
+            $allgoods = OrderGoodsModel::where('order_id', $data['id'])->select();
+            foreach ($allgoods as $i => $item) {
+                GoodsModel::where('id', $item['goods_id'])->setInc('sales', 1);
+            }
+        }
+//        ajax_return_ok($res);
+    }
 
     public function PostevakuteByAdd()
     {
         $data = input('param.');
         $res = EvaluateModel::create($data);
-        OrderModel::where('id', $data['order_id'])->data(['status' => 5,'commentTime'=>time()])->update();
+        OrderModel::where('id', $data['order_id'])->data(['status' => 5, 'commentTime' => time()])->update();
         ajax_return_ok($res);
     }
 

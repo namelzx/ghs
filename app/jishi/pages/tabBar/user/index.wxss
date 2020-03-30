@@ -130,7 +130,7 @@
 
 .user-info-container{
   width: 100%;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   padding-bottom: 40rpx;
   box-sizing: border-box;
   position: absolute;
@@ -825,4 +825,96 @@
   font-size:26rpx;
   font-weight:500;
   color:rgba(204,204,204,1);
+}
+
+
+
+.bar-menu{
+  width: 90%;
+  background: #fff;
+  margin: auto;
+  /* padding-left: 30rpx; */
+  /* padding-bottom: 87rpx; */
+  margin-top: 100rpx;
+  /* padding-left: 24rpx;
+  margin-bottom: 70rpx; */
+  
+}
+.bar-menu-item{
+  height:80rpx;
+  background: #fff;
+  border-bottom: solid #eaeaea 2rpx;
+}
+
+.bar-menu-item{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+.bar-menu-item-left{
+  font-size: 28rpx;
+  color: #333333;
+  display: flex;
+  align-items: center;
+}
+.bar-menu-item-left text{
+  margin-left: 30rpx;
+}
+.bar-menu-item image{
+  width: 25rpx;
+  height:25rpx;
+  margin-right: 10rpx;
+  margin-left: 24rpx;
+}
+.bar-menu-item-right{
+  margin-right: 24rpx;
+  color: #9a9a9a;
+  font-size: 26rpx;
+}
+.consultation_btn{
+  width: 69rpx;
+  height:142rpx;
+  position: fixed;
+  bottom: 110rpx;
+  right: 24rpx;
+  font-size: 23rpx;
+  color: #fff;
+}
+.consultation_btn_img{
+  width: 69rpx;
+  height:142rpx;
+}
+/* 中部导航图标大小 */
+.coupon{
+  width:47rpx;
+  height:39rpx;
+}
+.vip{
+  width: 54rpx;
+  height:40rpx;
+}
+.book{
+  width:37rpx;
+  height:42rpx;
+}
+.qs{
+  width:36rpx;
+  height:40rpx;
+}
+.wifi{
+  width: 46rpx;
+  height: 31rpx;
+}
+.p_movecar{
+  width: 38rpx;
+  height: 38rpx;
+}
+.post{
+  width: 33rpx;
+  height:33rpx;
+}
+.addr{
+  width: 34rpx;
+  height: 36rpx;
 }

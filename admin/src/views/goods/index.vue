@@ -1,189 +1,187 @@
 <template>
   <div class="app-container">
-    <!-- 搜索 -->
-    <div v-if="showSearch" class="filter-container">
-      <el-form :inline="true" :model="listQuery" class="form-inline">
-        <el-form-item label="">
-          <el-input v-model="listQuery.title" placeholder="名称" clearable size="small"/>
-        </el-form-item>
-        <el-form-item label="">
-          <el-select v-model="listQuery.status" placeholder="状态" clearable size="small">
-            <el-option label="全部" value="-1"/>
-            <el-option label="正常" value="1"/>
-            <el-option label="禁用" value="0"/>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="">
-          <el-select v-model="listQuery.type" placeholder="商品所属类型" clearable size="small">
-            <el-option label="全部" value="-1"/>
-            <el-option label="平台" value="1"/>
-            <el-option label="商家" value="2"/>
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <el-button v-waves type="primary" icon="el-icon-search" size="small" @click="handleFilter">搜索</el-button>
-        </el-form-item>
-        <el-form-item>
-          <el-button v-waves type="warning" icon="el-icon-refresh" size="small" @click="handleFilterClear">重置
-          </el-button>
-        </el-form-item>
-      </el-form>
-    </div>
+    <el-card class="filter-container" shadow="never">
+      <div>
+        <i class="el-icon-search"></i>
+        <span>筛选搜索</span>
+        <el-button
+          style="float:right"
+          type="primary"
+          @click="handleFilter()"
+          size="small">
+          查询搜索
+        </el-button>
+        <el-button
+          style="float:right;margin-right: 15px"
+          @click="handleResetSearch()"
+          size="small">
+          重置
+        </el-button>
+      </div>
+      <div style="margin-top: 15px" class="search">
+        <el-form :inline="true" :model="listQuery" size="small" label-width="80px">
+          <el-form-item label="输入搜索：">
+            <el-input v-model="listQuery.out_trade_no" size="mini" class="input-width" placeholder="订单编号"></el-input>
+          </el-form-item>
+          <el-form-item label="选择小区：">
+            <el-select
+              size="mini"
+              clearable
+              v-model="listQuery.community_id"
+              placeholder="选择所属小区"
+            >
+              <el-option v-for="(item,index) in community" :key="item.id" :label="item.name" :value="item.id"/>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="商品分类：">
+            <el-select
+              clearable
+              size="mini"
+              v-model="listQuery.category_id"
+              placeholder="选择商品分类"
+            >
+              <el-option v-for="(item,index) in category" :key="item.id" :label="item.name" :value="item.id"/>
+            </el-select>
+          </el-form-item>
+        </el-form>
+      </div>
+    </el-card>
+    <el-card class="operate-container" shadow="never">
+      <i class="el-icon-tickets"></i>
+      <span>商家商品列表</span>
 
-    <!-- 操作 -->
-    <el-row style="margin-bottom: 10px;">
-      <el-col :xs="24" :sm="24" :lg="24">
-        <el-tooltip content="刷新" placement="top">
-          <el-button v-waves type="warning" icon="el-icon-refresh" circle @click="handleFilterClear"/>
-        </el-tooltip>
-        <el-tooltip content="添加" placement="top">
-          <el-button v-waves type="success" icon="el-icon-plus" circle @click="handleCreate"/>
-        </el-tooltip>
-        <el-tooltip content="搜索" placement="top">
-          <el-button v-waves type="primary" icon="el-icon-search" circle @click="showSearch = !showSearch"/>
-        </el-tooltip>
-        <el-tooltip content="删除" placement="top">
-          <el-button v-waves :loading="deleting" :disabled="buttonDisabled" type="danger" icon="el-icon-delete" circle
-                     @click="handleDeleteAll()"/>
-        </el-tooltip>
-        <el-tooltip content="更多" placement="top">
-          <el-dropdown trigger="click" placement="bottom" style="margin-left: 10px;" @command="handleCommand">
-            <el-button :disabled="buttonDisabled" type="Info" circle>
-              <i class="el-icon-more"/>
-            </el-button>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="1">设为上架</el-dropdown-item>
-              <el-dropdown-item command="2">设为下架</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </el-tooltip>
-
-      </el-col>
-    </el-row>
-    <!-- 表格 -->
-    <el-table
-      v-loading="listLoading"
-      :key="tableKey"
-      :data="list"
-      border
-      fit
-      highlight-current-row
-      style="width: 100%;"
-      @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55"/>
-      <el-table-column label="ID" align="center" width="65">
-        <template slot-scope="scope">
-          <span>{{ scope.row.id }}</span>
-        </template>
-      </el-table-column>
+    </el-card>
+    <div class="table-container">
+      <el-table
+        v-loading="listLoading"
+        :key="tableKey"
+        :data="list"
+        border
+        fit
+        highlight-current-row
+        style="width: 100%;"
+        @selection-change="handleSelectionChange">
+        <el-table-column type="selection" width="55"/>
+        <el-table-column label="ID" align="center" width="65">
+          <template slot-scope="scope">
+            <span>{{ scope.row.id }}</span>
+          </template>
+        </el-table-column>
 
 
-      <el-table-column label="商品名称" align="center" min-width="220px">
-        <template slot-scope="scope">
-          <span >{{ scope.row.name }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="封面图" align="center" min-width="120px">
-        <template slot-scope="scope">
-          <img class="headimgurl" :src="scope.row.images_url"/>
-        </template>
-      </el-table-column>
+        <el-table-column label="商品名称" align="center" min-width="220px">
+          <template slot-scope="scope">
+            <span>{{ scope.row.name }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="封面图" align="center" min-width="120px">
+          <template slot-scope="scope">
+            <img class="headimgurl" :src="scope.row.images_url"/>
+          </template>
+        </el-table-column>
 
-      <el-table-column label="库存" align="center" min-width="120px">
-        <template slot-scope="scope">
-          {{scope.row.inventory}}
-        </template>
-      </el-table-column>
+        <el-table-column label="库存" align="center" min-width="120px">
+          <template slot-scope="scope">
+            {{scope.row.inventory}}
+          </template>
+        </el-table-column>
 
-      <el-table-column label="成本价" align="center" min-width="120px">
-        <template slot-scope="scope">
-          {{scope.row.cost_price}}
-        </template>
-      </el-table-column>
+        <el-table-column label="成本价" align="center" min-width="120px">
+          <template slot-scope="scope">
+            {{scope.row.cost_price}}
+          </template>
+        </el-table-column>
 
-      <el-table-column label="市场价" align="center" min-width="120px">
-        <template slot-scope="scope">
-          {{scope.row.line_price}}
-        </template>
-      </el-table-column>
-      <el-table-column label="销售价" align="center" min-width="120px">
-        <template slot-scope="scope">
-          {{scope.row.price}}
-        </template>
-      </el-table-column>
+        <el-table-column label="市场价" align="center" min-width="120px">
+          <template slot-scope="scope">
+            {{scope.row.line_price}}
+          </template>
+        </el-table-column>
+        <el-table-column label="销售价" align="center" min-width="120px">
+          <template slot-scope="scope">
+            {{scope.row.price}}
+          </template>
+        </el-table-column>
 
-      <el-table-column label="销量" align="center" min-width="120px">
-        <template slot-scope="scope">
-          {{scope.row.sales}}
-        </template>
-      </el-table-column>
+        <el-table-column label="销量" align="center" min-width="120px">
+          <template slot-scope="scope">
+            {{scope.row.sales}}
+          </template>
+        </el-table-column>
 
-      <el-table-column label="设为爆款" width="80px" align="center">
-        <template slot-scope="scope">
+        <el-table-column label="设为爆款" width="80px" align="center">
+          <template slot-scope="scope">
           <span
             :class="{'el-icon-success text-green':scope.row.faddish == 1,'el-icon-error text-red':scope.row.faddish == 2}"
             @click="handleModifyFaddish(scope.$index,scope.row.id,scope.row.faddish)">
             {{ scope.row.faddish | statusFilter }}</span>
-        </template>
-      </el-table-column>
+          </template>
+        </el-table-column>
 
-      <el-table-column label="是否允许自提" width="80px" align="center">
-        <template slot-scope="scope">
+        <el-table-column label="是否允许自提" width="80px" align="center">
+          <template slot-scope="scope">
           <span
             :class="{'el-icon-success text-green':scope.row.is_store == 1,'el-icon-error text-red':scope.row.is_store == 2}"
             @click="handleModifyis_store(scope.$index,scope.row.id,scope.row.is_store)">
             {{ scope.row.is_store | statusFilter }}</span>
-        </template>
-      </el-table-column>
+          </template>
+        </el-table-column>
 
 
-
-
-      <el-table-column label="状态" width="80px" align="center">
-        <template slot-scope="scope">
+        <el-table-column label="状态" width="80px" align="center">
+          <template slot-scope="scope">
           <span
             :class="{'el-icon-success text-green':scope.row.status == 1,'el-icon-error text-red':scope.row.status == 2}"
             @click="handleModifyStatus(scope.$index,scope.row.id,scope.row.status)">
             {{ scope.row.status | statusFilter }}</span>
-        </template>
-      </el-table-column>
+          </template>
+        </el-table-column>
 
-      <el-table-column label="是否轮播推荐" width="120px" align="center">
-        <template slot-scope="scope">
+        <el-table-column label="是否轮播推荐" width="120px" align="center">
+          <template slot-scope="scope">
           <span
             :class="{'el-icon-success text-green':scope.row.is_banner == 1,'el-icon-error text-red':scope.row.is_banner == 2}"
             @click="handleModifyBannder(scope.$index,scope.row.id,scope.row.is_banner)">
             {{ scope.row.is_banner | statusFilter }}</span>
-        </template>
-      </el-table-column>
+          </template>
+        </el-table-column>
 
 
-      <el-table-column label="操作" fixed="right" align="center" width="120px" class-name="small-padding">
-        <template slot-scope="scope">
-          <el-tooltip content="编辑" placement="top">
-            <router-link :to="'/goods/edit/'+scope.row.id">
+        <el-table-column label="操作" fixed="right" align="center" width="120px" class-name="small-padding">
+          <template slot-scope="scope">
+            <el-tooltip content="编辑" placement="top">
+              <router-link :to="'/goods/edit/'+scope.row.id">
 
-            <el-button v-waves type="text" size="mini"
-              > 编辑
-              </el-button>
-            </router-link>
-          </el-tooltip>
-          <el-button v-waves :loading="scope.row.delete" type="text" size="mini"
-                     @click="handleDelete(scope.$index,scope.row.id)"> 删除
-          </el-button>
+                <el-button v-waves type="text" size="mini"
+                > 编辑
+                </el-button>
+              </router-link>
+            </el-tooltip>
+            <el-button v-waves :loading="scope.row.delete" type="text" size="mini"
+                       @click="handleDelete(scope.$index,scope.row.id)"> 删除
+            </el-button>
 
-        </template>
-      </el-table-column>
-    </el-table>
+          </template>
+        </el-table-column>
+      </el-table>
 
-    <!-- 分页 -->
-    <div class="pagination-container">
-      <el-pagination v-show="total>0" :current-page="listQuery.page" :page-sizes="[10,20,30, 50]"
-                     :page-size="listQuery.psize" :total="total" background
-                     layout="total, sizes, prev, pager, next, jumper" @size-change="handleSizeChange"
-                     @current-change="handleCurrentChange"/>
+
     </div>
 
+    <div class="pagination-container">
+      <el-pagination
+        background
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        layout="total, sizes,prev, pager, next,jumper"
+        :current-page="listQuery.page"
+        :page-size="listQuery.limit"
+        :page-sizes="[5,10,15]"
+        :total="total">
+      </el-pagination>
+    </div>
+
+    <!--<logistics-dialog v-model ="logisticsDialogVisible"></logistics-dialog>-->
   </div>
 </template>
 
@@ -191,6 +189,10 @@
   import { change, changeAll, del, delAll, GetDataByList } from '@/api/goods'
   import waves from '@/directive/waves'
   import { getArrByKey, pickerOptions } from '@/utils'
+
+  import { GetCommunityByall } from '@/api/community'
+
+  import { GetCategory } from '@/api/category'
 
   export default {
     name: 'Roles',
@@ -218,8 +220,11 @@
         listQuery: {
           page: 1,
           limit: 10,
-          title: ''
+          title: '',
+          type: 1
         },
+        category: [],
+        community: [],
         buttonDisabled: true,
         deleting: false,
         pickerOptions: pickerOptions,
@@ -228,6 +233,13 @@
     },
     watch: {},
     created() {
+      GetCommunityByall().then(res => {
+        this.community = res.data
+      })
+      GetCategory().then(res => {
+        this.category = res.data
+      })
+
       this.fetchList()
     },
     methods: {
@@ -463,9 +475,7 @@
     cursor: pointer;
   }
 
-
   /*tab*/
-
 
   .cate-bar {
     overflow-y: auto; /*可滑动*/
@@ -473,16 +483,16 @@
     display: -webkit-box;
     /*height 1.2rem;*/
     line-height: 1.2rem;
-    position :fixed;
+    position: fixed;
     top: 1rem;
-    background :#fff;
+    background: #fff;
     width: 100%;
-    z-index :100;
+    z-index: 100;
   }
 
   .bar-item {
     // width 17%;
-    padding :0 .1rem;
+    padding: 0 .1rem;
     text-align: center;
     color: #666;
     font-size: 0.4rem;
@@ -578,4 +588,48 @@
   }
 
 </style>
+
+
+<style lang="scss" rel="stylesheet/scss" scoped>
+  .input-width {
+    width: 203px;
+  }
+
+  .search > > > .el-form-item__label {
+    font-size: 12px;
+  }
+
+  .search {
+
+  }
+
+  .el-form-item {
+    label {
+      font-weight: 400 !important;
+      font-size: 12px;
+    }
+  }
+
+  .app-container > > > thead {
+    color: #595961;
+    font-size: 12px;
+  }
+
+  .app-container > > > .cell {
+    /*display: flex;*/
+    div {
+      color: #595961;
+      font-size: 12px;
+    }
+  }
+
+  .headimgurl {
+    width: 36px;
+    height: 36px;
+    border-radius: 4px;
+    margin-right: 10px;
+  }
+
+</style>
+
 

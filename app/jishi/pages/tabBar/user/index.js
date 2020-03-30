@@ -25,6 +25,15 @@ let pageObj = {
   },
 
   /**
+   * 去链接
+   */
+  toUrl(e){
+    let { url } = e.currentTarget.dataset
+   wx.navigateTo({
+     url
+   })
+  },
+  /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {

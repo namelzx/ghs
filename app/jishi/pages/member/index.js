@@ -1,5 +1,6 @@
 // pages/order/index.js
 const wxApi = require("../../utils/wxApi.js")
+import Dialog from '../../vant-weapp/dist/dialog/dialog';
 
 import {
   ShopModel
@@ -104,12 +105,36 @@ Page({
     shopmodel.GetUserIdByInfo(info.id, res => {
       console.log(res)
       if (res.data === null) {
-        wx.navigateTo({
-          url: '/pages/member/info/index',
-          success: function (res) { },
-          fail: function (res) { },
-          complete: function (res) { },
+    
+
+        wx.showModal({
+          title: '提示',
+          content: '请先完善信息，再使用卖家中心',
+          showCancel: false,
+          success(){
+            wx.navigateTo({
+              url: '/pages/member/info/index',
+              success: function (res) { },
+              fail: function (res) { },
+              complete: function (res) { },
+            })
+          }
         })
+
+        // Dialog.confirm({
+        //   title: '标题',
+        //   message: '弹窗内容'
+        // }).then(() => {
+        //   // on confirm
+        
+        // }).catch(() => {
+        //   // on cancel
+        //   wx.switchTab({
+        //     url: '/pages/index/index',
+        //   })
+        // });
+
+       
 
       }
     })

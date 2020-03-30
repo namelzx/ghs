@@ -1,0 +1,23 @@
+<form bindsubmit="formSubmit" reportSubmit="true">
+<view class="box">
+ 
+    <view class="item">
+        <view>可提现金额</view>
+        <text>￥{{info.balance}}</text>
+    </view>
+
+    <view class="item">
+        <view>最少提现</view>
+        <text>￥1.00</text>
+    </view>
+
+    <view class="item">
+        <view>请输入提现金额</view>
+        <input name="money"  type='number' placeholder='请输入你想要提现的金额'/>
+    </view>
+
+</view>
+
+<button type="warn" formType="submit" class='btn'>确认提现</button>
+
+  </form>

@@ -332,7 +332,8 @@ let pageObj = {
       mobile: this.data.data.buyerPhone, //手机号码
       addressText: this.data.data.addressText, //收货地址
       buyerText: this.data.data.buyerText, //订单备注
-      openid:userinfo.openid
+      openid:userinfo.openid,
+      type:2
     }
     orderModel.PostDataBycreateOrder(queryObj, res => {
 

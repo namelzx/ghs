@@ -30,3 +30,12 @@ export function PostDataBySave(data) {
     data
   })
 }
+
+
+
+export function GetCommunityByall() {
+  return request({
+    url: 'admin/Community/GetCommunityByall',
+    method: 'get',
+  })
+}

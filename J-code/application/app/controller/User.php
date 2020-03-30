@@ -10,6 +10,7 @@ namespace app\app\controller;
 
 use app\app\model\GoodsModel;
 use app\app\model\UserModel;
+use app\common\model\WithdrawalModel;
 use EasyWeChat\Factory;
 
 class User extends Base
@@ -139,6 +140,37 @@ class User extends Base
         $data = input('param.');
         $res = GoodsModel::where('id', 'in', $data['in_id'])->delete();
 
+        ajax_return_ok($res);
+    }
+
+    /**
+     * 获取用户佣金信息
+     */
+    public function GetUserCommissByInfo()
+    {
+        $data = input('param.');
+        $res = UserModel::where('id', $data['id'])->find();
+        $where = [
+            'user_id' => $data['id'],
+            'status' => 2,
+            'type' => 2,
+        ];
+        $res['auditcommiss'] = WithdrawalModel::where($where)->sum('money');
+        $where['status'] = 1;
+        $res['succscommiss'] = WithdrawalModel::where($where)->sum('money');
+        ajax_return_ok($res);
+    }
+
+    public function GetUserWithdrawlByList()
+    {
+
+        $data = input('param.');
+        $where = [];
+        if($data['user_id']){
+            $where[]=['user_id','eq',$data['user_id']];
+            $where[]=['type','eq',$data['type']];
+        }
+        $res = WithdrawalModel::where($where)->order('id desc')->select();
         ajax_return_ok($res);
     }
 

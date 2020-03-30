@@ -31,7 +31,10 @@
     "pages/supplier/protocol/index",
     "pages/supplier/protocol/phone/index",
     "pages/supplier/protocol/datum/index",
-    "pages/supplier/protocol/hint/index"
+    "pages/supplier/protocol/hint/index",
+    "pages/member/shop/withdraw/withdraw/index",
+    "pages/tabBar/user/invite/invite",
+    "pages/tabBar/user/invite/withdrawalsrecord/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -58,12 +61,6 @@
         "text": "购物车"
       },
       {
-        "iconPath": "./imgs/supplier-1.png",
-        "selectedIconPath": "./imgs/supplier-2.png",
-        "pagePath": "pages/supplier/index",
-        "text": "供应商"
-      },
-      {
         "iconPath": "./imgs/hui-2.png",
         "selectedIconPath": "./imgs/hui-1.png",
         "pagePath": "pages/member/index",
@@ -75,6 +72,7 @@
         "pagePath": "pages/tabBar/user/index",
         "text": "我的"
       }
+      
     ]
   },
   "permission": {

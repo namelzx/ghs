@@ -121,7 +121,6 @@ Page({
 
   addProduct() {
     let data = this.data.data
-    console.log(data)
     shopModel.PostDataByAdd(data,res=>{
        wx.navigateBack({
         delta: 1,
@@ -219,11 +218,12 @@ Page({
           'community_name': res.data.community.name
         })
       }
-      if(res.data.community){
+      if(res.data){
 
         this.setData({
           "state.communityObj": res.data.community,
         })
+        
       
       }else{
         let communityObj = wx.getStorageSync("communityObj");
@@ -235,6 +235,11 @@ Page({
             "state.communityObj": commun,
           })
           this.data.data.community_id = commun.id
+        }else{
+          wx.showToast({
+            title: '当前未选择小区',
+            icon:'none',
+          })
         }
       }
       

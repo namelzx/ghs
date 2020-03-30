@@ -28,7 +28,8 @@ class Pay extends Base
             'order_no' => time(),
             'addressText' => $data['addressText'],
             'buyerText' => $data['buyerText'],
-            'create_time' => time()
+            'create_time' => time(),
+            'type'=>$data['type']
         ];
         if (!empty($data['dis_id'])) {
             $temp['dis_id'] = $data['dis_id'];
@@ -40,8 +41,11 @@ class Pay extends Base
         $temp['head_price'] = 0;
         $temp['manager_price'] = 0;
         foreach ($data['items'] as $i => $item) {
-            $temp['head_price'] = $temp['head_price'] + floatval($item['head_price']);
-            $temp['manager_price'] = $temp['manager_price'] + floatval($item['manager_price']);
+            if (!empty($item['head_price'])) {
+
+                $temp['head_price'] = $temp['head_price'] + floatval($item['head_price']);
+                $temp['manager_price'] = $temp['manager_price'] + floatval($item['manager_price']);
+            }
         }
 
         $res = OrderModel::create($temp);

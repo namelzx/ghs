@@ -26,7 +26,6 @@ class Base extends Controller
     public function __construct()
     {
         parent::__construct();
-
         $this->config = [
             'app_id' => 'wxae80c2472ba27081',
             'secret' => 'ad22904510c570ce34510fd592e049fa',
@@ -37,7 +36,6 @@ class Base extends Controller
                 'file' => __DIR__ . '/wechat.log',
             ],
         ];
-
     }
 
 

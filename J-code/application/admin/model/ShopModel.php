@@ -13,7 +13,7 @@ use think\Model;
 
 class ShopModel extends Model
 {
-    protected $table = 'tp_shop';
+    protected $table = 'ee_shop';
     protected $createTime = 'create_time';
 
 

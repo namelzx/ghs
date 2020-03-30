@@ -28,6 +28,14 @@ class GoodsModel extends Model
         if (!empty($data['status'])) {
             $where[] = ['status', 'eq', $data['status']];
         }
+        if (!empty($data['type'])) {
+            $where[] = ['type', 'eq', $data['type']];
+        }
+
+
+           if (!empty($data['community'])) {
+               $where[] = ['community', 'eq', $data['community']];
+           }
         if (!empty($data['category_id'])) {
             $where[] = ['category_id', 'eq', $data['category_id']];
         }

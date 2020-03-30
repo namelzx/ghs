@@ -83,7 +83,6 @@
             </el-row>
 
 
-
             <el-row :gutter="20">
               <el-col :span="8">
                 <el-form-item label-width="100px" label="成本价:">
@@ -144,6 +143,25 @@
 
             </el-row>
 
+            <el-row :gutter="20">
+              <el-col :span="12">
+                <el-form-item label-width="100px" label="选择所属小区:">
+                  <el-select
+                    size="mini"
+                    prod="category_id"
+                    v-model="postForm.community_id"
+                    placeholder="选择所属小区"
+
+                  >
+                    <el-option v-for="(item,index) in community" :key="item.id" :label="item.name" :value="item.id"/>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+            </el-row>
+
+
+
 
             <el-row :gutter="20">
               <el-col :span="20">
@@ -162,7 +180,6 @@
 
               </el-col>
             </el-row>
-
 
 
           </div>
@@ -248,9 +265,11 @@
   import Divider from './Dropdown/Divider'
   import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
 
-  import { GetCategory } from '@/api/category'
-
   import { GetCategoryIdByItems, GetIdByDetails, PostDataBySave } from '@/api/goods'
+
+  import { GetCommunityByall } from '@/api/community'
+
+  import { GetCategory } from '@/api/category'
 
   import { GetLibrary } from '@/api/common'
 
@@ -308,7 +327,8 @@
         brand: [],
         img_list: [],
         tempRoute: {},
-        photo: []
+        photo: [],
+        community:[],
 
       }
     },
@@ -323,8 +343,11 @@
       }
     },
     created() {
-      this.postForm.img_list=[]
-      this.postForm.img_banner=[]
+      GetCommunityByall().then(res=>{
+        this.community=res.data
+      })
+      this.postForm.img_list = []
+      this.postForm.img_banner = []
       this.postForm = Object.assign({}, this.postForm)
       if (this.isEdit) {
         const id = this.$route.params && this.$route.params.id
@@ -339,15 +362,14 @@
     },
     methods: {
 
-
       handelbannerRemove(e) {
         this.postForm.img_banner = e
       },
 
       handelbanner(e) {
 
-        if(this.postForm.img_banner==null){
-          this.postForm.img_banner=[]
+        if (this.postForm.img_banner == null) {
+          this.postForm.img_banner = []
         }
 
         this.postForm.img_banner.push({ url: e })
@@ -368,14 +390,14 @@
         this.postForm.images_url = e
         this.postForm = Object.assign({}, this.postForm)
       },
-      HandelHont(e){
-        var that=this;
-        this.postForm.hot_img=e
+      HandelHont(e) {
+        var that = this
+        this.postForm.hot_img = e
         this.postForm = Object.assign({}, this.postForm)
       },
-      Handelhome(e){
-        var that=this;
-        this.postForm.home_img=e
+      Handelhome(e) {
+        var that = this
+        this.postForm.home_img = e
         this.postForm = Object.assign({}, this.postForm)
       },
 
@@ -396,9 +418,6 @@
             for (let i = 0; i < banner.length; i++) {
               this.postForm.img_banner.push({ url: banner[i] })
             }
-
-
-
 
           }
 
@@ -432,10 +451,9 @@
               newimg.push(img[i].url)
             }
 
-
             var banner = this.postForm.img_banner
             console.log(banner)
-            if (banner !=null) {
+            if (banner != null) {
               var newbanner = []
               for (let i = 0; i < banner.length; i++) {
                 newbanner.push(banner[i].url)
