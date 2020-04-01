@@ -40,6 +40,16 @@ class GoodsModel extends HTTP {
     this.request(params)
   }
 
+  GetDataByGooslist(id,res) {
+    var params = {
+      url: 'Goods/GetDataByGooslist',//接口路径
+      method: 'get', //请求方式
+      data: { id },
+      success: res
+    }
+    this.request(params)
+  }
+
   
 
   GetCommunityBylist(res) {

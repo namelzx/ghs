@@ -37,6 +37,11 @@
   height: 100%;
 }
 
+.pr_edit{
+  color: #909399;
+  font-size: 28rpx;
+}
+
 .pr_main {
   width: 450rpx;
   display: flex;

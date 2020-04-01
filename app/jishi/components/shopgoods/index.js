@@ -100,6 +100,15 @@ Component({
       this.triggerEvent('inlist', this.data.list);
 
     },
+
+    //编辑商品
+     headEdit(e) {
+       const id = e.currentTarget.dataset.id;
+       console.log(id,"id")
+       wx.navigateTo({
+         url: '/pages/product/index?id='+ id,
+       })
+     }
   }
   
 })

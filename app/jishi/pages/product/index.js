@@ -10,6 +10,7 @@ import {
 
 let goodsModel = new GoodsModel();
 
+
 const uploadImage = require('../../utils/uploadAliyun.js');
 let base_img ='https://kedand.oss-cn-beijing.aliyuncs.com/';
 Page({
@@ -22,6 +23,7 @@ Page({
     vList: [ ],
     data:{
       name: undefined,
+      setlinePrice: undefined,
       price: undefined,
       line_price:undefined,
       inventory: undefined,
@@ -29,6 +31,7 @@ Page({
       videosrc:undefined,
       sellpoint: undefined,
     },
+    order_id: undefined,
     iList:[],
     name: '',
     price: '',
@@ -180,7 +183,11 @@ Page({
 
     if (this.data.pList.length === 0) {
       Toast('请先添加商品图');
-    } else if (this.data.data.name === '') {
+    }else if (this.data.vList.length === 0) {
+      Toast('请添加商品视频');
+    } else if (this.data.iList.length === 0) {
+      Toast('请添加商品详情图片集');
+    } else if (this.data.data.setlinePrice === '') {
       Toast('商品名称不能为空');
     } else if (this.data.data.price === '') {
       Toast('商品价格不能为空');
@@ -219,6 +226,8 @@ Page({
     data.img_list = ilist.join(',');
     var userinfo=wx.getStorageSync('userinfo')
     data.shop_id = userinfo.id
+    data.id = this.data.order_id
+    console.log(data,"提交数据")
     goodsModel.PostDataByAdd(data,res=>{
      wx.navigateTo({
        url: '/pages/member/goods/index',
@@ -230,7 +239,7 @@ Page({
 
   setName(e) {
     console.log(e)
-    this.setData({ 'data.name': e.detail.value})
+    this.setData({ 'data.setlinePrice': e.detail.value})
   },
 
   line_price: undefined,
@@ -277,6 +286,46 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    let that = this;
+    let order_id = options.id;
+    if (order_id !== undefined){
+      that.setData({
+        order_id
+      })
+    }
+    if (order_id !== undefined){
+      goodsModel.GetDataByGooslist(order_id, res => {
+        let iList = []
+        let vList = []
+        if (res.data.img_list !== null){
+          let imglsit = res.data.img_list.split(',');
+          for (let i = 0; i < imglsit.length;i++) {
+            iList.push(
+              { url: imglsit[i]}
+            )
+          }
+        }
+        if (res.data.videosrc !== null) {
+          let video = res.data.videosrc.split(',');
+          for (let i = 0; i < video.length; i++) {
+            vList.push(
+              { url: video[i] }
+            )
+          }
+        }
+        that.setData({
+          'pList[0].url': res.data.images_url,
+          'iList': iList,
+          'vList': vList,
+          'data.setlinePrice': res.data.name,
+          'data.price': res.data.price,
+          'data.line_price': res.data.line_price,
+          'data.sellpoint': res.data.sellpoint,
+          'data.inventory': res.data.inventory
+        })
+      })
+    }
+    
 
   },
 

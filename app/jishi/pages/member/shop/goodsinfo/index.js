@@ -48,7 +48,7 @@ Page({
      
       }
     },
-    hasUserInfo: false,
+    sUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
   //事件处理函数
@@ -463,7 +463,6 @@ Page({
       success: function (res) {
         _this.windowWidth = res.windowWidth;
         _this.WidthRadio = res.windowWidth / 750;
-
       }
     })
   },

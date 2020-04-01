@@ -24,6 +24,7 @@
           </view>
 				</view>
 			</view>
+      <view wx:if="{{!base_show}}" class="pr_edit" data-id="{{item.id}}" catchtap="headEdit">编辑</view>
 		</view>
 
 
