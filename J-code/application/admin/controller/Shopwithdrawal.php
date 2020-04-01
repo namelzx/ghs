@@ -11,6 +11,7 @@ namespace app\admin\controller;
 
 use app\admin\model\ShopModel;
 use app\common\model\WithdrawalModel;
+use EasyWeChat\Factory;
 
 class Shopwithdrawal extends System
 {
@@ -32,6 +33,20 @@ class Shopwithdrawal extends System
     public function PostDataByAudit()
     {
         $data = input('param.');
+
+        $config = [
+            // 必要配置
+            'app_id' => 'wxae80c2472ba27081',
+            'mch_id' => '1573988331',
+            'key' => 'qwertyuiopasdfghjklzxcvbnm123456',   // API 密钥
+            // 如需使用敏感接口（如退款、发送红包等）需要配置 API 证书路径(登录商户平台下载 API 证书)
+            'cert_path' => getcwd() . '/cert/apiclient_cert.pem', // XXX: 绝对路径！！！！
+            'key_path' => getcwd() . '/cert/apiclient_key.pem',
+            'notify_url' => '默认的订单回调地址',     // 你也可以在下单时单独设置来想覆盖它
+        ];
+
+        $app = Factory::payment($config);
+
         if ($data['status'] === 1) {
 
             $res = WithdrawalModel::where('id', 'in', $data['ids'])->data([$data['field'] => $data['status']])->update();

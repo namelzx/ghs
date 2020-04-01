@@ -4,10 +4,10 @@
 
 
 import {
-  UserModel
-} from '../../../../../api/user.js'
+  ShopModel
+} from '../../../../../api/shop.js'
 
-let usermodel = new UserModel();
+let shopModel = new ShopModel();
 Page({
 
   /**
@@ -15,19 +15,14 @@ Page({
    */
   data: {
 
-    list:[],
-    type:2,
+    list: [],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if (parseInt(options.type)===1){
-    this.setData({
-      type: parseInt(options.type)
-    })
-    }
+
   },
 
   /**
@@ -41,14 +36,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    let userinfo=wx.getStorageSync('userinfo');
-    var temp={
-      user_id:userinfo.id,
-      type:this.data.type,
-    }
-    usermodel.GetUserWithdrawlByList(temp,res=>{
+    let userinfo = wx.getStorageSync('userinfo');
+    shopModel.GetMoneyByLog(userinfo.id, res => {
       this.setData({
-        list:res.data
+        list: res.data
       })
     })
   },

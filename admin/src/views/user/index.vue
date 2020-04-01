@@ -37,7 +37,7 @@
       <i class="el-icon-tickets"></i>
       <span>批量操作</span>
       <el-button size="small" @click="handleShop()" plain>设店长</el-button>
-      <el-button size="small" @click="handleSalesman()" plain>设业务员</el-button>
+      <el-button size="small" @click="handleSalesman()" plain>设产品经理</el-button>
     </el-card>
     <div class="table-container">
       <el-table
@@ -55,7 +55,7 @@
           <template slot-scope="scope">
             <div>
               <img style="    float: left;" class="headimgurl" :src="scope.row.avatarUrl"/>
-              <div style="margin-left: 10px" class="link-type" @click="handleUpdate(scope.$index,scope.row.id)">{{
+              <div style="margin-left: 10px" class="link-type" >{{
                 scope.row.nickName }}
               </div>
 
@@ -93,9 +93,9 @@
           </template>
         </el-table-column>
 
-        <el-table-column label="是否是业务员" align="center" min-width="100px">
+        <el-table-column label="产品经理" align="center" min-width="100px">
           <template slot-scope="scope">
-            <div> {{scope.row.is_salesman|statusFilter}}</div>
+            <div> {{scope.row.is_product|statusFilter}}</div>
           </template>
         </el-table-column>
         <el-table-column label="加入平台时间" align="center" min-width="140px">
@@ -112,11 +112,11 @@
 
         <el-table-column label="操作" fixed="right" align="center" width="120px" class-name="small-padding">
           <template slot-scope="scope">
-            <el-button type="text" size="mini"
-                       @click="handleUpdate(scope.$index,scope.row.id)">编辑
+            <el-button v-if="scope.row.is_product===1" type="text" size="mini"
+                       @click="handleUpdate(scope.row.id,'is_product')">取消产品经理
             </el-button>
-            <el-button v-waves :loading="scope.row.delete" type="text" size="mini"
-                       @click="handleDelete(scope.$index,scope.row.id)">删除
+            <el-button  v-if="scope.row.is_shop===1" v-waves :loading="scope.row.delete" type="text" size="mini"
+                       @click="handleUpdate(scope.row.id,'is_shop')">取消店长
             </el-button>
           </template>
         </el-table-column>
@@ -235,12 +235,8 @@
             value: 1
           },
           {
-            label: '社会',
+            label: '产品经理',
             value: 2
-          },
-          {
-            label: '删除订单',
-            value: 3
           }
         ],
         logisticsDialogVisible: false
@@ -269,6 +265,17 @@
 
     },
     methods: {
+      handleUpdate(id,field){
+        var temp={
+          ids:id,
+          field,
+          status:2
+        }
+        PostRoleByUpdate(temp).then(res=>{
+          this.getList()
+        })
+
+      },
       handleShop() {
         this.operateType = 1
         this.handleBatchOperate()
@@ -333,7 +340,7 @@
         } else if (this.operateType === 2) {
           var temp={
             ids,
-            field:'is_salesman',
+            field:'is_product',
             status:1
 
           }

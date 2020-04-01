@@ -78,10 +78,17 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 3,
 					"name": "佣金",
 					"pathName": "pages/tabBar/user/invite/invite",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "佣金记录",
+					"pathName": "pages/member/shop/withdraw/record/index",
+					"query": "shp_id=1",
 					"scene": null
 				}
 			]

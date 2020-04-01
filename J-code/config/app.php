@@ -160,8 +160,8 @@ return [
 //    ],
 
     'weixin' => [
-        'appId' => 'wxa81ab244ee136c47',
-        'appSecret' => '6669295ed71c5de46abb991ce1fb5939',
+        'appId' => 'wxae80c2472ba27081',
+        'appSecret' => 'ad22904510c570ce34510fd592e049fa',
         'redirect_uri' => 'http://aystest.10huisp.com/api/',
         'app_id' => 'wxa81ab244ee136c47',
         'mch_id' => '1573988331',

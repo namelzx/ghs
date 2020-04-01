@@ -9,12 +9,8 @@
 namespace app\admin\controller;
 
 
-use app\common\model\GoodsImagesModel;
+use app\admin\model\UserModel;
 use app\common\model\GoodsModel;
-use app\common\model\GoodsSukEboModel;
-use app\common\model\GoodsSukLeaseModel;
-use app\common\model\GoodsSukModel;
-use app\common\model\ParameterModel;
 
 class Goods extends System
 {
@@ -73,7 +69,8 @@ class Goods extends System
         $data = input('param.');
 
         $res = GoodsModel::where('id', $data['id'])->find();
-        return json(['msg' => '获取详情', 'data' => $res, 'code' => 20000], 200);
+        $product = UserModel::where('is_product', 1)->select();
+        return json(['msg' => '获取详情', 'data' => $res, 'code' => 20000, 'product' => $product], 200);
     }
 
     /**
@@ -151,7 +148,7 @@ class Goods extends System
         } else {
             $ids = explode(',', $ids);
             $ids = array_diff($ids, [1]);
-            GoodsModel::where('id','in',$ids)->delete();
+            GoodsModel::where('id', 'in', $ids)->delete();
 //            model('AuthGroup', 'logic')->delall($ids);
             ajax_return_ok([], '删除成功！');
         }

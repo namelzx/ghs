@@ -31,12 +31,12 @@ Page({
   },
   onAccount() {
     wx.navigateTo({
-      url: '/pages/accounts/index'
+      url: '/pages/member/shop/withdraw/record/index'
     })
   },
   onDeposit() {
     wx.navigateTo({
-      url: '/pages/deposit/index'
+      url: '/pages/tabBar/user/invite/withdrawalsrecord/index?type=1'
     })
   },
   onTogeAttes() {

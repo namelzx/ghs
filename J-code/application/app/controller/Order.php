@@ -15,7 +15,9 @@ use app\app\model\OrderModel;
 use app\app\model\ShopModel;
 use app\app\model\UserModel;
 use app\common\model\CommissionModel;
+use app\common\model\ConfigModel;
 use app\common\model\OrderGoodsModel;
+use app\common\model\ShopMoneyLogModel;
 
 class Order extends Base
 {
@@ -76,14 +78,42 @@ class Order extends Base
         $order = OrderModel::where('id', $data['id'])->find();
         if ((int)$data['status'] === 4) {
             OrderModel::where('id', $data['id'])->data(['receiveTime' => time()])->update();
-            ShopModel::where('user_id', $order['shop_id'])->setInc('balance', $order['totalPrice']);
+            if ((int)$order['type'] === 2) {
+                //如果是2那么就是店铺 需要扣除佣金
+                $poundage = ConfigModel::where('id', 1)->value('poundage');//获取百分比
+                $deductpoundage = $order['totalPrice'] * ($poundage / 100);//扣除手续费
 
 
+                ShopModel::where('user_id', $order['shop_id'])->setInc('balance', $order['totalPrice'] - $deductpoundage);//增加店铺佣金
+
+                //手续费日志
+                $ptemp = [
+                    'title' => '订单收入',
+                    'shop_id' => $order['shop_id'],//所属店铺
+                    'price' => $order['totalPrice'] - $deductpoundage,//扣除手续费
+                    'type' => 1,
+                    'order_id' => $data['id']
+                ];
+                ShopMoneyLogModel::create($ptemp);//增加店铺金额
+
+                //手续费日志
+                $ptemp = [
+                    'title' => '平台服务费',
+                    'shop_id' => $order['shop_id'],//所属店铺
+                    'price' => $deductpoundage,//扣除的手续费
+                    'type' => 2,
+                    'order_id' => $data['id']
+                ];
+                ShopMoneyLogModel::create($ptemp);//所扣除手续费
+            }
+            //判断用户是否是店长 如果是店长 那么就进行佣金分配
             $is_shop = UserModel::where('id', $order['dis_id'])->value('is_shop');
-
             if (!empty($is_shop) && $is_shop) {
+                //增加可提现余额
                 UserModel::where('id', $order['dis_id'])->setInc('available_commission', (float)$order['head_price']);
+                //增加累计金额
                 UserModel::where('id', $order['dis_id'])->setInc('cumulative_commission', (float)$order['head_price']);
+
                 $temp = [
                     'title' => '分享佣金',
                     'order_id' => $data['id'],
@@ -94,7 +124,14 @@ class Order extends Base
             }
             $allgoods = OrderGoodsModel::where('order_id', $data['id'])->select();
             foreach ($allgoods as $i => $item) {
-                GoodsModel::where('id', $item['goods_id'])->setInc('sales', 1);
+                GoodsModel::where('id', $item['goods_id'])->setInc('sales', $item['totalBuyNum']);
+                //获取所属商品的产品经理  //增加佣金给业务经理
+                $product_id = GoodsModel::where('id', $item['goods_id'])->value('product_id');
+                if (!empty($product_id)) {
+                    UserModel::where('id', $product_id)->setInc('available_commission', (float)$order['manager_price']);
+                    //增加累计金额
+                    UserModel::where('id', $product_id)->setInc('cumulative_commission', (float)$order['manager_price']);
+                }
             }
         }
 //        ajax_return_ok($res);

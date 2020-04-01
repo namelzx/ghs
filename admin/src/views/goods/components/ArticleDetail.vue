@@ -57,7 +57,7 @@
 
             <el-row :gutter="20">
               <el-col :span="8">
-                <el-form-item label-width="100px" label="业务经理佣金:">
+                <el-form-item label-width="100px" label="产品经理佣金:">
                   <el-input
                     size="mini"
                     v-model="postForm.manager_price"
@@ -159,6 +159,24 @@
               </el-col>
 
             </el-row>
+
+            <el-row :gutter="20">
+              <el-col :span="12">
+                <el-form-item label-width="100px" label="选择所属经理:">
+                  <el-select
+                    size="mini"
+                    prod="category_id"
+                    v-model="postForm.product_id"
+                    placeholder="选择所属经理"
+
+                  >
+                    <el-option v-for="(item,index) in product" :key="item.id" :label="item.nickName" :value="item.id"/>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+            </el-row>
+
 
 
 
@@ -288,6 +306,7 @@
       Divider,
       Tinymce,
       Upload,
+
       Sticky,
       Warning,
       CommentDropdown,
@@ -315,6 +334,7 @@
     data() {
 
       return {
+        product:[],
         videosrc: '',
         ruleall: [],
         photoVisible: false,//获取图片库
@@ -404,6 +424,7 @@
       fetchData(id) {
         GetIdByDetails(id).then(response => {
           this.postForm = response.data
+          this.product=response.product
           if (this.postForm.img_list === null) {
             this.postForm.img_list = []
           } else {

@@ -116,6 +116,10 @@ Route::group('api/app/', function () {
 
     Route::rule('shop/PostDataByWithdrawal', 'app/Shop/PostDataByWithdrawal');//用户提现
 
+    Route::rule('shop/GetMoneyByLog', 'app/Shop/GetMoneyByLog');//店铺提现记录
+
+
+
 
     /**
      * 地址管理

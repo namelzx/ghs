@@ -13,6 +13,7 @@ use app\app\model\OrderModel;
 use app\app\model\ShopModel;
 use app\app\model\UserAudheModel;
 use app\app\model\UserModel;
+use app\common\model\ShopMoneyLogModel;
 use app\common\model\WithdrawalModel;
 
 class Shop extends Base
@@ -130,6 +131,16 @@ class Shop extends Base
         } else {
             UserModel::where('id', $data['user_id'])->setDec('available_commission', $data['money']);
         }
+        ajax_return_ok($res);
+    }
+
+    /**
+     * 店铺资金记录
+     */
+    public function GetMoneyByLog()
+    {
+        $data = input('param.');
+        $res = ShopMoneyLogModel::where('shop_id', $data['shop_id'])->order('id desc')-> select();
         ajax_return_ok($res);
     }
 }

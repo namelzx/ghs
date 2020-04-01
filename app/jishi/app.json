@@ -34,7 +34,8 @@
     "pages/supplier/protocol/hint/index",
     "pages/member/shop/withdraw/withdraw/index",
     "pages/tabBar/user/invite/invite",
-    "pages/tabBar/user/invite/withdrawalsrecord/index"
+    "pages/tabBar/user/invite/withdrawalsrecord/index",
+    "pages/member/shop/withdraw/record/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -72,7 +73,6 @@
         "pagePath": "pages/tabBar/user/index",
         "text": "我的"
       }
-      
     ]
   },
   "permission": {

@@ -12,6 +12,7 @@ namespace app\app\controller;
 use app\app\model\GoodsModel;
 use app\app\model\OrderModel;
 use app\app\model\PayLogModel;
+use app\common\model\ConfigModel;
 use EasyWeChat\Factory;
 use think\Db;
 
@@ -29,7 +30,7 @@ class Pay extends Base
             'addressText' => $data['addressText'],
             'buyerText' => $data['buyerText'],
             'create_time' => time(),
-            'type'=>$data['type']
+            'type' => $data['type']
         ];
         if (!empty($data['dis_id'])) {
             $temp['dis_id'] = $data['dis_id'];
@@ -77,7 +78,10 @@ class Pay extends Base
         $app = Factory::payment($config);
         $out_trade_no = time() . rand(1000, 9999);
         $totalPrice = $data['totalPrice'] * 100;
-        $totalPrice = 1;
+        $pay = ConfigModel::where('id', 1)->value('pay');
+        if ($pay === 1) {
+            $totalPrice = 1;
+        }
         $attributes = [
             'trade_type' => 'JSAPI', // JSAPI，NATIVE，APP...
             'body' => '123123',

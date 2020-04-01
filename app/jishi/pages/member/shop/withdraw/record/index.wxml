@@ -1,0 +1,26 @@
+<!--pages/invite/withdrawalsrecord/withdrawalsrecord.wxml-->
+<view class="list-box">
+     
+     <view class='item' wx:key wx:for='{{list}}'>
+        <view>
+        <view class='item-h1'>{{item.title}}</view>
+        <view>
+          <text class='item-jg' wx:if="{{item.type==1}}">+{{item.price}}</text>
+  <text class='item-jg' style="color:#909399" wx:else>-{{item.price}}</text>
+        </view>
+      
+        </view>
+        <view class='item-sj'>
+        
+       <text> {{item.create_time}}</text>
+
+         <view class="item-jg green" wx:if="{{item.type==1}}"> 结算成功</view>
+
+         <view class="item-jg green" wx:if="{{item.type==2}}"> 扣除</view>
+       
+        </view>
+     </view>
+
+     <view class='nolog' wx:if='{{list.length==0}}'>暂无记录</view>
+
+</view>

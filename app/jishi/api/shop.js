@@ -34,6 +34,19 @@ class ShopModel extends HTTP {
     }
     this.request(params)
   }
+
+
+  GetMoneyByLog(shop_id, res) {
+    var params = {
+      url: 'shop/GetMoneyByLog',//接口路径
+      method: 'get', //请求方式
+      data: { shop_id },
+      success: res
+    }
+    this.request(params)
+  }
+  
+
   
 
 

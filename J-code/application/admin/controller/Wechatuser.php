@@ -39,4 +39,5 @@ class Wechatuser extends System
         ajax_return_ok($res);
     }
 
+
 }

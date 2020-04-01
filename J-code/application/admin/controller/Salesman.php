@@ -38,7 +38,7 @@ class Salesman extends System
     public function GetDataByList()
     {
         $data = input('param.');
-        $where[] = ['is_salesman', 'eq', 1];
+        $where[] = ['is_product', 'eq', 1];
         $res = UserModel::where($where)->order('nature asc')->paginate($data['limit'], false, ['query' => [$data['page']]]);
         ajax_return_ok($res);
     }

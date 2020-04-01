@@ -37,7 +37,6 @@
     <el-card class="operate-container" shadow="never">
       <i class="el-icon-tickets"></i>
       <span>批量操作</span>
-      <el-button size="small" @click="handleSalesman()" plain>取消业务员业</el-button>
     </el-card>
     <div class="table-container">
       <el-table
@@ -92,10 +91,9 @@
             <div> {{scope.row.is_shop|statusFilter}}</div>
           </template>
         </el-table-column>
-
-        <el-table-column label="是否是业务员" align="center" min-width="100px">
+        <el-table-column label="产品经理" align="center" min-width="100px">
           <template slot-scope="scope">
-            <div> {{scope.row.is_salesman|statusFilter}}</div>
+            <div> {{scope.row.is_product|statusFilter}}</div>
           </template>
         </el-table-column>
         <el-table-column label="加入平台时间" align="center" min-width="140px">
@@ -108,41 +106,10 @@
             <div>{{scope.row.nature|nature}}</div>
           </template>
         </el-table-column>
-
-
-        <el-table-column label="操作" fixed="right" align="center" width="120px" class-name="small-padding">
-          <template slot-scope="scope">
-            <el-button type="text" size="mini"
-                       @click="handleUpdate(scope.$index,scope.row.id)">编辑
-            </el-button>
-            <el-button v-waves :loading="scope.row.delete" type="text" size="mini"
-                       @click="handleDelete(scope.$index,scope.row.id)">删除
-            </el-button>
-          </template>
-        </el-table-column>
       </el-table>
 
     </div>
-    <div class="batch-operate-container">
-      <el-select
-        size="small"
-        v-model="operateType" placeholder="批量操作">
-        <el-option
-          v-for="item in operateOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select>
-      <el-button
-        style="margin-left: 20px"
-        class="search-button"
-        @click="handleBatchOperate()"
-        type="primary"
-        size="small">
-        确定
-      </el-button>
-    </div>
+
     <div class="pagination-container">
       <el-pagination
         background
