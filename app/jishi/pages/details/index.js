@@ -12,6 +12,7 @@ let goodsModel = new GoodsModel();
 
 Page({
   data: {
+    // way_status:1,
     carArray: [],
     eva:[],
     state: {
@@ -47,6 +48,12 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
+  // wayClick(e) {
+  //   let way_status = parseInt(e.target.dataset.status)
+  //   this.setData({
+  //     way_status: way_status
+  //   })
+  // },
   //事件处理函数
   bindViewTap: function() {
     wx.navigateTo({
@@ -262,6 +269,7 @@ Page({
     var mark = goods_id
     var head_price = data.head_price
     var manager_price = data.manager_price
+    
 
     var obj = {
       goods_id,
@@ -280,6 +288,7 @@ Page({
 
     let queryObj = {
       is_store,//是否允许自提
+      
       products: [obj],
       isFromCart: true,
       isFormProductDetail: false

@@ -21,6 +21,21 @@ let pageObj = {
    */
   data: data,
 
+  wayClick(e) {
+    let way_status = parseInt(e.target.dataset.status)
+    this.setData({
+      'data.way_status': way_status
+    })
+  },
+
+
+  //跳转选择地址
+  toggleAddress() {
+    wx.setStorageSync('prod_type', 1)
+    wx.navigateTo({
+      url: '/pages/purchase/address/index',
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -34,7 +49,7 @@ let pageObj = {
       let queryObj = wx.getStorageSync('buy');
       console.log(queryObj,3)
       this.setData({
-        'state.is_store': queryObj.is_store
+        'state.is_store': queryObj.is_store,
       })
       let arryProducts = []
       let arryTime = [];
@@ -68,9 +83,18 @@ let pageObj = {
         "state.isFromCart": queryObj.isFromCart,
         "state.isFormProductDetail": queryObj.isFormProductDetail,
         "state.isIphoneX": app.globalData.isIphoneX,
-        // "data.qiniuDomain": userMs.config["qiniuDomain"]
       })
       this.oncomputedHandler();
+    }
+    let temps = options.details
+    if (temps !== undefined) {
+      let temps = JSON.parse(options.details)
+      this.setData({
+        'data.buyerName': temps.name,
+        'data.buyerPhone': temps.phone,
+        'data.addressText': temps.city_code + temps.address,
+        'data.way_status':2
+      })
     }
   },
 
@@ -87,7 +111,6 @@ let pageObj = {
   onShow: function() {
 
     let communityObj = wx.getStorageSync("communityObj");
-
     if (communityObj) {
       this.setData({
         "state.address": JSON.parse(communityObj)
@@ -95,8 +118,40 @@ let pageObj = {
       // 必须本地先选择了地址，因为可用红包需要判断门店id
       // this.onFetchPackageAbleListHandler();
     }
-
-
+    let queryObj = wx.getStorageSync('buy');
+    if (queryObj) {
+      this.setData({
+        'state.is_store': queryObj.is_store,
+        
+      })
+      let arryProducts = []
+      let arryTime = [];
+      queryObj.products.forEach((item) => {
+        arryTime.push(this.getTimeDays(item.expected_reach_time))
+      });
+      function formatDedupeArr(array) {
+        return Array.from(new Set(array))
+      }
+      arryTime = formatDedupeArr(arryTime);
+      //相同时间的数据重新分组
+      arryTime.forEach((item, num) => {
+        arryProducts.push([]);
+        queryObj.products.forEach((v, index) => {
+          if (this.getTimeDays(v.expected_reach_time) == item) { //判断日期相等的数据
+            if (v.expected_reach_time) v.expected_reach_time = util.formatTimeWithoutYear2(new Date(Number(v.expected_reach_time) * 1000));
+            arryProducts[num].push(v);
+          }
+        })
+      });
+      this.setData({
+        "data.productsRecom": arryProducts,
+        "data.products": queryObj.products,
+        "state.isFromCart": queryObj.isFromCart,
+        "state.isFormProductDetail": queryObj.isFormProductDetail,
+        "state.isIphoneX": app.globalData.isIphoneX,
+      })
+      this.oncomputedHandler();
+    }
   },
   //获取时间搓时间day
   getTimeDays: function(tamp) {

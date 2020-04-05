@@ -1,6 +1,6 @@
 module.exports = {
   data: {
-
+    way_status: 1, //1自提,2物流
     products: [
       {
         id: 11,
@@ -25,6 +25,7 @@ module.exports = {
     selectPackageItem: ""
   },
   state: {
+    
     switchHeight: false, //订单列表点击高度切换
     needOpenSettingBtn: false,
     totalPrice: 0,

@@ -73,6 +73,10 @@
         <view class='pro-desc-item-box' >
           <view class='pro-desc-item-text'>销量</view>
           <view class='pro-desc-item-value'>已售{{data.productDetail.sales}}件，仅剩<text>{{data.productDetail.inventory-data.productDetail.sales}}</text>件</view>
+          <!-- <view class="pro-desc-item-way">
+            <view catchtap="wayClick" data-status="1" class="way-name {{way_status==1?'way-name-active1':''}}">自取</view>
+            <view catchtap="wayClick" data-status="2" class="way-name {{way_status==2?'way-name-active2':''}}">物流</view>
+          </view> -->
         </view>
         
       </view>

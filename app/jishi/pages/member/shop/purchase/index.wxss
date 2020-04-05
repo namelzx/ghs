@@ -1,4 +1,42 @@
 /* pages/member/shop/purchase/index.wxss *//* page/purchase/purchase.wxss */
+.logistics{
+  padding: 10rpx 0;
+}
+.pro-desc-item-way {
+  width: 700rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border-radius: 30rpx;
+  background: #ffffff;
+  height: 80rpx;
+  font-size: 26rpx;
+  align-items: center;
+  margin: 10rpx auto;
+}
+.pro-desc-item-way .way-name{
+  height: 65rpx;
+  line-height: 65rpx;
+  width: 335rpx;
+  text-align: center;
+  color: #9B9B9B;
+}
+.pro-desc-item-way .way-name-active1{
+  /* background: #282828; */
+  background: #fee128;
+  color: #333333;
+  font-weight: bold;
+  border-radius: 30rpx;
+}
+.pro-desc-item-way .way-name-active2{
+  /* background: #282828; */
+  background: #fee128;
+  color: #333333;
+  font-weight: bold;
+  border-radius: 30rpx;
+}
+
+
 .P-purchase{
   min-height: 100vh;
   background-color: #F2F2F2;
@@ -23,6 +61,38 @@
 }
 .header-top-tips.highLight{
   background: #FFE849;
+}
+.card-way{
+  width: 710rpx;
+  margin: 0 auto;
+  padding-top: 30rpx;
+  padding-bottom: 30rpx;
+  color: #333333;
+  font-size: 30rpx;
+}
+  
+.card-way .name{
+  margin: auto 0;
+  /* width: 710rpx; */
+  padding-left: 30rpx;
+  background: #FFFFFF;
+  box-shadow: 0 3rpx 20rpx 0 rgba(128,128,128,0.10);
+  height: 80rpx;
+  line-height: 80rpx;
+  border-radius: 16rpx;
+  position: relative;
+  /* font-family: PingFangSC-Regular;  */
+}
+.card-way .he{
+  position: absolute;
+  left: 28rpx;
+  top: 55rpx;
+  width: 10rpx;
+height: 30rpx;
+background-image: linear-gradient(145deg, #FEE335 0%, #FFBF3A 100%);
+border-radius: 2rpx;
+margin-right: 20rpx;
+
 }
 
 .card-content{
@@ -149,8 +219,14 @@
   line-height: 90rpx;
   margin-left: 30rpx;
   font-family: PingFangSC-Semibold;
+  overflow: hidden;
+text-overflow:ellipsis;
+white-space: nowrap;
 }
-
+.buyer-info-item-value-aaa{
+  font-size: 30rpx;
+  color: #d9d3d2;
+}
 .order-pro-container{
   background-color: #fff;
   margin-bottom: 30rpx;

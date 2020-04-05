@@ -1,0 +1,57 @@
+<!-- 提交，编辑 -->
+<view>
+<view class="submit-box">
+<van-toast id="van-toast" />
+  <view class="submit-warp">
+    <view class="warp_name">收货人</view>
+    <input bindinput="bindKeyname" value="{{list.name}}" placeholder="请输入收货人姓名"></input>
+  </view>
+  <view class="submit-warp">
+    <view class="warp_name">手机号码</view>
+    <input bindinput="bindKeyphone" value="{{list.phone}}" type="number" placeholder="请输入手机号码"></input>
+  </view>
+  <view class="submit-warp">
+    <view class="warp_name">所在地区</view>
+    <view catchtap="toggleAddress" class="warp_right">
+      <text class="warp_right_name" wx:if="{{area==''}}">请选择区域</text>
+      <text wx:else>{{area}}</text>
+    </view>
+    
+  </view>
+  <view class="submit-warp">
+    <view class="warp_name">详细地址</view>
+    <input bindinput="bindKeyaddress" value="{{list.address}}" placeholder="请输入详细地址"></input>
+  </view>
+
+
+  <!-- 弹出框 -->
+  <view class="area-box" wx:if="{{addressShow}}" catchtouchmove="true">
+    <view class="main-box">
+      <view class="fs-24 color333 text-c title-box" wx:if="{{province!==''}}">
+        <van-steps direction="vertical" steps="{{ steps }}"  active="{{stpe}}">
+        </van-steps>
+      </view>
+      <view class="select">
+        <!--{{active}}-->
+        <view class="select-contens">
+          <view class="select-contens-title">{{province}}</view>
+          <scroll-view scroll-y style="height:{{scroll_height}}rpx" class="area-list">
+              <view
+                class="area-item"
+                bindtap="clickProvince"
+                data-area="{{item}}"
+                wx:for="{{areaJson}}"
+              >{{item.name}}</view>
+            </scroll-view>
+        </view>
+        <!-- active结束 -->
+      </view>
+      <view class="close-icon" bindtap="saveData">
+        <van-icon name="close" size="20px" color="#cfcfcf" />
+      </view>
+    </view>
+  </view>
+  
+</view>
+  <view class="adds-save" bindtap="toggleSubmit">保存</view>
+</view>

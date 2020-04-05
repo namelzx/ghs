@@ -13,6 +13,7 @@ let goodsModel = new GoodsModel();
 
 Page({
   data: {
+    
     eva: [],
     imagePath: '',
     canvasHidden: false,
@@ -51,6 +52,7 @@ Page({
     sUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
+  
   //事件处理函数
   bindViewTap: function () {
     wx.navigateTo({
@@ -150,6 +152,7 @@ Page({
     var images_url = data.images_url
     var name = data.name;
     var mark = goods_id
+    
 
     var obj = {
       goods_id,
@@ -162,6 +165,7 @@ Page({
       images_url,
       selected: false,
       moveState: false,
+      
     };
     wx.setStorageSync('shopbuy', [obj]) 
     wx.navigateTo({

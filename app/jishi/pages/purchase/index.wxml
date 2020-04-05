@@ -9,7 +9,16 @@
     <view class=''>该商品可以到货后请到店自提</view>
   </view>
 
-  <view class='card-content'>
+  <!-- 自提/物流切换 -->
+  <view class="logistics">
+    <view class="pro-desc-item-way">
+      <view catchtap="wayClick" data-status="1" class="way-name {{data.way_status==1?'way-name-active1':''}}">自提</view>
+      <view catchtap="wayClick" data-status="2" class="way-name {{data.way_status==2?'way-name-active2':''}}">物流</view>
+    </view>
+  </view>
+
+
+  <view class='card-content' wx:if="{{data.way_status===2}}">
     <view class='card-content-title-box'>
       <view class='card-content-title-icon'></view>
       <view class='card-content-title'>收货人信息</view>
@@ -39,14 +48,17 @@
       <view class='buyer-info-item'>
         <!-- <image></image> -->
         <view class='buyer-info-item-text others'>收货地址</view>
-        <input class='buyer-info-item-value' bindinput='onInputAddressTextHandler' placeholder-class='buyer-info-item-value-holder' placeholder='请填写门牌号，例1栋308室' value='{{data.addressText}}' ></input>
-      
+        <!-- <input class='buyer-info-item-value' bindinput='onInputAddressTextHandler' placeholder-class='buyer-info-item-value-holder' placeholder='请填写门牌号，例1栋308室' value='{{data.addressText}}'></input> -->
+        <view class='buyer-info-item-value buyer-info-item-value-aaa' bindtap="toggleAddress" wx:if="{{data.addressText==''}}">请选择地址</view>
+        <view class='buyer-info-item-value' bindtap="toggleAddress" wx:else>{{data.addressText}}</view>
     </view>
   </view>
-
-  
-
   </view>
+  <!-- 自提显示 -->
+  <!-- <view class="card-way" wx:if="{{data.way_status===1}}">
+    <view class="name">自提商品</view>
+    <view class="he"></view>
+  </view> -->
   
   <view class='card-content card-content-except'>
     <view class='order-pro-container' wx:for="{{data.productsRecom}}" wx:key="{{index}}" wx:for-item="itemName">

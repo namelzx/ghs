@@ -1,0 +1,53 @@
+
+.addr-add{
+  background: #ffffff;
+  height: 150rpx;
+  border-bottom: 20rpx solid #f4f4f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.addr-add .botton{
+  width: 200rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+  font-size: 30rpx;
+  background: #fedc07;
+  border-radius: 40rpx;
+}
+
+.addlist{
+  display: flex;
+  justify-content: space-between;
+  margin: 30rpx 30rpx;
+  align-items: center;
+}
+.addlist-content {
+  width: 600rpx;
+}
+.addlist-content-linkman{
+  font-size: 32rpx;
+  color: #000000;
+}
+.addlist-content-linkman .link-text{
+  color: #909399;
+  font-size: 26rpx;
+  margin-left: 30rpx;
+}
+.addlist-content-deatils{
+  color: #303133;
+  margin-top: 10rpx;
+  font-size: 30rpx;
+}
+.addlist-edit{
+  color: #C0C4CC;
+  font-size: 28rpx;
+  padding-right: 10rpx;
+}
+.addr-no{
+  text-align: center;
+  color: #C0C4CC;
+  font-size: 32rpx;
+  margin-top: 100rpx;
+}

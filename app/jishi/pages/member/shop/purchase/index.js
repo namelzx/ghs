@@ -19,6 +19,22 @@ let pageObj = {
    */
   data: data,
 
+  wayClick(e) {
+    let way_status = parseInt(e.target.dataset.status)
+    this.setData({
+      'data.way_status': way_status
+    })
+  },
+
+  //跳转选择地址
+  toggleAddress() {
+    
+    wx.setStorageSync('prod_type', 2)
+    wx.navigateTo({
+      url: '/pages/purchase/address/index',
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -38,10 +54,23 @@ let pageObj = {
 
     this.setData({
       "data.products": queryObj,
+     
       // "state.isFormProductDetail": queryObj.isFormProductDetail,
       // "data.qiniuDomain": userMs.config["qiniuDomain"]
     })
+    
     this.oncomputedHandler();
+
+    let temps = options.details
+    if (temps !== undefined) {
+      let temps = JSON.parse(options.details)
+      this.setData({
+        'data.buyerName': temps.name,
+        'data.buyerPhone': temps.phone,
+        'data.addressText': temps.city_code + temps.address,
+        'data.way_status': 2
+      })
+    }
   },
 
   /**
@@ -65,8 +94,6 @@ let pageObj = {
       // 必须本地先选择了地址，因为可用红包需要判断门店id
       this.onFetchPackageAbleListHandler();
     }
-
-
   },
   //获取时间搓时间day
   getTimeDays: function (tamp) {

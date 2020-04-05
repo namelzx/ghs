@@ -1,0 +1,26 @@
+<!-- 收货地址 -->
+<view>
+<!-- 添加收货地址 -->
+  <view class="addr-add">
+    <view class="botton" bindtap="toggleAdds">添加地址</view>
+  </view>
+  <!-- 收货人列表 -->
+  <view class="addr-warp">
+    <view class="addlist" wx:for="{{addlist}}" wx:if="{{addlist.length>1}}">
+      <view class="addlist-content">
+        <view data-item="{{item}}"  bindtap="togglepurchase">
+          <view class="addlist-content-linkman">
+            <text>{{item.name}}</text>
+            <text class="link-text">{{item.phone}}</text>
+          </view>
+          <view class="addlist-content-deatils">{{item.city_code}}{{item.address}}</view>
+        </view>
+      </view>
+      <view class="addlist-edit" data-item="{{item}}" catchtap="toggleEdit">编辑</view>
+    </view>
+  </view>
+  <!-- 还没有添加地址 -->
+  <view class="addr-no" wx:if="{{addlist.length<1}}">
+    还没有添加地址哦~
+  </view>
+</view>

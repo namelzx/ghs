@@ -4,15 +4,13 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
 		"coverView": true,
 		"autoAudits": true,
-		"showShadowRootInWxmlPanel": true,
-		"scopeDataCheck": false,
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
@@ -20,7 +18,9 @@
 			"ignore": [],
 			"disablePlugins": [],
 			"outputPath": ""
-		}
+		},
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.10.1",
@@ -95,6 +95,35 @@
 					"id": -1,
 					"name": "商家中心-商品管理",
 					"pathName": "pages/member/goods/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/details/index",
+					"pathName": "pages/details/index",
+					"query": "id=244",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/purchase/index",
+					"pathName": "pages/purchase/index",
+					"query": "queryObj=%257B%2522is_store%2522%253A2%252C%2522way_status%2522%253A1%252C%2522products%2522%253A%255B%257B%2522goods_id%2522%253A242%252C%2522shop_id%2522%253A0%252C%2522line_price%2522%253A%2522269.00%2522%252C%2522mark%2522%253A242%252C%2522name%2522%253A%2522%25E5%25AF%258C%25E8%25B4%25B5%25E9%25B8%259F%25E8%25A1%25A3%25E6%259C%258D%2522%252C%2522totalBuyNum%2522%253A1%252C%2522price%2522%253A%2522198.00%2522%252C%2522images_url%2522%253A%2522https%253A%252F%252Fkedand.oss-cn-beijing.aliyuncs.com%252Fvideo%252F20200322%252F20200322155308_lipn.png%2522%252C%2522selected%2522%253Afalse%252C%2522moveState%2522%253Afalse%252C%2522head_price%2522%253A%25220.00%2522%252C%2522manager_price%2522%253A%25220.00%2522%257D%255D%252C%2522isFromCart%2522%253Atrue%252C%2522isFormProductDetail%2522%253Afalse%257D",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "收货地址",
+					"pathName": "pages/purchase/address/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "添加编辑收货人信息",
+					"pathName": "pages/purchase/address/submit/index",
+					"query": "",
 					"scene": null
 				}
 			]

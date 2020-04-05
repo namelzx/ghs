@@ -35,7 +35,9 @@
     "pages/member/shop/withdraw/withdraw/index",
     "pages/tabBar/user/invite/invite",
     "pages/tabBar/user/invite/withdrawalsrecord/index",
-    "pages/member/shop/withdraw/record/index"
+    "pages/member/shop/withdraw/record/index",
+    "pages/purchase/address/index",
+    "pages/purchase/address/submit/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
