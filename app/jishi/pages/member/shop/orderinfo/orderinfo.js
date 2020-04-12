@@ -63,8 +63,9 @@ let pageObj = {
 
   },
   authMsg() {
+    //用户下单的时候提示是否需要发货提醒
     wx.requestSubscribeMessage({
-      tmplIds: ['gHQSOcCng-4XY0DlM2b7dcrl626D-F8TylKkrYUcOgU', 'X0uUIhn5jENF4vHQ2m-69RzcEwyd9NMDGHvQxWiwLGs', 'wVyeppelYymqlhqmveaTIiA_S7tIled9l_1cETl5o-0'],
+      tmplIds: [ 'X0uUIhn5jENF4vHQ2m-69RzcEwyd9NMDGHvQxWiwLGs'],
       success: function (e) {
         console.log(e)
       }, fail(e) {

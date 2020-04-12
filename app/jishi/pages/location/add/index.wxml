@@ -1,0 +1,44 @@
+<!--pages/product/index.wxml-->
+
+
+
+<view class="product-container">
+<van-toast id="van-toast" />
+
+
+<view>
+
+<van-action-sheet
+  show="{{ show }}"
+  actions="{{ actions }}"
+  bind:close="community"
+  bind:select="onSelect"
+/>
+
+
+  <view class="pro-img-list">
+    <view class="list-title">小区logo</view>
+    <van-uploader    max-count="1"
+  data-suffix=".jpg" data-type='1' file-list="{{ pList }}" bind:delete="delPic" bind:after-read="afterRead" />
+  </view>
+</view>
+
+
+  <view class="pro-detail-wrap">
+    <van-cell-group>
+      <van-field value="{{ data.name }}"  title-width="70px" clearable label="小区名称"placeholder="小区名称" bind:blur="setName" />
+
+
+
+ <van-field value="{{ data.address }}" title-width="70px" clearable label="详细地址" placeholder="必填，输入小区地址" bind:blur="setaddress"/>
+
+    </van-cell-group>
+
+
+  </view>
+
+  <view class="post-bottom">
+    <view class="post-btn" catchtap="checkRequired">发布</view>
+  </view>
+
+</view>

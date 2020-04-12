@@ -10,27 +10,39 @@ class Index extends Base
 {
     public function index()
     {
+        $data=[];
+//        $send=SM
+
         $config = [
-            // 必要配置
             'app_id' => 'wxae80c2472ba27081',
-            'mch_id' => '1573988331',
-            'key' => 'qwertyuiopasdfghjklzxcvbnm123456',   // API 密钥
-            // 如需使用敏感接口（如退款、发送红包等）需要配置 API 证书路径(登录商户平台下载 API 证书)
-            'cert_path' => getcwd() . '/cert/apiclient_cert.pem', // XXX: 绝对路径！！！！
-            'key_path' => getcwd() . '/cert/apiclient_key.pem',
-            'notify_url' => '默认的订单回调地址',     // 你也可以在下单时单独设置来想覆盖它
+            'secret' => 'ad22904510c570ce34510fd592e049fa',
+            // 指定 API 调用返回结果的类型：array(default)/collection/object/raw/自定义类名
+            'response_type' => 'array',
+            //...
+        ];
+        $app = Factory::miniProgram($config);
+
+        $data = [
+            'template_id' => 'gHQSOcCng-4XY0DlM2b7dcrl626D-F8TylKkrYUcOgU', // 所需下发的订阅模板id
+            'touser' => 'oD-YF5h-NshE5TE7MLJg432c8otk',     // 接收者（用户）的 openid
+            'page' => '/pages/index/index',       // 点击模板卡片后的跳转页面，仅限本小程序内的页面。支持带参数,（示例index?foo=bar）。该字段不填则模板无跳转。
+            'data' => [         // 模板内容，格式形如 { "key1": { "value": any }, "key2": { "value": any } }
+                'character_string1' => [
+                    'value' => 1,
+                ],
+                'thing2' => [
+                    'value' => 10,
+                ],
+                'amount3' => [
+                    'value' => 39,
+                ],
+                'date4' => [
+                    'value' => date('yy-m-d', time()),
+                ],
+            ],
         ];
 
-        $app = Factory::payment($config);
-    $res=   $app->transfer->toBalance([
-            'partner_trade_no' => make_password(6), // 商户订单号，需保持唯一性(只能是字母或者数字，不能包含有符号)
-            'openid' => 'oD-YF5h-NshE5TE7MLJg432c8otk',
-            'check_name' => 'NO_CHECK', // NO_CHECK：不校验真实姓名, FORCE_CHECK：强校验真实姓名
-            're_user_name' => '', // 如果 check_name 设置为FORCE_CHECK，则必填用户真实姓名
-            'amount' => 1, // 企业付款金额，单位为分
-            'desc' => '理赔', // 企业付款操作说明信息。必填
-        ]);
-    dump($res);
+     $res=   $app->subscribe_message->send($data);
 
     }
 

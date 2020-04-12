@@ -1,8 +1,6 @@
 <!--pages/product/index.wxml-->
 <view class="product-container">
 <van-toast id="van-toast" />
-
-
 <view>
 
 
@@ -34,11 +32,14 @@
 
   <view class="pro-detail-wrap">
     <van-cell-group>
-      <van-field value="{{ data.setlinePrice }}"  title-width="70px" clearable label="名称"placeholder="请输入商品名称" bind:blur="setName" />
+      <van-field value="{{ data.name }}"  title-width="70px" clearable label="名称"placeholder="请输入商品名称" bind:blur="setName" />
 
       <van-field value="{{data.price }}" title-width="70px" type="number" label="价格" placeholder="0.01 - 5000.00" bind:change="checkNumber" bind:blur="setPrice"	/>
 
    <van-field value="{{data.line_price }}" title-width="70px" type="number" label="市场价格" placeholder="0.01 - 5000.00" bind:change="checkNumber" bind:blur="setlinePrice"	/>
+
+      
+   <van-field value="{{data.tel }}" title-width="70px" type="number" label="联系电话" placeholder="0.01 - 5000.00" bind:blur="settel"	/>
 
       
 

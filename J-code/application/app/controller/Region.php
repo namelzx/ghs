@@ -23,9 +23,28 @@ class Region extends Base
     public function GetCommunityBylist()
     {
         $data = input('param.');
-        $res=Db::name('community')->select();
+        $where=[];
+        if(!empty($data['city'])){
+            $where[]=['location','like',$data['city'].'%'];
+        }
+        $res = Db::name('community')->where($where)->select();
         ajax_return_ok($res);
 
+    }
+
+
+    //收货人所选区域数据
+    public function GetByCitylist()
+    {
+        $data = input('param.');
+        $where = [];
+        if (empty($data['id'])) {
+            $where[] = ['grade', 'eq', 1];
+        } else {
+            $where[] = ['pid', 'eq', $data['id']];
+        }
+        $res = CityModel::where($where)->select();
+        ajax_return_ok($res);
     }
 
 }

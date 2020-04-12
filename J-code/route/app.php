@@ -72,8 +72,6 @@ Route::group('api/app/', function () {
     Route::post('user/GetUserWithdrawlByList', 'app/user/GetUserWithdrawlByList');//获取用户佣金体系
 
 
-
-
     /**
      * 城市管理
      */
@@ -95,9 +93,15 @@ Route::group('api/app/', function () {
     Route::get('Goods/GetDataByInfo', 'app/Goods/GetDataByInfo');//获取详情
     Route::post('Goods/PostDataByAdd', 'app/Goods/PostDataByAdd');//添加商品
 
+    Route::get('Goods/GetDataByGooslist', 'app/Goods/GetDataByInfo');//获取详情
+
+
+
 
     //小区管理
     Route::get('Community/GetDataBylist', 'app/Community/GetDataBylist');//获取小区
+
+    Route::post('Community/PostDataByAdd', 'app/Community/PostDataByAdd');//添加小区
 
 
     /**
@@ -119,13 +123,21 @@ Route::group('api/app/', function () {
     Route::rule('shop/GetMoneyByLog', 'app/Shop/GetMoneyByLog');//店铺提现记录
 
 
-
-
     /**
      * 地址管理
      */
+
+
+    Route::rule('city/GetByCitylist', 'app/Region/GetByCitylist'); /* 获取用户地址*/
+
+    Route::rule('Useraddress/PostDataByAdd', 'app/Useraddress/PostDataByAdd'); /* 添加地址*/
+
+    Route::rule('Useraddress/GetDataByUseradderss', 'app/Useraddress/GetDataByUseradderss'); /* 获取用户地址*/
+    Route::rule('address/getAddressBydetailed', 'api/Address/getAddressBydetailed'); /* 获取地址详情*/
+
     Route::rule('address/postAddress', 'api/Address/postAddress'); /* 添加地址*/
     Route::rule('address/getAddressBydetailed', 'api/Address/getAddressBydetailed'); /* 获取地址详情*/
+
     Route::rule('address/GetDataByDelete', 'api/Address/GetDataByDelete'); /*  删除数据*/
     Route::rule('address/gettAddress', 'api/Address/gettAddress'); /* 获取选中地址*/
     Route::rule('address/getAddressByItems', 'api/Address/getAddressByItems'); /* 获取地址列表*/

@@ -9,6 +9,7 @@
 namespace app\app\controller;
 
 
+use app\api\controller\Wechat;
 use app\app\model\EvaluateModel;
 use app\app\model\GoodsModel;
 use app\app\model\OrderModel;
@@ -51,11 +52,44 @@ class Order extends Base
         $data = input('param.');
         $where = [];
         $order = [];
+        $getorder = OrderModel::where('id', $data['id'])->find();
+        $getuser = UserModel::where('id', $getorder['shop_id'])->find();
         if (!empty($data['id'])) {
             $where[] = ['id', 'eq', $data['id']];
             $order['status'] = $data['status'];
             if ($data['status'] === 2) {
                 $order['out_trade_no'] = $data['out_trade_no'];
+            }
+        }
+        if (!empty($getorder['shop_id'])) {
+            dump(1,$data['status']);
+            if ($data['status'] === 2) {
+                //发通知给卖家
+                $semd = [
+                    'template_id' => 'gHQSOcCng-4XY0DlM2b7dZlifhDeu24qoKiAcfbFa5s', // 所需下发的订阅模板id
+                    'touser' => $getuser['openid'],     // 接收者（用户）的 openid
+                    'page' => '/pages/member/shop/orderinfo/orderinfo?id=' . $data['id'],       // 点击模板卡片后的跳转页面，仅限本小程序内的页面。支持带参数,（示例index?foo=bar）。该字段不填则模板无跳转。
+                    'data' => [         // 模板内容，格式形如 { "key1": { "value": any }, "key2": { "value": any } }
+                        'character_string1' => [
+                            'value' => $getorder['order_no'],
+                        ],
+                        'amount3' => [
+                            'value' => $getorder['totalPrice'],
+                        ],
+                        'date4' => [
+                            'value' => date('yy-m-d', time()),
+                        ],
+                        'name5' => [
+                            'value' => $getorder['buyerName'],
+                        ],
+                        'thing6' => [
+                            'value' => $getorder['addressText'],
+                        ],
+                    ],
+                ];
+                $we = new Wechat();
+                $semd = $we->SendMessage($semd);
+                dump($semd);
             }
         }
         $order['paymentTime'] = time();

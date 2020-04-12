@@ -6,6 +6,8 @@
     "pages/details/index",
     "pages/location/index",
     "pages/location/locationCity/locationCity",
+    "pages/location/communitySearch/index",
+    
     "pages/userCenter/pages/login/login",
     "pages/cart/index",
     "pages/purchase/index",

@@ -43,6 +43,9 @@ let pageObj = {
     _this.setData({
       shop_id:options.shop_id
     })
+    if (options.shop_id!==undefined){
+      wx.setStorageSync('to_shop_id', options.shop_id)
+    }
     wx.setNavigationBarTitle({
       title: '订单确认',
     });
@@ -85,14 +88,13 @@ let pageObj = {
    */
   onShow: function () {
 
+
     let communityObj = wx.getStorageSync("communityObj");
 
     if (communityObj) {
       this.setData({
         "state.address": JSON.parse(communityObj)
       })
-      // 必须本地先选择了地址，因为可用红包需要判断门店id
-      this.onFetchPackageAbleListHandler();
     }
   },
   //获取时间搓时间day
@@ -303,7 +305,14 @@ let pageObj = {
     this.formId = e.detail.formId;
     // this.onGotoProductDetail();
     this.onCheckValueHandler();
-    console.log('form发生了submit事件，携带数据为：', e)
+    wx.requestSubscribeMessage({
+      tmplIds: ['gHQSOcCng-4XY0DlM2b7dZlifhDeu24qoKiAcfbFa5s', 'e8BiV9VVmwgyroSogGOJuWjK5sTXecEi-ZfTEey-w44', 'X0uUIhn5jENF4vHQ2m-69RzcEwyd9NMDGHvQxWiwLGs'],
+      success: function (e) {
+        console.log(e)
+      }, fail(e) {
+        console.log(e)
+      }
+    })  
   },
 
   // 判断字段是否合法
@@ -352,8 +361,9 @@ let pageObj = {
       pay_type: 1,
       totalPrice: this.data.state.goodsPrice ,
       items: cart,
+      way_type:this.data.data.way_status,
+      shop_id: wx.getStorageSync('to_shop_id'),
       type:2,
-      shop_id: _this.data.shop_id,
       user_id: userinfo.id,
       buyerName: this.data.data.buyerName, // 用户名
       mobile: this.data.data.buyerPhone, //手机号码
@@ -362,8 +372,13 @@ let pageObj = {
       openid:userinfo.openid,
       type:2
     }
+   
+    if(_this.data.ispay===false){
+      return
+    }
+    _this.data.ispay = false;
     orderModel.PostDataBycreateOrder(queryObj, res => {
-
+     
 
       let paydata = res.data;
       wx.requestPayment({
@@ -384,7 +399,7 @@ let pageObj = {
               title: '支付成功!',
             })
             setTimeout(function () {
-              wx.redirectTo({
+              wx.reLaunch({
                 url: '/pages/userCenter/pages/orderList/orderList?id=' + res.data
               })
             }, 1000);

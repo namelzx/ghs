@@ -14,6 +14,16 @@ class CommunityModel extends HTTP {
     }
     this.request(params)
   }
+  PostDataByAdd(data,res){
+    var params = {
+      url: 'Community/PostDataByAdd',//接口路径
+      method: 'post', //请求方式
+      success: res,
+      data
+    }
+    this.request(params)
+  }
+  
 
 }
 export { CommunityModel }

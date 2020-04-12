@@ -11,7 +11,7 @@
         <image src='/imgs/icon-arrow-bottom.png' class='icon-arrow-bottom'></image>
       </view>
       <!-- <view class='line-vertical'></view> -->
-      <view class='input-content' catchtap='onGoToComSearchHandler'>
+      <view class='input-content' catchtap='tosearch'>
         <!-- <image src='/imgs/icon-search-default.png' class='icon-search'></image> -->
         <view class='input-text'>输入小区名称搜索社区</view>
       </view>
@@ -52,7 +52,7 @@
             </view>
           </view>
         </view>
-        <view class='touch-bottom-tips'>没有合适小区？请在搜索试试哦～</view>
+        <view class='touch-bottom-tips' bindtap="tosearch">没有合适小区？请在搜索试试哦～</view>
       </view>
       <view class='hot-community-empty' wx:if="{{data.coms && data.coms.length == 0}}">
         <image src='/imgs/icon-community-empty.png'></image>

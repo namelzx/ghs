@@ -19,16 +19,15 @@ class Wechat extends Controller
 
 
         $config = [
-            'app_id' => 'wxa81ab244ee136c47',
-            'secret' => '6669295ed71c5de46abb991ce1fb5939',
-
+            'app_id' => 'wxae80c2472ba27081',
+            'secret' => 'ad22904510c570ce34510fd592e049fa',
             // 指定 API 调用返回结果的类型：array(default)/collection/object/raw/自定义类名
             'response_type' => 'array',
             //...
         ];
-        $app = Factory::officialAccount($config);
-      $res=  $app->template_message->send($data);
-        return  $res;
+        $app = Factory::miniProgram($config);
+        $res = $app->subscribe_message->send($data);
+        return $res;
 
     }
 

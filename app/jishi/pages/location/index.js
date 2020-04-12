@@ -23,6 +23,11 @@ Page({
   data: {
   },
 
+  tosearch(){
+    wx.navigateTo({
+      url: '/pages/location/communitySearch/index',
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -37,6 +42,7 @@ Page({
     wx.getLocation({
       type: 'wgs84',
       success(res) {
+        console.log(res)
         _this.latitude = res.latitude
         _this.longitude = res.longitude
         // 先拿到本地经纬度，再请求接口获取社区列表，再循环计算距离
@@ -148,7 +154,10 @@ Page({
       // url,
       data: queryObj
     }
-    cityModel.GetCommunityBylist(res=>{
+    var temp = {
+      city: locationObj.city
+    }
+    cityModel.GetCommunityBylist(temp,res=>{
 
       res.data.forEach(item => {
         item.distance = _this.distance(_this.latitude, _this.longitude, item.lat, item.lng)

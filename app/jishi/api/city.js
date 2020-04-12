@@ -15,11 +15,12 @@ class CityModel extends HTTP {
   }
 
 
-  GetCommunityBylist(res) {
+  GetCommunityBylist(data,res) {
     var params = {
       url: 'city/GetCommunityBylist',//接口路径
       method: 'get', //请求方式
-      success: res
+      success: res,
+      data
     }
     this.request(params)
   }

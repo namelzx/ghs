@@ -30,6 +30,7 @@ Page({
       img_list:undefined,
       videosrc:undefined,
       sellpoint: undefined,
+      tel:'',
     },
     order_id: undefined,
     iList:[],
@@ -227,8 +228,8 @@ Page({
     var userinfo=wx.getStorageSync('userinfo')
     data.shop_id = userinfo.id
     data.id = this.data.order_id
-    console.log(data,"提交数据")
     goodsModel.PostDataByAdd(data,res=>{
+      Toast('保存成功');
      wx.navigateTo({
        url: '/pages/member/goods/index',
      })
@@ -239,15 +240,21 @@ Page({
 
   setName(e) {
     console.log(e)
-    this.setData({ 'data.setlinePrice': e.detail.value})
+    this.setData({ 'data.name': e.detail.value})
   },
 
-  line_price: undefined,
 
   setPrice(e) {
     console.log(e)
     this.setData({ 'data.price': e.detail.value })
   },
+
+
+  settel(e) {
+    console.log(e)
+    this.setData({ 'data.tel': e.detail.value })
+  },
+
 
 //市场价格
   setlinePrice(e) {

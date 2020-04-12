@@ -125,6 +125,34 @@
 					"pathName": "pages/purchase/address/submit/index",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "地址",
+					"pathName": "pages/purchase/address/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 11,
+					"name": "商家下单",
+					"pathName": "pages/member/shop/purchase/index",
+					"query": "shop_id=1",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "小区",
+					"pathName": "pages/location/communitySearch/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "添加地址",
+					"pathName": "pages/location/add/index",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

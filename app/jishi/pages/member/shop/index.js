@@ -120,7 +120,10 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
+  onShareAppMessage() {
+    let goods_id = this.data.goods_id
+    return {
+      title: this.data.shop.name,
+    }
   }
 })

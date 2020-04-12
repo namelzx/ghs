@@ -19,4 +19,30 @@ class Community extends Base
         ajax_return_ok($res);
     }
 
+    public function PostDataByAdd()
+    {
+        $data = input('param.');
+        if(empty($data['location'])){
+            ajax_return_error('请输入地址');
+        }
+
+        $tem = $this->getCoord($data['location']);
+        if($tem==='查询无结果'){
+            ajax_return_error($tem);
+        }
+        $temp['lat'] = $tem['lat'];
+        $temp['lng'] = $tem['lng'];
+        $res = CommunityModel::create($temp);
+        ajax_return_ok($res);
+    }
+
+    public function getCoord($address)
+    {
+        $url = 'https://apis.map.qq.com/ws/geocoder/v1/?address=' . $address . '&key=XB2BZ-J7PW3-DIZ3P-YC34A-BWFW7-ELBOI';
+        $res = curlSend($url);
+        if ($res['message'] !== 'query ok') {
+            return $res['message'];
+        }
+        return $res['result']['location'];
+    }
 }

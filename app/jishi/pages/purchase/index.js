@@ -150,6 +150,14 @@ let pageObj = {
         "state.isFormProductDetail": queryObj.isFormProductDetail,
         "state.isIphoneX": app.globalData.isIphoneX,
       })
+      wx.requestSubscribeMessage({
+        tmplIds: ['gHQSOcCng-4XY0DlM2b7dZlifhDeu24qoKiAcfbFa5s', 'e8BiV9VVmwgyroSogGOJuWjK5sTXecEi-ZfTEey-w44', 'X0uUIhn5jENF4vHQ2m-69RzcEwyd9NMDGHvQxWiwLGs', 'wVyeppelYymqlhqmveaTIiA_S7tIled9l_1cETl5o-0'],
+        success: function (e) {
+          console.log(e)
+        }, fail(e) {
+          console.log(e)
+        }
+      })    
       this.oncomputedHandler();
     }
   },
@@ -255,64 +263,6 @@ let pageObj = {
         wx.hideLoading();
       })
   },
-  // 获取可用红包请求
-  onFetchPackageAbleListHandler: function() {
-    if (!this.data.state.address) {
-      return false;
-    }
-    let _this = this;
-    let id = this.data.data.id;
-    let url = `${config.ApiRoot}/red-envelop/available-items`;
-    let queryObj = {
-      store_id: this.data.state.address.id
-    };
-    let arr = [];
-    this.data.data.products.forEach(item => {
-      let obj = {
-        activity_goods_id: item.activity_goods_id,
-        goods_id: item.goods_id,
-        sku_id: item.sku_id,
-        number: item.num,
-        type: item.type
-      }
-      arr.push(obj)
-    })
-    queryObj.goods = arr;
-    if (wx.getStorageSync("communityObj")) {
-      queryObj.adcode = JSON.parse(wx.getStorageSync("communityObj")).adcode
-    }
-
-    let data = {
-      url,
-      method: "POST",
-      data: queryObj
-    }
-    userMs.request(data)
-      .then(res => {
-        const {
-          data,
-          code,
-          msg
-        } = res.data
-        if (code == 10000) {
-          let canUsePackageNum = 0;
-          data.forEach(item => {
-            item.deadlineUtil = util.formatTimeToDay(new Date(item.deadline * 1000));
-            let matchArr = this.splitIntFloat(item.amount / 100);
-            item.amountInt = matchArr[1];
-            item.amountFloat = matchArr[2] ? matchArr[2] : "";
-            item.available && ++canUsePackageNum;
-          })
-          this.setData({
-            "data.packageList": data,
-            "data.canUsePackageNum": canUsePackageNum
-          })
-        }
-      }).catch(err => {
-        console.log(err)
-      });
-
-  },
   // 切割整数小数部分函数
   splitIntFloat: util.splitIntFloat,
   /**
@@ -344,39 +294,9 @@ let pageObj = {
   },
 
   formSubmit: function(e) {
-    this.formId = e.detail.formId;
     // this.onGotoProductDetail();
-    wx.requestSubscribeMessage({
-      tmplIds: ['gHQSOcCng-4XY0DlM2b7dcrl626D-F8TylKkrYUcOgU'],
-      success: function (e) {
-        console.log(e)
-      }, fail(e) {
-        console.log(e)
-      }
-    })
-
-    wx.requestSubscribeMessage({
-      tmplIds: ['X0uUIhn5jENF4vHQ2m-69RzcEwyd9NMDGHvQxWiwLGs'],
-      success: function (e) {
-        console.log(e)
-      }, fail(e) {
-        console.log(e)
-      }
-    })
-
-
-    wx.requestSubscribeMessage({
-      tmplIds: ['wVyeppelYymqlhqmveaTIiA_S7tIled9l_1cETl5o-0'],
-      success: function (e) {
-        console.log(e)
-      }, fail(e) {
-        console.log(e)
-      }
-    })
-
-    
+ 
     this.onCheckValueHandler();
-    console.log('form发生了submit事件，携带数据为：', e)
   },
 
   // 判断订单提交字段是否合法
@@ -434,11 +354,17 @@ let pageObj = {
       addressText: this.data.data.addressText, //收货地址
       buyerText: this.data.data.buyerText, //订单备注
       openid:userinfo.openid,
-      type:1
+      type:1,
+      way_type: this.data.data.way_status
     }
     if (shop.is_shop===true){
       queryObj.dis_id=shop.user_id
     }
+
+    if (_this.data.ispay === false) {
+      return
+    }
+    _this.data.ispay = false;
     orderModel.PostDataBycreateOrder(queryObj, res => {
 
       let paydata = res.data;

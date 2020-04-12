@@ -67,6 +67,7 @@ Page({
     
     let id = userinfo.id
     userAdderssModel.GetDataByUseradderss(id, res => {
+      console.log(res.data)
       this.setData({
         addlist: res.data
       })

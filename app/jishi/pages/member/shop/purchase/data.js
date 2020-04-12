@@ -1,5 +1,7 @@
 module.exports = {
+  ispay:true,
   data: {
+    ispay:true,
     way_status: 1, //1自提,2物流
     products: [
       {

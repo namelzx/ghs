@@ -1,24 +1,44 @@
 <!--page/purchase/purchase.wxml-->
 <view class='P-purchase {{state.isIphoneX?"isIphoneX":""}} {{state.choosePackageStatus || state.onComfirmBoxStatus?"limit-scroll":""}}'>
 
-  <!-- <view class='header-top-tips'>
-    <view class=''>选择小区门店，可享受免费代收服务</view>
-  </view> -->
-<!-- 
-  <view class='header-top-tips highLight'>
-    <view class=''>已享受免费代收服务，到货后请到店自提</view>
-  </view> -->
-
   <!-- 自提/物流切换 -->
   <view class="logistics">
     <view class="pro-desc-item-way">
-      <view catchtap="wayClick" data-status="1" class="way-name {{data.way_status==1?'way-name-active1':''}}">自提</view>
+      <view catchtap="wayClick" data-status="1" class="way-name {{data.way_status==1?'way-name-active1':''}}">同城</view>
       <view catchtap="wayClick" data-status="2" class="way-name {{data.way_status==2?'way-name-active2':''}}">物流</view>
     </view>
   </view>
 
-
   <view class='card-content' wx:if="{{data.way_status===2}}">
+    <view class='card-content-title-box'>
+      <view class='card-content-title-icon'></view>
+      <view class='card-content-title'>收货地址</view>
+    </view>
+
+    <view class='address-container' bindtap="toggleAddress">>
+
+
+      <view class='address-info' wx:if="{{data.buyerName}}">
+        <view class='address-info-desc'>
+          <view class='location-detail-content two-ellipsis'>
+            <text>{{data.buyerName}}</text>
+          </view>
+          <view class='user-info-content'>
+            <view>{{data.buyerPhone}}{{data.addressText}}</view>
+          </view>
+
+        </view>
+
+      </view>
+      <view class='address-info-empty' wx:else  bindtap="toggleAddress">
+        <view>选择地址（点击选择）</view>
+        <image class='address-info-arrow' src='/imgs/icon-arrow-address-right.png'></image>
+      </view>
+
+    </view>
+  </view>
+
+  <view class='card-content' wx:if="{{data.way_status===1}}">
     <view class='card-content-title-box'>
       <view class='card-content-title-icon'></view>
       <view class='card-content-title'>收货人信息</view>
@@ -37,22 +57,22 @@
         <view class='buyer-info-item-value' wx:else>{{data.buyerPhone}}</view>
       </view>
 
-      
-      <view class='buyer-info-item'>
-        <!-- <image></image> -->
-        <view class='buyer-info-item-text others'>备注</view>
-        <input class='buyer-info-item-value' bindinput='onInputBuyerTextHandler' placeholder-class='buyer-info-item-value-holder' placeholder='预约送货时间等其他对商家要求' value='{{data.buyerText}}' ></input>
-        
-    </view>
 
       <view class='buyer-info-item'>
         <!-- <image></image> -->
+        <view class='buyer-info-item-text others'>备注</view>
+        <input class='buyer-info-item-value' bindinput='onInputBuyerTextHandler' placeholder-class='buyer-info-item-value-holder' placeholder='预约送货时间等其他对商家要求' value='{{data.buyerText}}'></input>
+
+      </view>
+
+      <view class='buyer-info-item'>
+
         <view class='buyer-info-item-text others'>收货地址</view>
-        <!-- <input class='buyer-info-item-value' bindinput='onInputAddressTextHandler' placeholder-class='buyer-info-item-value-holder' placeholder='请填写门牌号，例1栋308室' value='{{data.addressText}}' ></input> -->
+
         <view class='buyer-info-item-value buyer-info-item-value-aaa' bindtap="toggleAddress" wx:if="{{data.addressText==''}}">请选择地址</view>
         <view class='buyer-info-item-value' bindtap="toggleAddress" wx:else>{{data.addressText}}</view>
+      </view>
     </view>
-  </view>
   </view>
 
   <!-- 自提显示 -->
@@ -60,11 +80,11 @@
     <view class="name">自提商品</view>
     <view class="he"></view>
   </view> -->
-  
+
   <view class='card-content card-content-except'>
     <view class='order-pro-container'>
       <view class='order-pro-title-box'>
-       <!--本订单由小区店主为您代收配送-->
+        <!--本订单由小区店主为您代收配送-->
         <view class='order-pro-title'>
           商品列表
         </view>
@@ -72,29 +92,29 @@
       </view>
       <view class='order-pro-lists'>
 
-        <view class='order-pro-lists-contentet {{state.switchHeight==false&&itemName.length>3?"order-pro-lists-hidden":""}}'> 
+        <view class='order-pro-lists-contentet {{state.switchHeight==false&&itemName.length>3?"order-pro-lists-hidden":""}}'>
 
-        <view class='order-pro-item half-border-top' wx:for="{{data.products}}" wx:key="{{index}}" >
-          <view class='item-info-container'>
-            <image src='{{item.images_url}}'></image>
-            <view class='item-info-content'>
-              <view class='order-item-info-title-box'>
-                <view class='order-item-info-title'>{{item.name}}</view>
-                <view class='order-item-info-price'>¥  {{item.price}}</view>
-              </view>
-              <view class='order-item-info-sku'>
-                <view class='order-item-info-sku-num'>x{{item.totalBuyNum}}</view>
+          <view class='order-pro-item half-border-top' wx:for="{{data.products}}" wx:key="{{index}}">
+            <view class='item-info-container'>
+              <image src='{{item.images_url}}'></image>
+              <view class='item-info-content'>
+                <view class='order-item-info-title-box'>
+                  <view class='order-item-info-title'>{{item.name}}</view>
+                  <view class='order-item-info-price'>¥ {{item.price}}</view>
+                </view>
+                <view class='order-item-info-sku'>
+                  <view class='order-item-info-sku-num'>x{{item.totalBuyNum}}</view>
+                </view>
               </view>
             </view>
-          </view>
-       
-        </view>
-       </view>
 
-         <view class="more-products {{state.switchHeight==false?'more-products-style':''}}" catchtap='onSwitchHeightHandler' wx:if="{{itemName.length>3}}">
+          </view>
+        </view>
+
+        <view class="more-products {{state.switchHeight==false?'more-products-style':''}}" catchtap='onSwitchHeightHandler' wx:if="{{itemName.length>3}}">
           <view class="products-length"> 共{{itemName.length}}件商品</view>
-           <image class="arrow-icon {{state.switchHeight==true?'up-arrow-icon':''}}" src="/imgs/arrow_up.svg"></image>
-         </view>
+          <image class="arrow-icon {{state.switchHeight==true?'up-arrow-icon':''}}" src="/imgs/arrow_up.svg"></image>
+        </view>
       </view>
     </view>
   </view>
@@ -107,20 +127,24 @@
           <text>¥</text>{{state.goodsPrice}}
         </view>
       </view>
-   
+
       <view class='order-extra-item'>
         <view></view>
         <view class='order-extra-item-right'>
           <view class='order-extra-item-value-total'>共{{data.products.length}}件商品</view>
-          <view class='order-extra-item-value-total'>小计：<text>￥{{data.selectPackageItem?state.totalPrice:state.goodsPrice}}</text></view>
+          <view class='order-extra-item-value-total'>小计：
+            <text>￥{{data.selectPackageItem?state.totalPrice:state.goodsPrice}}</text>
+          </view>
         </view>
       </view>
     </view>
   </view>
 
   <view class='footer-container {{state.isIphoneX?"isIphoneX":""}}'>
-    <view class='total-price'>合计<text>¥{{state.goodsPrice}}</text></view>
-    <form report-submit >
+    <view class='total-price'>合计
+      <text>¥{{state.goodsPrice}}</text>
+    </view>
+    <form report-submit>
       <button bindtap="formSubmit" form-type='submit' class='btn-buy'>立即付款</button>
     </form>
   </view>
@@ -131,12 +155,12 @@
         <view class='comfirm-order-title'>
           此商品需要您到店自提，请确认收货信息
         </view>
-      
+
       </view>
-     
+
       <view class='comfirm-order-info-content'>
 
-         <view class='comfirm-order-info-item'>
+        <view class='comfirm-order-info-item'>
           <view class='comfirm-order-info-item-text'>地址:</view>
           <view class='comfirm-order-info-item-value'>
             {{data.addressText}}
@@ -155,14 +179,14 @@
             {{data.buyerPhone}}
           </view>
         </view>
-      
+
       </view>
       <view class='comfirm-order-actions'>
         <view class='comfirm-order-action cancel' catchtap='onCloseOrderComfirmHandler'>取消</view>
         <view class='comfirm-order-action sure' catchtap='onSureOrderComfirmHandler'>确认</view>
       </view>
     </view>
-    
+
   </view>
 
   <view class='choose-package-container' wx:if="{{state.choosePackageStatus}}">
