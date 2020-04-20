@@ -19,9 +19,9 @@ class CityModel extends Model
     {
         $where = [];
         if (!empty($data['title'])) {
-            $where[] = ['name', '=', $data['title']];
+            $where[] = ['name', 'like', '%'.$data['title'].'%'];
         }
-        $res = self::where($where)->order('sort')->paginate($data['limit'], false, ['query' => $data['page']]);
+        $res = self::where($where)->paginate($data['limit'], false, ['query' => $data['page']]);
         return $res;
     }
 

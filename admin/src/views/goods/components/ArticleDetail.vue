@@ -6,7 +6,7 @@
     <el-form ref="postForm" :model="postForm" class="form-container">
 
       <sticky :z-index="10" :class-name="'sub-navbar '+postForm.status">
-        <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm">
+        <el-button v-loading="loading" style="margin-left: 10px;"  type="success" @click="submitForm">
           保存
         </el-button>
       </sticky>
@@ -178,21 +178,27 @@
             </el-row>
 
 
-
-
-
             <el-row :gutter="20">
               <el-col :span="20">
                 <el-form-item label-width="100px" label="商品特色:">
-                  <el-input
-                    size="mini"
+                  <!--<el-input-->
+                    <!--size="mini"-->
+                    <!--v-model="postForm.sellpoint"-->
+                    <!--:rows="1"-->
+                    <!--type="textarea"-->
+                    <!--class="article-textarea"-->
+                    <!--autosize-->
+                    <!--placeholder="输入商品特色"-->
+                  <!--/>-->
+                  <quill-editor
                     v-model="postForm.sellpoint"
-                    :rows="1"
-                    type="textarea"
-                    class="article-textarea"
-                    autosize
-                    placeholder="输入商品特色"
-                  />
+                    ref="myQuillEditor"
+                    :options="editorOption"
+
+                  >
+                  </quill-editor>
+
+
                 </el-form-item>
 
 
@@ -286,6 +292,7 @@
   import { GetCategoryIdByItems, GetIdByDetails, PostDataBySave } from '@/api/goods'
 
   import { GetCommunityByall } from '@/api/community'
+  import { quillEditor } from "vue-quill-editor"; //调用编辑器
 
   import { GetCategory } from '@/api/category'
 
@@ -299,22 +306,21 @@
 
   }
 
+
+  import 'quill/dist/quill.core.css';
+  import 'quill/dist/quill.snow.css';
+  import 'quill/dist/quill.bubble.css';
   export default {
     name: 'ArticleDetail',
     components: {
       uploadVideo,
       Divider,
-      Tinymce,
       Upload,
-
+      quillEditor,
       Sticky,
-      Warning,
-      CommentDropdown,
-      PlatformDropdown,
-      SourceUrlDropdown,
+
       CoverImage,
       ListImage,
-      SukImages
     },
     props: {
       isEdit: {
@@ -334,7 +340,8 @@
     data() {
 
       return {
-        product:[],
+        editorOption:[],
+        product: [],
         videosrc: '',
         ruleall: [],
         photoVisible: false,//获取图片库
@@ -348,7 +355,7 @@
         img_list: [],
         tempRoute: {},
         photo: [],
-        community:[],
+        community: []
 
       }
     },
@@ -363,8 +370,8 @@
       }
     },
     created() {
-      GetCommunityByall().then(res=>{
-        this.community=res.data
+      GetCommunityByall().then(res => {
+        this.community = res.data
       })
       this.postForm.img_list = []
       this.postForm.img_banner = []
@@ -424,23 +431,28 @@
       fetchData(id) {
         GetIdByDetails(id).then(response => {
           this.postForm = response.data
-          this.product=response.product
+          this.product = response.product
           if (this.postForm.img_list === null) {
             this.postForm.img_list = []
           } else {
             var img = this.postForm.img_list.split(',')
             this.postForm.img_list = []
-            for (let i = 0; i < img.length; i++) {
-              this.postForm.img_list.push({ url: img[i] })
-            }
 
+            if (img[0] !== '') {
+              for (let i = 0; i < img.length; i++) {
+                this.postForm.img_list.push({ url: img[i] })
+              }
+            }
             var banner = this.postForm.img_banner.split(',')
             this.postForm.img_banner = []
-            for (let i = 0; i < banner.length; i++) {
-              this.postForm.img_banner.push({ url: banner[i] })
-            }
+            if (banner[0] !== '') {
 
+              for (let i = 0; i < banner.length; i++) {
+                this.postForm.img_banner.push({ url: banner[i] })
+              }
+            }
           }
+          this.loading=false
 
           this.setTagsViewTitle()
 
@@ -460,6 +472,7 @@
         document.title = `${title} - ${this.postForm.id}`
       },
       submitForm() {
+        this.loading=true
         this.$refs.postForm.validate(valid => {
 
           if (valid) {
@@ -485,15 +498,18 @@
             }
             this.postForm.img_list = newimg.join(',')
             PostDataBySave(temp).then(res => {
+
               this.$notify({
                 title: '成功',
                 message: res.msg,
                 type: 'success',
                 duration: 2000
               })
+              this.fetchData(temp.id)
+              this.loading = false
             })
 
-            this.loading = false
+
           } else {
             return false
           }

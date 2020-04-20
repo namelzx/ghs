@@ -177,7 +177,7 @@
 
 .empty-action-btn{
   margin: 46rpx auto 0;
-  width: 170rpx;
+  width: 250rpx;
   height: 60rpx;
   line-height: 60rpx;
  background:linear-gradient(146deg,rgba(254,227,53,1) 0%,rgba(255,191,58,1) 100%);

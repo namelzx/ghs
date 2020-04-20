@@ -57,21 +57,28 @@ let pageObj = {
 
     this.setData({
       "data.products": queryObj,
-     
-      // "state.isFormProductDetail": queryObj.isFormProductDetail,
-      // "data.qiniuDomain": userMs.config["qiniuDomain"]
+  
     })
     
     this.oncomputedHandler();
-
+    let cityall = wx.getStorageSync('cityall')
+    this.setData({
+      'data.city_id': cityall.city_id,
+      'data.provinces_id': cityall.provinces_id,
+      'data.area_id': cityall.area_id,
+    })
     let temps = options.details
     if (temps !== undefined) {
       let temps = JSON.parse(options.details)
+      console.log(temps)
       this.setData({
         'data.buyerName': temps.name,
         'data.buyerPhone': temps.phone,
         'data.addressText': temps.city_code + temps.address,
-        'data.way_status': 2
+        'data.way_status': 2,
+        'data.provinces_id': temps.provinces_id,
+        'data.city_id': temps.city_id,
+        'data.area_id': temps.area_id,
       })
     }
   },
@@ -369,6 +376,9 @@ let pageObj = {
       mobile: this.data.data.buyerPhone, //手机号码
       addressText: this.data.data.addressText, //收货地址
       buyerText: this.data.data.buyerText, //订单备注
+      provinces_id: this.data.data.provinces_id, //收货地址
+      city_id: this.data.data.city_id, //订单备注
+      area_id: this.data.data.area_id, //订单备注
       openid:userinfo.openid,
       type:2
     }
@@ -665,6 +675,15 @@ let pageObj = {
 
     this.setData({
       'data.buyerText': e.detail.value
+    })
+  },
+
+  // 输入备注事件
+  onInputBuyerTextAddress: function (e) {
+    this.data.data.addressText = e.detail.value;
+
+    this.setData({
+      'data.addressText': e.detail.value
     })
   },
 

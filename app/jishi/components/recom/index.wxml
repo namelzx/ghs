@@ -1,6 +1,5 @@
 <!--components/recom/index.wxml-->
 <view class="recom">
-    <!-- <view class="big-title">· 为你推荐 ·</view> -->
     <view class="recom-list">
       <view class="recom-item" wx:for="{{recom}}" :key="index" catchtap="clickToRecom" data-id="{{item.id}}">
         <view class="recom-img">

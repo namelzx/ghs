@@ -6,13 +6,18 @@ qqmapsdk = new QQMapWX({
   key: 'XB2BZ-J7PW3-DIZ3P-YC34A-BWFW7-ELBOI'
 });
 
-
-
 import {
   UserModel
 } from '/api/user.js'
 
 let usermodel = new UserModel();
+
+
+import {
+  CityModel
+} from '/api/city.js'
+
+let citymodel = new CityModel();
 App({
   onLaunch: function () {
     wx.setNavigationBarTitle({
@@ -46,8 +51,18 @@ App({
             longitude: res.longitude
           },
           success: function (ret) {
+            console.log(ret)
         
             if (ret.status === 0 && ret.result) {
+              var temp = {
+                city: ret.result.address_component.city,
+                district: ret.result.address_component.district
+              }
+              //保存用户在平台的地理位置
+              citymodel.GetCityByName(temp, res => {
+                wx.setStorageSync('cityall', res.data)
+              })
+
               var currentLocation = {
                 city: ret.result.address_component.city,
                 district: ret.result.address_component.district,
@@ -67,9 +82,9 @@ App({
               if (communityObj){
 
               }else{
-                wx.navigateTo({
-                  url: '/pages/location/index',
-                })
+                // wx.navigateTo({
+                //   url: '/pages/location/index',
+                // })
               }
             
            

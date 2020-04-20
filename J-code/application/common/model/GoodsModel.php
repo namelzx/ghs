@@ -22,8 +22,8 @@ class GoodsModel extends Model
     {
 
         $where = [];
-        if (!empty($data['title'])) {
-            $where[] = ['name', 'eq', $data['title']];
+        if (!empty($data['name'])) {
+            $where[] = ['name', 'like','%'. $data['name'].'%'];
         }
         if (!empty($data['status'])) {
             $where[] = ['status', 'eq', $data['status']];
@@ -33,8 +33,9 @@ class GoodsModel extends Model
         }
 
 
-           if (!empty($data['community'])) {
-               $where[] = ['community', 'eq', $data['community']];
+
+        if (!empty($data['community_id'])) {
+               $where[] = ['community_id', 'eq', $data['community_id']];
            }
         if (!empty($data['category_id'])) {
             $where[] = ['category_id', 'eq', $data['category_id']];

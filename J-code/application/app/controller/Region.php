@@ -23,13 +23,15 @@ class Region extends Base
     public function GetCommunityBylist()
     {
         $data = input('param.');
-        $where=[];
-        if(!empty($data['city'])){
-            $where[]=['location','like',$data['city'].'%'];
+        $where = [];
+        if (!empty($data['city'])) {
+            $where[] = ['location', 'like', '%' . $data['city'] . '%'];
+        }
+        if (!empty($data['name'])) {
+            $where[] = ['name', 'like', '%' . $data['name'] . '%'];
         }
         $res = Db::name('community')->where($where)->select();
         ajax_return_ok($res);
-
     }
 
 

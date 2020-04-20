@@ -9,19 +9,14 @@
         <el-form-item>
           <el-button v-waves type="primary" icon="el-icon-search" size="small" @click="handleFilter">搜索</el-button>
         </el-form-item>
-        <el-form-item>
-          <el-button v-waves type="warning" icon="el-icon-refresh" size="small" @click="handleFilterClear">重置
-          </el-button>
-        </el-form-item>
+
       </el-form>
     </div>
 
     <!-- 操作 -->
     <el-row style="margin-bottom: 10px;">
       <el-col :xs="24" :sm="24" :lg="24">
-        <el-tooltip content="刷新" placement="top">
-          <el-button v-waves type="warning" icon="el-icon-refresh" circle @click="handleFilterClear"/>
-        </el-tooltip>
+
         <el-tooltip content="添加" placement="top">
           <el-button v-waves type="success" icon="el-icon-plus" circle @click="handleCreate"/>
         </el-tooltip>
@@ -45,14 +40,14 @@
     >
 
 
-      <el-table-column label="小区名称"       fixed="left"
+      <el-table-column label="小区名称" fixed="left"
                        min-width="150px" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.name }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="所处城市"       fixed="left"
+      <el-table-column label="所处城市" fixed="left"
                        min-width="150px" align="center">
         <template slot-scope="scope">
           <span v-if="scope.row.city">{{ scope.row.city.name }}</span>
@@ -62,7 +57,7 @@
 
 
       <!--| parseTime('{y}-{m}-{d} {h}:{i}')-->
-      <el-table-column label="小区详细地址" min-width="80px"  align="center">
+      <el-table-column label="小区详细地址" min-width="80px" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.location }}</span>
         </template>
@@ -96,37 +91,44 @@
                style="width: 400px; margin-left:50px;">
 
 
-        <el-form-item label="小区名称" >
+        <el-form-item label="小区名称">
           <el-input v-model="temp.name"/>
         </el-form-item>
 
 
-
-        <el-form-item label="详细地址" >
+        <el-form-item label="详细地址">
           <el-input v-model="temp.location" placeholder="请填写详细地址,方便定位"/>
         </el-form-item>
 
-        <el-form-item label="是否启用">
+        <el-form-item label="选择地址">
 
-          <el-select v-model="temp.city_id" class="filter-item" placeholder="Please select">
-            <el-option v-for="(item,index) in community" :key="item.id" :label="item.name" :value="item.id" />
-          </el-select>
+          <el-cascader
+            :props="props"
+            clearable
+            filterable
+            placeholder
+            ref="elcascader"
+            v-model="temp.city_model"
+            change-on-select
+            @visible-change="elCascaderOnlick"
+            @expand-change="elCascaderOnlick"
+
+          ></el-cascader>
         </el-form-item>
 
-        <el-form-item  label="小区图片:">
+        <el-form-item label="小区图片:">
           <Upload :image-url="temp.images_url" @showParentComp="HandelImages"/>
 
         </el-form-item>
 
 
-
-        <el-form-item label="排序" >
+        <el-form-item label="排序">
           <el-input v-model="temp.sort"/>
         </el-form-item>
         <el-form-item label="是否启用">
 
           <el-select v-model="temp.status" class="filter-item" placeholder="Please select">
-            <el-option v-for="(item,index) in StatusMap" :key="item.index" :label="item.name" :value="item.index" />
+            <el-option v-for="(item,index) in StatusMap" :key="item.index" :label="item.name" :value="item.index"/>
           </el-select>
         </el-form-item>
 
@@ -155,20 +157,20 @@
 </template>
 
 <script>
-  import {PostDataBySave, GetIdByDel, GetDataByList,GetCity} from '@/api/community'
+  import { PostDataBySave, GetIdByDel, GetDataByList, GetCity } from '@/api/community'
   import waves from '@/directive/waves' // waves directive
-  import {parseTime} from '@/utils'
+  import { parseTime } from '@/utils'
   import Pagination from '@/components/Pagination' // secondary package based on el-pagination
   import Upload from '@/components/Upload/CoverImage' // secondary package based on el-pagination
 
+  import { City } from '@/api/city'
 
   // arr to obj, such as { CN : "China", US : "USA" }
 
-
   export default {
     name: 'ComplexTable',
-    components: {Pagination, Upload},
-    directives: {waves},
+    components: { Pagination, Upload },
+    directives: { waves },
     filters: {
       statusFilter(status) {
         const statusMap = {
@@ -184,12 +186,67 @@
     },
     data() {
       return {
-        showSearch:false,
+
+        props: {
+          lazy: true,
+          lazyLoad(node, resolve) {
+            const { level } = node
+
+            if (level === 0) {
+
+              City(1).then(res => {
+
+                var data = res.data
+
+                let nodes = []
+                for (let i = 0; i < data.length; i++) {
+                  nodes.push({ label: data[i].label, value: data[i].id })
+                }
+                resolve(nodes)
+
+              })
+
+              // 通过调用resolve将子节点数据返回，通知组件数据加载完成
+            }
+            if (level === 1) {
+              City(node.data.value).then(res => {
+                var data = res.data
+                let nodes = []
+                for (let i = 0; i < data.length; i++) {
+                  nodes.push({ label: data[i].label, value: data[i].id })
+                }
+                resolve(nodes)
+
+              })
+
+              // 通过调用resolve将子节点数据返回，通知组件数据加载完成
+            }
+
+            if (level === 2) {
+              City(node.data.value).then(res => {
+                var data = res.data
+                let nodes = []
+                for (let i = 0; i < data.length; i++) {
+                  nodes.push({ label: data[i].label, value: data[i].id, leaf: level >= 2 })
+                }
+                resolve(nodes)
+
+              })
+
+              // 通过调用resolve将子节点数据返回，通知组件数据加载完成
+            }
+            if (level === 3) {
+              let nodes = []
+              resolve(nodes)
+            }
+          }
+        },
+        showSearch: false,
         tableKey: 0,
         list: [],
         total: 0,
         listLoading: true,
-        community:[],
+        community: [],
         listQuery: {
           page: 1,
           limit: 20,
@@ -199,16 +256,17 @@
           sort: '+id'
         },
         importanceOptions: [1, 2, 3],
-        sortOptions: [{label: 'ID Ascending', key: '+id'}, {label: 'ID Descending', key: '-id'}],
+        sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
         statusOptions: ['published', 'draft', 'deleted'],
         showReviewer: false,
         temp: {
+          city_model:'',
           id: undefined,
           name: '',
           sort: 0,
           ico: '',
           status: 2,
-          status_hm: 2,
+          status_hm: 2
         },
         dialogFormVisible: false,
         dialogStatus: '',
@@ -219,40 +277,58 @@
 
         StatusMap: [
           {
-            index:2,
-            name:'禁用'
+            index: 2,
+            name: '禁用'
           },
           {
-            index:1,
-            name:'启用'
+            index: 1,
+            name: '启用'
           }
         ],
         HomeMap: [
           {
-            index:2,
-            name:'不展示'
+            index: 2,
+            name: '不展示'
           },
           {
-            index:1,
-            name:'展示'
+            index: 1,
+            name: '展示'
           }
         ],
         dialogPvVisible: false,
         pvData: [],
         rules: {
-          name: [{required: true, message: '名称必须输入', trigger: 'blur'}]
+          name: [{ required: true, message: '名称必须输入', trigger: 'blur' }]
         },
         downloadLoading: false
       }
     },
     created() {
       this.getList()
-      GetCity().then(res=>{
-this.community=res.data
+      GetCity().then(res => {
+        this.community = res.data
       })
 
     },
     methods: {
+      elCascaderOnlick() {
+        let that = this;
+        setTimeout(function() {
+          document.querySelectorAll(".el-cascader-node__label").forEach(el => {
+            el.onclick = function() {
+              this.previousElementSibling.click();
+              that.$refs.elcascader.dropDownVisible = false;
+            };
+          });
+          document
+            .querySelectorAll(".el-cascader-panel .el-radio")
+            .forEach(el => {
+              el.onclick = function() {
+                that.$refs.elcascader.dropDownVisible = false;
+              };
+            });
+        }, 100);
+      },
       HandelImages(e) {
         this.temp.images_url = e
       },
@@ -277,17 +353,16 @@ this.community=res.data
         this.getList()
       },
       handleModifyStatus(row, status) {
-        GetIdByDel(row.id).then(res=>{
-          var index=this.list.indexOf(row)
-          this.list.splice(index, 1);
+        GetIdByDel(row.id).then(res => {
+          var index = this.list.indexOf(row)
+          this.list.splice(index, 1)
           this.$message({
-            type: "success",
-            message:  res.msg
-          });
+            type: 'success',
+            message: res.msg
+          })
         })
 
       },
-
 
       handleCreate() {
         this.dialogStatus = 'create'
@@ -313,7 +388,20 @@ this.community=res.data
         })
       },
       handleUpdate(row) {
-        this.temp =row // copy obj
+        this.temp = row;// copy obj
+        console.log(row)
+        if(row.city_code.constructor===Array){
+          this.temp.city_model=row.city_code
+        }else{
+          let cityCode=row.city_code.split(',');
+          for(let i=0;i<cityCode.length;i++){
+            cityCode[i]=parseInt(cityCode[i]);
+          }
+          this.temp.city_model=cityCode
+
+        }
+
+
         this.dialogStatus = 'update'
         this.dialogFormVisible = true
         this.$nextTick(() => {
@@ -359,7 +447,7 @@ this.community=res.data
           this.pvData = response.data.pvData
           this.dialogPvVisible = true
         })
-      },
+      }
 
     }
   }

@@ -96,8 +96,6 @@ Route::group('api/app/', function () {
     Route::get('Goods/GetDataByGooslist', 'app/Goods/GetDataByInfo');//获取详情
 
 
-
-
     //小区管理
     Route::get('Community/GetDataBylist', 'app/Community/GetDataBylist');//获取小区
 
@@ -127,7 +125,8 @@ Route::group('api/app/', function () {
      * 地址管理
      */
 
-
+    Route::rule('tools/GetCityByName', 'tools/Citytools/GetCityByName'); /* 通过城市和区获取地址id*/
+    
     Route::rule('city/GetByCitylist', 'app/Region/GetByCitylist'); /* 获取用户地址*/
 
     Route::rule('Useraddress/PostDataByAdd', 'app/Useraddress/PostDataByAdd'); /* 添加地址*/

@@ -53,14 +53,8 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="订单来源：">
-            <el-select v-model="listQuery.sourceType" class="input-width" placeholder="全部" clearable>
-              <el-option v-for="item in sourceTypeOptions"
-                         :key="item.value"
-                         :label="item.label"
-                         :value="item.value">
-              </el-option>
-            </el-select>
+          <el-form-item label="所属产品：">
+            <el-input v-model="listQuery.goodsname" class="input-width" placeholder="输入产品"></el-input>
           </el-form-item>
         </el-form>
       </div>

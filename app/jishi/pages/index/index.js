@@ -66,8 +66,18 @@ Page({
     } = e.currentTarget.dataset
     console.log(id)
     wx.navigateTo({
-      url: '/pages/details/index?id=' + id,
+     
+      url: '/pages/details/index?scene=' + id,
     })
+  },
+  toNonew(){
+    // wx.showToast({
+    //   title: '功能未开放',
+    //   icon:'none'
+    // })
+   wx.switchTab({
+     url: '/pages/tabBar/user/index',
+   })
   },
 
   onSelectFilterHandler(e) {
@@ -105,7 +115,7 @@ Page({
   onShow() {
     var that = this;
     wx.setNavigationBarTitle({
-      title: '果划算',
+      title: '随卖',
     })
     wx.requestSubscribeMessage({
       success:function(e){

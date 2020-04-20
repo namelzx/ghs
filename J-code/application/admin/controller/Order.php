@@ -9,6 +9,7 @@
 namespace app\admin\controller;
 
 
+use app\app\model\OrderGoodsModel;
 use app\common\model\OrderBuyoutModel;
 use app\common\model\OrderCourierModel;
 use app\common\model\OrderModel;
@@ -23,6 +24,10 @@ class Order extends System
     public function GetDataByList()
     {
         $data = input('param.');
+        if (!empty($data['goodsname'])) {
+            $data['order_id_in'] = OrderGoodsModel::where('name', 'like', $data['goodsname'] . '%')->column('order_id');
+
+        }
         $res = OrderModel::GetDataByList($data);
         return json(['msg' => '获取成功', 'data' => $res, 'code' => 20000], 200);
     }

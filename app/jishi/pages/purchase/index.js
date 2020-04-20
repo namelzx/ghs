@@ -11,7 +11,6 @@ let orderModel = new OrderModel();
 //获取应用实例
 const app = getApp()
 const userMs = app.userMs;
-
 // 引用封装的本地存储函数
 const util = require("../../utils/util.js");
 let pageObj = {
@@ -44,6 +43,12 @@ let pageObj = {
       title: '订单确认',
     });
 
+    let cityall = wx.getStorageSync('cityall')
+    this.setData({
+        'data.city_id': cityall.city_id,
+        'data.provinces_id': cityall.provinces_id,
+        'data.area_id': cityall.area_id,
+    })
 
     if (options.queryObj) {
       let queryObj = wx.getStorageSync('buy');
@@ -89,11 +94,15 @@ let pageObj = {
     let temps = options.details
     if (temps !== undefined) {
       let temps = JSON.parse(options.details)
+      console.log(temps)
       this.setData({
         'data.buyerName': temps.name,
         'data.buyerPhone': temps.phone,
         'data.addressText': temps.city_code + temps.address,
-        'data.way_status':2
+        'data.way_status':2,
+        'data.provinces_id': temps.provinces_id,
+        'data.city_id': temps.city_id,
+        'data.area_id': temps.area_id,
       })
     }
   },
@@ -341,11 +350,13 @@ let pageObj = {
     let userinfo = wx.getStorageSync('userinfo')
     this.payingStatus = true;
     let cart = wx.getStorageSync('buy')
-    
+
+  
     let shop=wx.getStorageSync('is_shop')
     console.log(cart.products)
     let queryObj = {
       pay_type: 1,
+    
       totalPrice: this.data.state.goodsPrice,
       items: cart.products,
       user_id: userinfo.id,
@@ -353,6 +364,9 @@ let pageObj = {
       mobile: this.data.data.buyerPhone, //手机号码
       addressText: this.data.data.addressText, //收货地址
       buyerText: this.data.data.buyerText, //订单备注
+      provinces_id: this.data.data.provinces_id,
+      city_id: this.data.data.city_id,
+      area_id: this.data.data.area_id,
       openid:userinfo.openid,
       type:1,
       way_type: this.data.data.way_status
@@ -366,7 +380,6 @@ let pageObj = {
     }
     _this.data.ispay = false;
     orderModel.PostDataBycreateOrder(queryObj, res => {
-
       let paydata = res.data;
       wx.requestPayment({
         timeStamp: paydata.timeStamp,
@@ -394,8 +407,9 @@ let pageObj = {
 
         },
         fail(res) {
+          _this.data.ispay = true;
           wx.redirectTo({
-            url: '/pages/userCenter/pages/orderDetail/orderDetail?id=' + res.data.id
+            url: '/pages/userCenter/pages/orderDetail/orderDetail?id=' + paydata.id
           })
         }
       })

@@ -21,7 +21,7 @@ class TreeUtil
         foreach ($list as $v) {
             if ($v[$pk] == $id) {
                 $tree[] = $v;
-                $tree   = array_merge(self::getParents($list, $v[$pid]), $tree);
+                $tree = array_merge(self::getParents($list, $v[$pid]), $tree);
             }
         }
 
@@ -43,7 +43,7 @@ class TreeUtil
         foreach ($list as $v) {
             if ($v[$pk] == $id) {
                 $tree[] = $v[$pk];
-                $tree   = array_merge(self::getParentsId($list, $v[$pid], $pk, $pid), $tree);
+                $tree = array_merge(self::getParentsId($list, $v[$pid], $pk, $pid), $tree);
             }
         }
 
@@ -74,7 +74,7 @@ class TreeUtil
 
                 $v[$html] = str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", $level);
                 $v[$html] = $v[$html] ? ($v[$html] . $prefix) : $v[$html];
-                $tree[]   = $v;
+                $tree[] = $v;
                 $level++;
                 $tree = array_merge($tree, self::listToTreeOne($list, $v[$pk], $prefix, $pk, $pid, $html));
             }
@@ -97,24 +97,24 @@ class TreeUtil
     {
 
         $new_array = [];
-        foreach($list as $v){
+        foreach ($list as $v) {
             $new_array[$v['id']] = $v;
         }
         //遍历新的数组，对每一个值的pid进行判断，判断新数组中是否存在键名为pid的值，如果存在，当前值为存在的pid的子节点，不存在，当前值为一级节点，添加到返回的数据中作为一级节点。这里使用引用传值是因为直接传值是不会影响到函数外边的变量值，我们这里要给一级节点添加子节点（sons），所以需要用到引用传值。
         $return_tree = [];
-        foreach($new_array as $kk=>$vv){
+        foreach ($new_array as $kk => $vv) {
 
-            if(isset($new_array[$vv['pid']])){
+            if (isset($new_array[$vv['pid']])) {
 
                 $new_array[$vv['pid']]['children'][] = &$new_array[$kk];
-            }else{
+            } else {
                 $return_tree[] = &$new_array[$kk];
             }
         }
 
+
         return $return_tree;
     }
-
 
 
     /**
@@ -144,7 +144,7 @@ class TreeUtil
                     $tree[] =& $list[$key];
                 } else {
                     if (isset($refer[$parentId])) {
-                        $parent           =& $refer[$parentId];
+                        $parent =& $refer[$parentId];
                         $parent[$child][] =& $list[$key];
                     }
                 }

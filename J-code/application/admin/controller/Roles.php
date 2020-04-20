@@ -2,10 +2,6 @@
 
 namespace app\admin\controller;
 
-use app\admin\controller\System;
-use \think\Db;
-use app\common\util\TreeUtil;
-
 /**
  * 角色管理
  * @author hardphp@163.com
@@ -20,16 +16,16 @@ class Roles extends System
     {
 
 //        if ($this->request->isGet()) {
-            //搜索参数
-            $title  = input('title', '', 'trim');
-            $status = input('status', -1, 'int');
-            $order  = input('order/a', '');
-            $page   = input('page', 1, 'intval');
-            $psize  = input('psize', 10, 'intval');
-            $lists           = model('AuthGroup', 'logic')->getLists($title, $status, $order, $page, $psize);
-            $result['total'] = model('AuthGroup', 'logic')->getTotal($title, $status);
-            $result['data']  = $lists;
-            ajax_return_ok($result);
+        //搜索参数
+        $title = input('title', '', 'trim');
+        $status = input('status', -1, 'int');
+        $order = input('order/a', '');
+        $page = input('page', 1, 'intval');
+        $psize = input('psize', 10, 'intval');
+        $lists = model('AuthGroup', 'logic')->getLists($title, $status, $order, $page, $psize);
+        $result['total'] = model('AuthGroup', 'logic')->getTotal($title, $status);
+        $result['data'] = $lists;
+        ajax_return_ok($result);
 //        }
     }
 
@@ -54,7 +50,7 @@ class Roles extends System
         if ($id == 0) {
             ajax_return_error('参数有误！');
         }
-        $info          = model('AuthGroup', 'logic')->getGroupById($id);
+        $info = model('AuthGroup', 'logic')->getGroupById($id);
         ajax_return_ok($info);
     }
 
@@ -65,20 +61,20 @@ class Roles extends System
     {
         $id = input('id', '0', 'int');
         //接收数据
-        $data     = [
-            'title'  => input('title', '', 'trim'),
+        $data = [
+            'title' => input('title', '', 'trim'),
             'status' => input('status', 0, 'int'),
-            'rules'  => input('rules/a', ''),
-            'btn'  => input('btn', '')
+            'rules' => input('rules/a', ''),
+            'btn' => input('btn', '')
         ];
         $validate = validate('AuthGroup');
-        $result   = $validate->check($data);
+        $result = $validate->check($data);
         if (!$result) {
             $error = $validate->getError();
             ajax_return_error($error);
         }
         $data['rules'] = implode(',', $data['rules']);
-        $res           = model('AuthGroup', 'logic')->modify($id, $data);
+        $res = model('AuthGroup', 'logic')->modify($id, $data);
         if ($res == false) {
             ajax_return_error('保存失败！');
         } else {
@@ -125,7 +121,7 @@ class Roles extends System
     public function change()
     {
 
-        $val   = input('val', '', 'int');
+        $val = input('val', '', 'int');
         $field = input('field', '', 'trim');
         $value = input('value', '', 'int');
         if (empty($field)) {
@@ -142,7 +138,7 @@ class Roles extends System
 
     public function changeall()
     {
-        $val   = input('val', '', 'trim');
+        $val = input('val', '', 'trim');
         $field = input('field', '', 'trim');
         $value = input('value', '', 'int');
         if (empty($val)) {

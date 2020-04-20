@@ -123,7 +123,10 @@
           <view class='pro-pic-desc-maohao'>
             <image src='/imgs/icon-pro-maohao.png'></image>
           </view>
-          <view class='pro-pic-desc-text'>{{data.productDetail.sellpoint}}</view>
+          <view class='pro-pic-desc-text'>
+            <rich-text nodes="{{data.productDetail.sellpoint}}"></rich-text>
+
+          </view>
         </view>
         
       
@@ -156,7 +159,7 @@
     </view>
     
     <!-- 返回团长端按钮 -->
-    <naviBackBtn  isIphoneX="{{state.isIphoneX}}"></naviBackBtn>
+    <!-- <naviBackBtn  isIphoneX="{{state.isIphoneX}}"></naviBackBtn> -->
 
     <!-- 底部按钮footer container-->
     <view class='pro-footer-container {{state.isIphoneX?"isIphoneX-nav-footer":""}}'>
@@ -280,4 +283,3 @@
 
 </scroll-view>
 
-<image></image>

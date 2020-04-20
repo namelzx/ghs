@@ -99,10 +99,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 6,
 					"name": "pages/details/index",
 					"pathName": "pages/details/index",
-					"query": "id=244",
+					"query": "id=264",
 					"scene": null
 				},
 				{
@@ -135,9 +135,9 @@
 				},
 				{
 					"id": 11,
-					"name": "商家下单",
-					"pathName": "pages/member/shop/purchase/index",
-					"query": "shop_id=1",
+					"name": "用户下单",
+					"pathName": "pages/purchase/index",
+					"query": "",
 					"scene": null
 				},
 				{
@@ -151,6 +151,13 @@
 					"id": -1,
 					"name": "添加地址",
 					"pathName": "pages/location/add/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "测试模块",
+					"pathName": "pages/logs/logs",
 					"query": "",
 					"scene": null
 				}

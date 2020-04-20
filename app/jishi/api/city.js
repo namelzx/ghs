@@ -25,6 +25,18 @@ class CityModel extends HTTP {
     this.request(params)
   }
 
+
+
+  GetCityByName(data, res) {
+    var params = {
+      url: 'tools/GetCityByName',//接口路径
+      method: 'get', //请求方式
+      success: res,
+      data
+    }
+    this.request(params)
+  }
+
   GetByCitylist(id,res) {
     var params = {
       url: 'city/GetByCitylist',//接口路径

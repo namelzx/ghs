@@ -11,7 +11,7 @@ export function GetDataByList(query) {
 export function GetCategory() {
   return request({
     url: 'admin/city/GetCategory',
-    method: 'get',
+    method: 'get'
   })
 }
 
@@ -19,7 +19,15 @@ export function GetIdByDel(id) {
   return request({
     url: 'admin/city/GetIdByDel',
     method: 'get',
-    params: {id}
+    params: { id }
+  })
+}
+
+export function City(pid) {
+  return request({
+    url: 'tools/Citytools/City',
+    method: 'get',
+    params: { pid }
   })
 }
 

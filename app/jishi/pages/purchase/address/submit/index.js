@@ -22,6 +22,9 @@ Page({
       phone:null,
       address:''
     },
+    provinces_id:0,
+    city_id:0,
+    area_id:0,
     steps:[
       {
         text: '选择省份'
@@ -89,6 +92,10 @@ Page({
       let temp = that.list;
       temp.user_id = userinfo.id
       temp.city_code = that.area
+      temp.provinces_id = that.provinces_id
+      temp.city_id = that.city_id
+      temp.area_id = that.area_id
+        
       let status = that.status   //1为添加，2为更新
       if (status == 1) {
         console.log(temp, 1);
@@ -127,6 +134,7 @@ Page({
         province_code: data.name,
         active: data.id,
         stpe: 1,
+        provinces_id: data.id,
         province:'选择城市',
         'steps[0].text': data.name,
       })
@@ -135,6 +143,7 @@ Page({
         city_code: data.name,
         active: data.id,
         stpe: 2,
+        city_id: data.id,
         'steps[1].text': data.name,
         province: '选择城区'
       })
@@ -143,6 +152,7 @@ Page({
       this.setData({
         district_code: data.name,
         active: 1,
+        area_id: data.id,
         addressShow:false,
         stpe: 0,
         'steps[0].text': '选择省份',

@@ -37,7 +37,7 @@
 					</view>
 					<view class="earnings_he">
 						<view>累计总收益</view>
-						<view class="earnings_he_money">¥<text>{{shopinfo.cumulative*100}}</text></view>
+						<view class="earnings_he_money">¥<text>{{shopinfo.cumulative}}</text></view>
 					</view>
 				</view>
 				<view class="earnings">

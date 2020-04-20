@@ -10,6 +10,7 @@ namespace app\app\controller;
 
 
 use app\admin\model\CommunityModel;
+use app\app\model\CityModel;
 
 class Community extends Base
 {
@@ -22,17 +23,23 @@ class Community extends Base
     public function PostDataByAdd()
     {
         $data = input('param.');
-        if(empty($data['location'])){
+        if (empty($data['location'])) {
             ajax_return_error('请输入地址');
         }
 
         $tem = $this->getCoord($data['location']);
-        if($tem==='查询无结果'){
+        if ($tem === '查询无结果') {
             ajax_return_error($tem);
         }
-        $temp['lat'] = $tem['lat'];
-        $temp['lng'] = $tem['lng'];
-        $res = CommunityModel::create($temp);
+        $getarea = CityModel::where('name', 'like', '%' . $tem['title'] . '%')->find();
+        $data['area'] = $getarea['id'];
+        $data['city'] = $getarea['pid'];
+        $province = CityModel::where('id', 'eq', $getarea['pid'])->find();
+        $data['province'] = $province['pid'];
+        $data['city_code'] = $data['province'] . ',' . $data['city'] . ',' . $data['area'];
+        $data['lat'] = $tem['location']['lat'];
+        $data['lng'] = $tem['location']['lng'];
+        $res = CommunityModel::create($data);
         ajax_return_ok($res);
     }
 
@@ -43,6 +50,6 @@ class Community extends Base
         if ($res['message'] !== 'query ok') {
             return $res['message'];
         }
-        return $res['result']['location'];
+        return $res['result'];
     }
 }

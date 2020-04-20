@@ -12,7 +12,6 @@ class Admin extends System
 //    protected $middleware = ['check'];
 
 
-
     /**
      * 列表
      */
@@ -29,14 +28,11 @@ class Admin extends System
             $order = input('order/a', 'a.id desc');
             $page = input('page', 1, 'intval');
             $psize = input('psize', 10, 'intval');
-
             $groupId = input('groupId', 10, 'intval');
-
-            $lists = model('Admin', 'logic')->getLists($userName, $phone, $realName, $startTime, $endTime, $isEnabled, $order, $page, $psize,$groupId);
+            $lists = model('Admin', 'logic')->getLists($userName, $phone, $realName, $startTime, $endTime, $isEnabled, $order, $page, $psize, $groupId);
             $result['total'] = model('Admin', 'logic')->getTotal($userName, $phone, $realName, $startTime, $endTime, $isEnabled);
             $result['data'] = $lists;
             ajax_return_ok($result);
-
         }
     }
 
@@ -51,33 +47,32 @@ class Admin extends System
 
         $routers = [];
 
-
-        $access=$this->bubble_sort($access);
+        $access = $this->bubble_sort($access);
 
         foreach ($access as $v) {
             $temp = $this->getdata($v);
-            foreach ($v['children'] as $vo=>$ivo) {
+            foreach ($v['children'] as $vo => $ivo) {
                 $temp['children'][] = $this->getdata($ivo);
-                if(!empty($ivo['children'])){
+                if (!empty($ivo['children'])) {
 
 
-                   $children=$this->bubble_sort($ivo['children']);
-                    $temp['children'][$vo]['children']=$this->getMuen( $children);
+                    $children = $this->bubble_sort($ivo['children']);
+                    $temp['children'][$vo]['children'] = $this->getMuen($children);
                 }
             }
             $routers[] = $temp;
         }
         $user['access'] = $routers;
 
-        $user['group']= my_model('AuthGroup', 'model', 'admin')->getGroupById($user['groupId']);
+        $user['group'] = my_model('AuthGroup', 'model', 'admin')->getGroupById($user['groupId']);
 
         ajax_return_ok($user);
     }
 
-    protected  function bubble_sort($arr)
+    protected function bubble_sort($arr)
     {
         $len = count($arr);
-        for ($i = 0; $i < $len -1; $i++) {//循环对比的轮数
+        for ($i = 0; $i < $len - 1; $i++) {//循环对比的轮数
             for ($j = 0; $j < $len - $i - 1; $j++) {//当前轮相邻元素循环对比
                 if ($arr[$j]['sorts'] > $arr[$j + 1]['sorts']) {//如果前边的大于后边的
                     $tmp = $arr[$j];//交换数据
@@ -92,24 +87,24 @@ class Admin extends System
     protected function getMuen($idata)
     {
         $temp = [];
-        foreach ($idata as $i=>$data){
-        $temp[$i]['path'] = $data['path'];
-        $temp[$i]['component'] = $data['component'];
-        $temp[$i]['name'] = $data['name'];
-        if ($data['hidden'] > -1) {
-            $temp[$i]['hidden'] = (boolean)$data['hidden'];
-        }
-        if ($data['alwaysShow'] > -1) {
-            $temp[$i]['alwaysShow'] = (boolean)$data['alwaysShow'];
-        }
-        if ($data['redirect']) {
-            $temp[$i]['redirect'] = $data['redirect'];
-        }
-        $temp[$i]['meta']['title'] = $data['title'];
-        $temp[$i]['meta']['icon'] = $data['icon'];
-        if ($data['noCache'] > -1) {
-            $temp[$i]['meta']['noCache'] = (boolean)$data['noCache'];
-        }
+        foreach ($idata as $i => $data) {
+            $temp[$i]['path'] = $data['path'];
+            $temp[$i]['component'] = $data['component'];
+            $temp[$i]['name'] = $data['name'];
+            if ($data['hidden'] > -1) {
+                $temp[$i]['hidden'] = (boolean)$data['hidden'];
+            }
+            if ($data['alwaysShow'] > -1) {
+                $temp[$i]['alwaysShow'] = (boolean)$data['alwaysShow'];
+            }
+            if ($data['redirect']) {
+                $temp[$i]['redirect'] = $data['redirect'];
+            }
+            $temp[$i]['meta']['title'] = $data['title'];
+            $temp[$i]['meta']['icon'] = $data['icon'];
+            if ($data['noCache'] > -1) {
+                $temp[$i]['meta']['noCache'] = (boolean)$data['noCache'];
+            }
         }
 
         return $temp;
@@ -136,7 +131,6 @@ class Admin extends System
         if ($data['noCache'] > -1) {
             $temp['meta']['noCache'] = (boolean)$data['noCache'];
         }
-
 
 
         return $temp;

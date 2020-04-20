@@ -30,12 +30,15 @@ class City extends System
     {
         $data = input('param.');
         $data['create_time'] = time();
+        $temp=[
+            'name'=>$data['name']
+        ];
         if (empty($data['id'])) {
-            $res = CityModel::create($data);
+            $res = CityModel::create($temp);
             return json(['msg' => '添加成功', 'data' => $res, 'code' => 20000], 200);
 
         } else {
-            $res = CityModel::where('id', $data['id'])->data($data)->update();
+            $res = CityModel::where('id', $data['id'])->data($temp)->update();
             return json(['msg' => '更新成功', 'data' => $res, 'code' => 20000], 200);
         }
     }

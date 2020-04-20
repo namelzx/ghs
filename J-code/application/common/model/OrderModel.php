@@ -36,10 +36,14 @@ class OrderModel extends Model
     {
         return $this->hasOne('OrderCourierModel', 'order_id', 'id');
     }
-
     public static function GetDataByList($data)
     {
 
+
+        $where = [];
+        if (!empty($data['order_id_in'])) {
+            $where[] = ['id', 'in', $data['order_id_in']];
+        }
         $res = self::with(['getUser']);
 
         if (!empty($data['time'])) {
@@ -53,8 +57,7 @@ class OrderModel extends Model
         if (!empty($data['status'])) {
             $res = $res->where('status', $data['status']);
         }
-
-        $res = $res->
+        $res = $res->where($where)->
         order('status asc,create_time desc')->
         paginate($data['limit'], false, ['query' => $data['page']]);
         return $res;

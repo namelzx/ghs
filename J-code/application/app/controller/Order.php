@@ -41,6 +41,10 @@ class Order extends Base
                 $where[] = ['status', 'eq', $data['status']];
             }
         }
+
+        if (!empty($data['user_id'])) {
+            $where[] = ['user_id', 'eq', $data['user_id']];
+        }
         $res = OrderModel::with(['goods'])
             ->order('id desc')
             ->where($where)->paginate($data['limit'], false, ['query' => $data['page']]);
@@ -62,8 +66,7 @@ class Order extends Base
             }
         }
         if (!empty($getorder['shop_id'])) {
-            dump(1,$data['status']);
-            if ($data['status'] === 2) {
+            if ((int)$data['status'] === 2) {
                 //发通知给卖家
                 $semd = [
                     'template_id' => 'gHQSOcCng-4XY0DlM2b7dZlifhDeu24qoKiAcfbFa5s', // 所需下发的订阅模板id

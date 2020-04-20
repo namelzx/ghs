@@ -21,7 +21,7 @@
       <div style="margin-top: 15px" class="search">
         <el-form :inline="true" :model="listQuery" size="small" label-width="80px">
           <el-form-item label="输入搜索：">
-            <el-input v-model="listQuery.out_trade_no" size="mini" class="input-width" placeholder="订单编号"></el-input>
+            <el-input v-model="listQuery.name" size="mini" class="input-width" placeholder="订单昵称"></el-input>
           </el-form-item>
           <el-form-item label="选择小区：">
             <el-select

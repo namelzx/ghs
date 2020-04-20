@@ -9,19 +9,14 @@
         <el-form-item>
           <el-button v-waves type="primary" icon="el-icon-search" size="small" @click="handleFilter">搜索</el-button>
         </el-form-item>
-        <el-form-item>
-          <el-button v-waves type="warning" icon="el-icon-refresh" size="small" @click="handleFilterClear">重置
-          </el-button>
-        </el-form-item>
+
       </el-form>
     </div>
 
     <!-- 操作 -->
     <el-row style="margin-bottom: 10px;">
       <el-col :xs="24" :sm="24" :lg="24">
-        <el-tooltip content="刷新" placement="top">
-          <el-button v-waves type="warning" icon="el-icon-refresh" circle @click="handleFilterClear"/>
-        </el-tooltip>
+
         <el-tooltip content="添加" placement="top">
           <el-button v-waves type="success" icon="el-icon-plus" circle @click="handleCreate"/>
         </el-tooltip>
@@ -51,23 +46,10 @@
           <span>{{ scope.row.name }}</span>
         </template>
       </el-table-column>
-      <!--| parseTime('{y}-{m}-{d} {h}:{i}')-->
-      <el-table-column label="城市代码" min-width="80px"  align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.code }}</span>
-        </template>
-      </el-table-column>
 
-      <el-table-column label="排序" min-width="130px"  align="center">
+      <el-table-column label="级别" width="110px" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.sort }}</span>
-        </template>
-      </el-table-column>
-
-
-      <el-table-column label="城市状态" width="110px" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.status |statusFilter}}</span>
+          <span>{{ scope.row.grade}}</span>
         </template>
       </el-table-column>
 
@@ -97,28 +79,6 @@
           <el-input v-model="temp.name"/>
         </el-form-item>
 
-
-
-        <el-form-item label="城市代码" >
-          <el-input v-model="temp.code"/>
-        </el-form-item>
-
-        <el-form-item label="权益说明" >
-          <el-input v-model="temp.level"/>
-        </el-form-item>
-
-
-
-
-        <el-form-item label="排序" >
-          <el-input v-model="temp.sort"/>
-        </el-form-item>
-        <el-form-item label="是否启用">
-
-          <el-select v-model="temp.status" class="filter-item" placeholder="Please select">
-            <el-option v-for="(item,index) in StatusMap" :key="item.index" :label="item.name" :value="item.index" />
-          </el-select>
-        </el-form-item>
 
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -193,10 +153,6 @@
         temp: {
           id: undefined,
           name: '',
-          sort: 0,
-          ico: '',
-          status: 2,
-          status_hm: 2,
         },
         dialogFormVisible: false,
         dialogStatus: '',

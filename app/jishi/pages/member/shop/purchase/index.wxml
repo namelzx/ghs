@@ -69,8 +69,9 @@
 
         <view class='buyer-info-item-text others'>收货地址</view>
 
-        <view class='buyer-info-item-value buyer-info-item-value-aaa' bindtap="toggleAddress" wx:if="{{data.addressText==''}}">请选择地址</view>
-        <view class='buyer-info-item-value' bindtap="toggleAddress" wx:else>{{data.addressText}}</view>
+  <input class='buyer-info-item-value' bindinput='onInputBuyerTextAddress' placeholder-class='buyer-info-item-value-holder' placeholder='请输入收货地址' value='{{data.addressText}}'></input>
+
+
       </view>
     </view>
   </view>
@@ -153,7 +154,7 @@
     <view class='comfirm-order-content'>
       <view class='comfirm-order-title-box'>
         <view class='comfirm-order-title'>
-          此商品需要您到店自提，请确认收货信息
+          请确认收货信息
         </view>
 
       </view>

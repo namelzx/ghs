@@ -21,7 +21,7 @@ Page({
   data: {},
 
   onGoToHomeHandler(){
-wx.switchTab({
+    wx.reLaunch({
   url: '/pages/index/index',
 })
   },

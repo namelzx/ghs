@@ -35,7 +35,7 @@ class Goods extends Base
     {
         $data = input('param.');
         $res = GoodsModel::where('id', $data['id'])->find();
-        $Eva = EvaluateModel::with(['user'])->where('goods_id', 'in', $data['id'])->select();
+        $Eva = EvaluateModel::with(['user'])->where('goods_id', 'in', $data['id'])->limit(1)->select();
         $res['eva'] = $Eva;
         ajax_return_ok($res);
 

@@ -3,7 +3,7 @@
 <view class="index-container">
   <!-- 轮播 -->
   <view class="swiper-wrap">
-    <swiper indicator-dots="{{indicatorDots}}" circular="{{circular}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" bindchange="handleIndexChange">
+    <swiper indicator-dots="{{indicatorDots}}" circular="{{circular}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
       <block wx:for="{{imgList}}" wx:key="*this">
         <swiper-item catchtap="clickToRecom" data-id="{{item.id}}">
           <image src="{{item.images_url}}" class="swiper-img"></image>
@@ -16,51 +16,87 @@
   <!-- <kkarea kkarea="{{kkarea}}"></kkarea> -->
   <!-- <tool></tool> -->
 
-  <view class="news">
+<view class="tools">
+
+  <view class="head">
+      <text class="txt">每日必点</text>
+      <text class="txt-mini">好玩的都在这里</text>
+    </view>
+    <view class="news">
+  
     <view class="tj" bindtap="toShop">
-    <image src="../../imgs/h-1.png"></image>
+      <image src="../../imgs/h-1.png"></image>
     </view>
-    <view class="jc">
-    <view  class="nk">
-    <image src="../../imgs/h-2.png"></image>
-    </view>
-     <view class="nk">
-       <image src="../../imgs/h-3.png"></image>
-     </view>
-    </view>
-  </view>
-  <!-- 品牌 -->
-    <!-- 搜索 -->
-
-    <!-- 爆款推荐  -->
-    <view class="swiper-wrap-hot" wx:if="{{faddish.length>0}}"> 
-      <swiper indicator-dots="{{indicatorDots}}" circular="{{circular}}" autoplay="{{autoplayHot}}" interval="{{intervalHot}}" duration="{{duration}}" >
-      <block wx:for="{{faddish}}"  wx:key="*this" >
-        <swiper-item catchtap="clickToRecom" data-id="{{item.id}}">
-          <image src="{{item.hot_img}}" class="swiper-img-hot"></image>
-        </swiper-item>
-      </block>
-    </swiper>
-    <view class="sw_hot_icon">
-      <view>Hot</view>
-    </view>
-    </view>
-
-    
-     <view class='filter-bar-container'>
-    
-      <view class='scroll-bar-view ' >
-        <scroll-view scroll-x class='filter-bar-container' scroll-with-animation scroll-left="{{data.scrollLeft}}">
-          <view class='filter-item {{index == 0?"short":""}} {{item.id == state.selectFilterId?"active":""}}' catchtap='onSelectFilterHandler' wx:for="{{filters}}" wx:key="{{index}}" data-id='{{item.id}}' data-index='{{index}}'>
-            <view class='filter-item-text'>{{item.name}}</view>
-            <view class='filter-item-bottom' wx:if="{{item.id == ac}}"></view>
-          </view>
-        </scroll-view>
+    <view class="jc" bindtap="toNonew">
+      <view class="nk">
+        <image src="../../imgs/h-2.png"></image>
+      </view>
+      <view class="nk">
+        <image src="../../imgs/h-3.png"></image>
       </view>
     </view>
+  </view>
+    
+    </view>
+  
+  <!-- 品牌 -->
+  <!-- 搜索 -->
+
+  <!-- 爆款推荐  -->
+  <view class="recom-bg">
+    <view class="head">
+      <image src="../../imgs/fire.png"></image>
+      <text class="txt">爆款推荐</text>
+      <text class="txt-mini">热销好物集聚</text>
+    </view>
+    <view class="swiper-wrap-hot" wx:if="{{faddish.length>0}}"> 
+      <swiper wx:if="{{faddish>1}}" indicator-dots="{{indicatorDots}}" circular="{{circular}}" autoplay="{{autoplayHot}}" interval="{{intervalHot}}" duration="{{duration}}">
+        <block wx:for="{{faddish}}" wx:key="*this">
+          <swiper-item catchtap="clickToRecom" data-id="{{item.id}}">
+
+            <image src="{{item.hot_img}}" class="swiper-img-hot"></image>
 
 
-     
-  <!-- 为你推荐 -->
+          </swiper-item>
+        </block>
+      </swiper>
+
+      <swiper wx:else indicator-dots="{{indicatorDots}}" circular="{{circular}}" autoplay="{{autoplayHot}}" display-multiple-items="2" interval="{{intervalHot}}" duration="{{duration}}" next-margin="10px">
+        <block wx:for="{{faddish}}" wx:key="*this">
+          <swiper-item class="sw-warp" catchtap="clickToRecom" data-id="{{item.id}}">
+            <view class="list-item">
+              <image src="{{item.hot_img}}" class="swiper-img-hot"></image>
+              <view class="content">
+                <text class="txt">{{item.name}}</text>
+                <view class="price">¥ {{item.price}}</view>
+              </view>
+            </view>
+          </swiper-item>
+        </block>
+      </swiper>
+    
+    </view> 
+  </view>
+
+<view class="recom">
+
+
+  <!-- <view class="big-title">· 为你推荐 ·</view> -->
+
+  <view class='filter-bar-container'>
+
+    <view class='scroll-bar-view '>
+      <scroll-view scroll-x class='filter-bar-container' scroll-with-animation scroll-left="{{data.scrollLeft}}">
+        <view class='filter-item {{index == 0?"short":""}} {{item.id == state.selectFilterId?"active":""}}' catchtap='onSelectFilterHandler' wx:for="{{filters}}" wx:key="{{index}}" data-id='{{item.id}}' data-index='{{index}}'>
+          <view class='filter-item-text'>{{item.name}}</view>
+          <view class='filter-item-bottom' wx:if="{{item.id == ac}}"></view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+
+
+
   <recom recom="{{recom}}"></recom>
+</view>
 </view>

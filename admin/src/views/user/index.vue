@@ -20,16 +20,10 @@
       </div>
       <div style="margin-top: 15px" class="search">
         <el-form :inline="true" :model="listQuery" size="small" label-width="80px">
-          <el-form-item label="输入搜索：">
-            <el-input v-model="listQuery.out_trade_no" size="mini" class="input-width" placeholder="订单编号"></el-input>
-          </el-form-item>
-          <el-form-item label="评价昵称：">
-            <el-input v-model="listQuery.nickName" class="input-width" placeholder="用户昵称"></el-input>
+          <el-form-item label="输入昵称：">
+            <el-input v-model="listQuery.nickName" size="mini" class="input-width" placeholder="输入昵称"></el-input>
           </el-form-item>
 
-          <el-form-item label="评价内容：">
-            <el-input v-model="listQuery.desc" class="input-width" placeholder="评价内容"></el-input>
-          </el-form-item>
         </el-form>
       </div>
     </el-card>

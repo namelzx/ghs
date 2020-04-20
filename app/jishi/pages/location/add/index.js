@@ -179,7 +179,7 @@ Page({
    */
   onLoad: function (options) {
     wx.setNavigationBarTitle({
-      title: '小区添加',
+      title: '小区/街道/村添加',
     })
   },
 

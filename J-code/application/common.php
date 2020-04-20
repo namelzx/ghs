@@ -490,7 +490,7 @@ function think_decrypt($data, $key = '')
 }
 
 //随机数
-function make_password( $length = 8 )
+function make_password($length = 8)
 {
     // 密码字符集，可任意添加你需要的字符
 //    $chars = array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
@@ -505,8 +505,7 @@ function make_password( $length = 8 )
     // 在 $chars 中随机取 $length 个数组元素键名
     $keys = array_rand($chars, $length);
     $password = '';
-    for($i = 0; $i < $length; $i++)
-    {
+    for ($i = 0; $i < $length; $i++) {
         // 将 $length 个数组元素连接成字符串
         $password .= $chars[$keys[$i]];
     }
@@ -514,14 +513,17 @@ function make_password( $length = 8 )
 }
 
 //获取地址栏
-function curPageURL() {
+function curPageURL()
+{
     $pageURL = 'http';
-    if (!empty($_SERVER['HTTPS'])) {$pageURL .= "s";}
+    if (!empty($_SERVER['HTTPS'])) {
+        $pageURL .= "s";
+    }
     $pageURL .= "://";
     if ($_SERVER["SERVER_PORT"] != "80") {
-        $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+        $pageURL .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . $_SERVER["REQUEST_URI"];
     } else {
-        $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+        $pageURL .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
     }
     return $pageURL;
 }

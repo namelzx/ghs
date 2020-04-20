@@ -1441,6 +1441,8 @@
   z-index: 200;
 }
 .share-type-content{
+  display: flex;
+  flex-direction: row;
   height: 300rpx;
   background: #FFFFFF;
   border-radius: 20rpx 20rpx 0 0;
@@ -1660,4 +1662,96 @@
 .right-imgs .imgs image{
   width: 100%;
   height: 100%;
+}
+
+
+
+/* 海报 */
+
+
+
+.imagePathBox{
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000000;
+}
+.shengcheng{
+  width: 80%;
+  height: 80%;
+  position: fixed;
+  top: 50rpx;
+  left: 50%;
+  margin-left: -40%;
+  z-index: 10;
+}
+.baocun{
+  display: block;
+  width: 80%;
+  height: 80rpx;
+  padding: 0;
+  line-height: 80rpx;
+  text-align: center;
+  position: fixed;
+  bottom: 50rpx;
+  left: 10%;
+  background: #ffe200;
+  color: #333;
+  font-size: 32rpx;
+  border-radius: 44rpx;
+}
+button[class="baocun"]::after{
+  border: 0;
+}
+
+.suk-conent{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding:20rpx 0;
+  margin:0 32rpx;
+  /* justify-content: space-between; */
+  align-items: flex-start;
+  
+}
+.suk-conent .suk-items{
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  margin-bottom: 30rpx;
+}
+.suk-items .s-title{
+  color: rgb(110, 108, 108);
+  font-size: 35rpx;
+}
+.suk-items .s-desc{
+   font-size: 33rpx;
+   text-indent: 20rpx;
+   color: rgb(20, 20, 20);
+   justify-content: center;
+}
+.qbtn{
+  text-align: center;
+  margin-top: 30rpx;
+  padding: 15rpx;
+  background: #f4f5f8;
+  width: 70%;
+  font-size: 30rpx;
+  margin: auto;
+  border-radius: 20%;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  margin-bottom: 30rpx;
+}
+
+.predict{
+  color: #46a0fc;
+  border: 1px solid #46a0fc;
 }

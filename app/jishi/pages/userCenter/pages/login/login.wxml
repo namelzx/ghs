@@ -10,7 +10,7 @@
     </view>
     <button open-type="getUserInfo" bindgetuserinfo="userInfoHandler" class='submit'>点击授权</button>
 
-      <view class='empty-action-btn' catchtap='onGoToHomeHandler'>去首页</view>
+      <view class='empty-action-btn' catchtap='onGoToHomeHandler'>不授权,去首页</view>
 </view>
 
 

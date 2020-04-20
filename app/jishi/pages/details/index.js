@@ -12,6 +12,10 @@ let goodsModel = new GoodsModel();
 
 Page({
   data: {
+    model:'',
+    screen_width:0,
+    screen_height:0,
+    hbHidden:false,
     // way_status:1,
     carArray: [],
     eva:[],
@@ -48,12 +52,85 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
-  // wayClick(e) {
-  //   let way_status = parseInt(e.target.dataset.status)
-  //   this.setData({
-  //     way_status: way_status
-  //   })
-  // },
+  createNewImg: function () {
+    var that = this;
+    let goods = that.data.data.productDetail
+    wx.setStorageSync('good', goods)
+  
+    wx.navigateTo({
+      url: '/pages/logs/logs',
+    })
+    return true;
+    let w = 0 // 画布宽度
+    let h = 0 // 画布宽度
+    // 获取canvas标签
+    let ctx = wx.createCanvasContext('mycanvas')
+    // 获取canvas尺寸
+    let query = wx.createSelectorQuery()
+    query.select('#share').boundingClientRect()
+    query.exec(function (rect) {
+      console.log(rect)
+      let res = rect[0]
+      w = res.width
+      h = res.height
+      let baseNum = 300 // 标准画布宽度基数
+      let ratio = w / baseNum // 自适应比例
+      console.log('绘图开始')
+      ctx.setFillStyle('#fff') // 背景颜色
+      ctx.fillRect(0, 0, w, h)
+      let img = {
+        type: 'img',
+        url: '图片链接'
+      }
+      let qrImg = {
+        type: 'qrimg',
+        url: '二维码链接'
+      }
+      // 图片统一转为本地图片
+      let num = 0 // 转为本地图片数量
+      // 将图片转为临时图片
+      // 绘图内容
+      ctx.drawImage(that.data.images_url, 0, 0, w, w)
+      // 二维码
+      ctx.drawImage(that.data.images_url, 209 * ratio, 314 * ratio, 72 * ratio, 72 * ratio)
+      // 。。。中间代码省略
+      ctx.draw(true, setTimeout(function () {  // 加定时器是防止绘图未完成就生成图片导致图片内容不完整
+        // 生成本地图片
+        wx.canvasToTempFilePath({
+          x: 0, y: 0,
+          canvasId: 'customCanvas',
+          success: function (res) {
+            let path = res.tempFilePath
+            console.log(path)
+          },
+          fail: function (res) { }
+        })
+      }, 0))
+    })
+    context.draw();
+    //将生成好的图片保存到本地，需要延迟一会，绘制期间耗时
+    setTimeout(function () {
+      wx.canvasToTempFilePath({
+        canvasId: 'mycanvas',
+        success: function (res) {
+          var tempFilePath = res.tempFilePath;
+          console.log(tempFilePath)
+          that.setData({
+            imagePath: tempFilePath,
+            canvasHidden: true
+          });
+        },
+        fail: function (res) {
+          console.log(res);
+        }
+      });
+    }, 200);
+  },
+  onChangeShareBoxHandler: function () {
+    this.setData({
+      shareBoxStatus: !this.data.shareBoxStatus
+    })
+  },
   //事件处理函数
   bindViewTap: function() {
     wx.navigateTo({
@@ -63,7 +140,20 @@ Page({
 
   
   onLoad: function(e) {
-    console.log(e.user_id)
+    let goods_id = decodeURIComponent(e.scene);
+
+    this.data.goods_id = decodeURIComponent(e.scene)
+
+    wx.getSystemInfo({
+      success: function (res) {
+        console.log(res)
+        that.setData({
+          model: res.model,
+          screen_width: res.windowWidth / 375,
+          screen_height: res.windowHeight
+        })
+      }
+    })
     let user_id = e.user_id;
     if (user_id===undefined){
       console.log('普通进入')
@@ -80,7 +170,7 @@ Page({
       wx.setStorageSync('is_shop', temp)
     }
     this.data.carArray = wx.getStorageSync('cart');
-    this.data.goods_id = e.id
+   
     this.getInfo();
     if (app.globalData.userInfo) {
       this.setData({
@@ -136,6 +226,16 @@ Page({
       if (data.img_banner !== null) {
         data.img_banner = data.img_banner.split(',')
       }
+      console.log(res.data)
+      wx.getImageInfo({
+        src: res.data.images_url,
+        success:function(res){
+          console.log(res)
+          that.setData({
+            images_url:res.path
+          })
+        }
+      })
       that.setData({
         'data.productDetail': res.data
       })
@@ -231,7 +331,6 @@ Page({
       })
     // this.oncomputedHandler();
   },
-
   // 数量加事件
   onNumAddHandler: function(e) {
     let index = e.currentTarget.dataset.index;
@@ -304,23 +403,20 @@ Page({
 
   //生成海报
   onOpenSavePicStatus: function () {
-    wxApi.getSetting().then(res => {
-      if (res.authSetting['scope.userInfo']) {
-        this.onOpenSettingNeedBtn();
-        this.onRequestCodePic();
-        this.setData({
-          "state.savePicBoxStatus": true,
-          "state.shareBoxStatus": false,
-          // "state.openSavePicBoxTimes": ++this.data.state.openSavePicBoxTimes
-        })
-      } else {
-        this.alertHandler("需要用户授权才能使用这个功能")
-        wx.navigateTo({
-          url: '../userCenter/pages/login/login',
-        })
-        return false;
-      }
-    })
+    let that=this;
+    wx.showToast({
+      title: '生成中...',
+      icon: 'loading',
+      duration: 1000
+    });
+    setTimeout(function () {
+      wx.hideToast()
+      that.createNewImg();
+      that.setData({
+        hbHidden: true
+      });
+    }, 1000)
+    
 
   },
 
@@ -355,119 +451,6 @@ Page({
     console.log(e)
   },
 
-  // 保存canvas图片到手机事件
-  saveWeChatPicHandler: function () {
-    const _this = this;
-    wxApi.authorize({
-      scope: "scope.writePhotosAlbum"
-    }).catch(e => {
-      return wxApi.openSetting().then(res => {
-        if (res.authSetting["scope.writePhotosAlbum"]) {
-          return;
-        } else {
-          throw "授权失败！";
-        }
-      })
-        .catch(err => {
-          // 这里的思路是，先让用户授权地址，用户拒绝以后，先进入一次设置页
-          // 如果 opensetting api 报错，返回一个对象
-          // 如果是 用户自己取消授权，则把报错值自定义为字符串，则不是api 报错
-          // 否则使用button open-type 为 opensetting
-
-          if (typeof err === "string") {
-            throw "授权失败！";
-          } else {
-            _this.setData({
-              "state.needOpenSettingBtn": true
-            })
-          }
-        })
-
-    }).then(() => {
-      return wxApi.canvasToTempFilePath({ x: 0, y: 0, canvasId: this.data.state.posterId })
-      // return wxApi.getImageInfo({
-      //   src: "https://bir.langnadujia.cn/static/images/kefu.jpg",
-      // })
-    })
-      .then(res => {
-        console.log(res)
-        return wxApi.saveImageToPhotosAlbum({ filePath: res.tempFilePath })
-        // return wxApi.saveImageToPhotosAlbum({ filePath: res.path})
-
-
-        // wx.saveImageToPhotosAlbum({
-        //   filePath: res.path,
-        //   success: function () {
-        //     _this.setData({
-        //       "state.alertingStatus": true,
-        //       "state.alertingWords": "保存成功，请前往微信扫描二维码"
-        //     })
-        //     setTimeout(function () {
-        //       _this.setData({
-        //         "state.alertingStatus": false
-        //       })
-        //     }, 2000);
-        //     _this.setData({
-        //       "state.qrcodeBoxStatus": !_this.data.state.qrcodeBoxStatus
-        //     })
-        //   }
-        // })
-      })
-      .then(res => {
-        this.alertHandler("保存成功，请前往微信扫描二维码")
-        // _this.setData({
-        //   "state.alertingStatus": true,
-        //   "state.alertingWords": "保存成功，请前往微信扫描二维码"
-        // })
-        // setTimeout(function () {
-        //   _this.setData({
-        //     "state.alertingStatus": false
-        //   })
-        // }, 2000);
-        _this.setData({
-          "state.savePicBoxStatus": false,
-          // "state.posterId": this.data.state.posterId + this.data.state.openSavePicBoxTimes
-        })
-      })
-      .catch(err => {
-        if (typeof err === "string") {
-          wx.showToast({
-            title: err,
-            image: "/imgs/cancel.png",
-            duration: 2000
-          });
-        }
-        console.log(err)
-      });
-  },
-  // 请求获得小程序二维码事件
-  onRequestCodePic: function () {
-    let _this = this;
-    let storeId = "";
-    if (wx.getStorageSync("communityObj")) {
-      storeId = JSON.parse(wx.getStorageSync("communityObj")).id
-    }
-
-    let adcode = "";
-    let community_id = "";
-    let locationObj = wx.getStorageSync("communityObj");
-    if (locationObj) {
-      locationObj = JSON.parse(locationObj);
-      adcode = locationObj.adcode;
-      locationObj.com && (community_id = locationObj.com.id)
-    }
-
-    if (this.hasCodePicStatus) {
-      this.onDrawCanvasHandler();
-    } else {
-      _this.setData({
-        "data.qrCode": '../../imgs/logo.jpg'
-      })
-      _this.onDrawCanvasHandler();
-
-    }
-
-  },
 
 
   onCloseSavePicStatus: function () {
@@ -476,153 +459,14 @@ Page({
       // "state.posterId": this.data.state.posterId + this.data.state.openSavePicBoxTimes
     })
   },
-  // canvas 绘图事件
-  onDrawCanvasHandler: function () {
-    // if (this.data.state.posterHasCreateStatus) return;
-    let productDetail = this.data.data.productDetail;
-    let windowWidth = this.windowWidth;
-    let WidthRadio = this.WidthRadio;
-    let picRadio = 500 / 750;
-    // let userInfo;
-    // if (userMs){
-    //   userInfo = userMs.config.userInfo
-    // }
-    // let {userInfo} = userMs.config;
-    // console.log("userInfo",userInfo)
-    console.log(this.data.state.posterId)
-    const ctx = wx.createCanvasContext('mycanvas');
-    console.log(ctx)
-    ctx.clearRect(0, 0, 500 * WidthRadio, 840 * windowWidth);
-    ctx.setFillStyle("#fff");
-    ctx.fillRect(0, 0, 500 * WidthRadio, 840 * windowWidth);
-
-
-
-
-    var path;
-    // 背景图片
-    path = "../../imgs/icon-share-poster-bg.png";
-    ctx.drawImage(path, 0, 0, (500 * WidthRadio), (957 * picRadio * WidthRadio));
-    path = "../../imgs/icon-logo-share.png";
-    ctx.drawImage(path, (258 * picRadio * WidthRadio), 46 * picRadio * WidthRadio, (234 * picRadio * WidthRadio), (138 * picRadio * WidthRadio));
   
-    // 商品logo
-    path = '../../imgs/icon-share-poster-bg.png';
-    if (path) {
-      ctx.drawImage(path, (151 * picRadio * WidthRadio), (214 * picRadio * WidthRadio), (448 * picRadio * WidthRadio), (448 * picRadio * WidthRadio));
-    }
-
-
-
-    if (productDetail.name) {
-      // 左下角的title 这里需要限制次数啊。。
-      let titleLength = productDetail.name.length;
-      let title = productDetail.name;
-      let titleOne;
-      let titleTwo;
-      if (titleLength >= 36) {
-        titleOne = title.substr(0, 18);
-        titleTwo = title.substr(18, 16);
-        titleTwo = titleTwo + "..."
-      } else if (titleLength < 36 && titleLength >= 18) {
-        titleOne = title.substr(0, 18);
-        titleTwo = title.substr(18, 18);
-      } else {
-        titleOne = title
-      }
-      ctx.setFillStyle("#333");
-      ctx.setFontSize(19 * picRadio);
-      ctx.setTextBaseline('top');
-      ctx.setTextAlign('center')
-      ctx.fillText(titleOne, (375 * picRadio * WidthRadio), (692 * picRadio * WidthRadio));
-      if (titleTwo) {
-        ctx.fillText(titleTwo, (375 * picRadio * WidthRadio), (740 * picRadio * WidthRadio));
-      }
-    }
-    // 我们的价格
-    if (productDetail.price) {
-      let our_price = productDetail.price;
-      ctx.setFillStyle("#FF5e53");
-      ctx.setTextBaseline('bottom')
-      ctx.setTextAlign('right')
-      // 让新价格 && 旧价格 中间对齐
-      ctx.setFontSize(24 * picRadio);
-      ctx.fillText(our_price / 100, ((365) * picRadio * WidthRadio), (848 * picRadio * WidthRadio));
-      let prefixWidth = ctx.measureText(`${our_price / 100}`).width;
-      let widthMargin = 10;
-      ctx.setFontSize(16 * picRadio);
-      ctx.fillText("¥", ((365 - widthMargin) * picRadio * WidthRadio - prefixWidth), (848 * picRadio * WidthRadio));
-
-    }
-    // 市场价格
-    if (productDetail.line_price) {
-      ctx.setFillStyle("#d6d6d6");
-      ctx.setTextBaseline('bottom')
-      ctx.setTextAlign('left')
-      // 让新价格 && 旧价格 中间对齐
-      ctx.setFontSize(14 * picRadio);
-
-      ctx.fillText("¥", ((385) * picRadio * WidthRadio), (838 * picRadio * WidthRadio));
-      let prefixWidth = ctx.measureText(`¥`).width;
-      let market_price = productDetail.line_price;
-
-      ctx.fillText(market_price / 100, ((385) * picRadio * WidthRadio + prefixWidth), (838 * picRadio * WidthRadio));
-      let marketPriceWidth = ctx.measureText(`${market_price / 100}`).width;
-      ctx.setStrokeStyle("#999")
-      ctx.beginPath()
-      ctx.moveTo(((385) * picRadio * WidthRadio), (824 * picRadio * WidthRadio))
-      ctx.lineTo(((385) * picRadio * WidthRadio + marketPriceWidth + prefixWidth), (824 * picRadio * WidthRadio))
-      ctx.stroke()
-    }
-
-    if (productDetail.sales) {
-      let sell_count = productDetail.sales;
-      
-      let marketPriceWidth = ctx.measureText(`${sell_count / 100}`).width;
-      ctx.setFillStyle('#ff5e53')
-      // ctx.fillRect((230 * picRadio * WidthRadio), (888 * picRadio * WidthRadio), ((290) * picRadio * WidthRadio), (88 * picRadio * WidthRadio))
-      ctx.setStrokeStyle('#ff5e53')
-      this.drawRoundRect(ctx, (230 * picRadio * WidthRadio), (888 * picRadio * WidthRadio), ((290) * picRadio * WidthRadio), (88 * picRadio * WidthRadio), 44 * picRadio * WidthRadio);
-      ctx.stroke()
-      ctx.fill()
-      ctx.setFillStyle("#fff");
-      ctx.setFontSize(16 * picRadio);
-      ctx.setTextBaseline('bottom')
-      ctx.setTextAlign('center')
-      ctx.fillText(`已售${sell_count}件`, (375 * picRadio * WidthRadio), (950 * picRadio * WidthRadio));
-    }
-
-
-    // 右下角二维码
-    path = '../../imgs/icon-share-poster-bg.png';
-    if (path) {
-      ctx.drawImage(path, (80 * picRadio * WidthRadio), (994 * picRadio * WidthRadio), (220 * picRadio * WidthRadio), (220 * picRadio * WidthRadio));
-    }
-    ctx.setFillStyle("#333");
-    ctx.setFontSize(16 * picRadio);
-    ctx.setTextBaseline('bottom');
-    ctx.setTextAlign('left')
-    ctx.fillText("长按识别小程序二维码", (328 * picRadio * WidthRadio), (1117 * picRadio * WidthRadio));
-
-    ctx.setFillStyle("#999");
-    ctx.setFontSize(13 * picRadio);
-    ctx.fillText("好货要和朋友一起分享", (328 * picRadio * WidthRadio), (1164 * picRadio * WidthRadio));
-    // ctx.draw()
-    // this.setData({
-    //   "state.posterHasCreateStatus":true
-    // })
-    ctx.draw(true, setTimeout(function () {
-      wx.hideLoading()
-    }, 100))
-
-  },
   onShareAppMessage() {
     let goods_id = this.data.goods_id
     let user=wx.getStorageSync('userinfo')
     console.log(user)
     return {
       title: this.data.data.productDetail.name,
-      path: 'pages/details/index?id=' + goods_id+'&user_id='+user.id
+      path: 'pages/details/index?scene=' + goods_id+'&user_id='+user.id
     }
   }
 

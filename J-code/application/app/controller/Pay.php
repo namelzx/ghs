@@ -31,7 +31,10 @@ class Pay extends Base
             'buyerText' => $data['buyerText'],
             'create_time' => time(),
             'type' => $data['type'],
-            'way_type'=>$data['way_type']
+            'way_type' => $data['way_type'],
+            'provinces_id' => $data['provinces_id'],
+            'area_id' => $data['area_id'],
+            'city_id' => $data['city_id']
         ];
         if (!empty($data['dis_id'])) {
             $temp['dis_id'] = $data['dis_id'];

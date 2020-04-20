@@ -27,7 +27,7 @@ Component({
       } = e.currentTarget.dataset
       console.log(id)
       wx.navigateTo({
-        url: '/pages/details/index?id='+id,
+        url: '/pages/details/index?scene='+id,
       })
     }
   }

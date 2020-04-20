@@ -32,10 +32,11 @@ class createCode extends Controller
             'page' => 'pages/member/shop/goodsinfo/index',
             'width' => 600,
         ]);
+        $name = $id . time();
         if ($response instanceof \EasyWeChat\Kernel\Http\StreamResponse) {
-            $response->saveAs('./code/', $id . '.jpg');
+            $response->saveAs('./code/', $name . '.jpg');
         }
-        return '/code/' . $id . '.jpg';
+        return '/code/' . $name . '.jpg';
     }
 
 }

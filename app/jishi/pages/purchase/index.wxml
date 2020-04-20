@@ -28,7 +28,7 @@
     <view class='address-container' bindtap="toggleAddress">>
 
 
-      <view class='address-info' wx:if="{{state.address}}">
+      <view class='address-info' wx:if="{{data.buyerName}}">
         <view class='address-info-desc'>
           <view class='location-detail-content two-ellipsis'>
             <text>{{data.buyerName}}</text>
@@ -40,8 +40,8 @@
         </view>
 
       </view>
-      <view class='address-info-empty' wx:if="{{!state.address}}" catchtap='onGotoLocationListHandler'>
-        <view>选择提货地址（点击选择）</view>
+      <view class='address-info-empty' wx:else  bindtap="toggleAddress">
+        <view>选择地址（点击选择）</view>
         <image class='address-info-arrow' src='/imgs/icon-arrow-address-right.png'></image>
       </view>
 
@@ -79,8 +79,7 @@
 
         <view class='buyer-info-item-text others'>收货地址</view>
 
-        <view class='buyer-info-item-value buyer-info-item-value-aaa' bindtap="toggleAddress" wx:if="{{data.addressText==''}}">请选择地址</view>
-        <view class='buyer-info-item-value' bindtap="toggleAddress" wx:else>{{data.addressText}}</view>
+        <input class='buyer-info-item-value' bindinput='onInputAddressTextHandler' placeholder-class='buyer-info-item-value-holder' placeholder='填写收货地址，尽可能填写到门牌号' value='{{data.addressText}}'></input>
       </view>
     </view>
   </view>
@@ -210,7 +209,7 @@
     <view class='comfirm-order-content'>
       <view class='comfirm-order-title-box'>
         <view class='comfirm-order-title'>
-          此商品需要您到店自提，请确认收货信息
+         请确认收货信息
         </view>
 
       </view>

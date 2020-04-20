@@ -30,17 +30,48 @@ class Community extends System
     {
         $data = input('param.');
         $data['create_time'] = time();
+        if (!empty($data['city_model'])) {
+            for ($i = 0; $i < count($data['city_model']); $i++) {
+                if ($i === 0) {
+                    $data['province'] = $data['city_model'][$i];
+                }
+                if ($i === 1) {
+                    $data['city'] = $data['city_model'][$i];
+                }
+                if ($i === 2) {
+                    $data['area'] = $data['city_model'][$i];
+                    $data['city_id'] = $data['area'];
+                }
+
+            }
+
+        }
         if (empty($data['id'])) {
 
             $temp = [
-                'city_id' => $data['city_id'],
                 'name' => $data['name'],
                 'location' => $data['location'],
                 'status' => $data['status'],
                 'sort' => $data['sort'],
-                'sort' => $data['sort'],
-
             ];
+
+            if (!empty($data['city_model'])) {
+                $temp['city_code'] = implode(',', $data['city_model']);
+            }
+
+            if (!empty($data['province'])) {
+                $temp['province'] = $data['province'];
+            }
+
+            if (!empty($data['city'])) {
+                $temp['city'] = $data['city'];
+            }
+
+            if (!empty($data['area'])) {
+                $temp['area'] = $data['area'];
+                $data['city_id'] = $data['area'];
+            }
+
             $tem = $this->getCoord($data['location']);
             $temp['lat'] = $tem['lat'];
             $temp['lng'] = $tem['lng'];
@@ -54,9 +85,24 @@ class Community extends System
                 'name' => $data['name'],
                 'location' => $data['location'],
                 'status' => $data['status'],
-                'images_url' => $data['images_url'],
-
             ];
+
+            if (!empty($data['city_model'])) {
+                $temp['city_code'] = implode(',', $data['city_model']);
+            }
+
+            if (!empty($data['province'])) {
+                $temp['province'] = $data['province'];
+            }
+
+            if (!empty($data['city'])) {
+                $temp['city'] = $data['city'];
+            }
+
+            if (!empty($data['area'])) {
+                $temp['area'] = $data['area'];
+            }
+
             $tem = $this->getCoord($data['location']);
             $temp['lat'] = $tem['lat'];
             $temp['lng'] = $tem['lng'];

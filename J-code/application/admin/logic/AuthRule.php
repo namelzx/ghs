@@ -95,15 +95,6 @@ class AuthRule extends Model
     public function getLists($title = '', $status = -1, $myorder = 'a.sorts desc')
     {
         $res = my_model('AuthRule', 'model', 'admin')->getLists($title, $status, $myorder);
-//
-//        foreach ($res as $i => $item) {
-//            $res[$i]['children']=Db::name('auth_rule')->where('pid',$item['id'])->select();
-//
-//            foreach (  $res[$i]['children'] as $k=>$itemk){
-//                $res[$i]['children'][$k]['children']=Db::name('auth_rule')->where('pid',$itemk['id'])->select();
-//
-//            }
-//        }
         return $res;
     }
 

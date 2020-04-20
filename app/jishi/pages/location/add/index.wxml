@@ -16,11 +16,11 @@
 />
 
 
-  <view class="pro-img-list">
+  <!-- <view class="pro-img-list">
     <view class="list-title">小区logo</view>
     <van-uploader    max-count="1"
   data-suffix=".jpg" data-type='1' file-list="{{ pList }}" bind:delete="delPic" bind:after-read="afterRead" />
-  </view>
+  </view> -->
 </view>
 
 

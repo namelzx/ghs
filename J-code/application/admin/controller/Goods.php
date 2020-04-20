@@ -11,6 +11,7 @@ namespace app\admin\controller;
 
 use app\admin\model\UserModel;
 use app\common\model\GoodsModel;
+use app\tools\controller\createCode;
 
 class Goods extends System
 {
@@ -32,13 +33,22 @@ class Goods extends System
     {
         $data = input('param.');
 
+        $createCode = new createCode();
         if (!empty($data['id'])) {
+
+
+            $data['code'] = $this->Code($data['id']);
 
             $this->PostDataUpdate($data);
             return json(['msg' => '更新成功', 'data' => '', 'code' => 20000], 200);
         }
 //
-        GoodsModel::create($data); //单纯添加商品
+        $res = GoodsModel::create($data); //单纯添加商品
+
+        $code = $this->Code($res['id']);
+
+        GoodsModel::where('id', $res['id'])->data(['code' => $code])->update();
+
         return json(['msg' => '成功', 'code' => 20000], 200);
 
     }
