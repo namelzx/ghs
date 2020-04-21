@@ -1,4 +1,5 @@
 var app = getApp();
+// 小程序更新
 Page({
   
   canvasIdErrorCallback: function (e) {
