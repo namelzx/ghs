@@ -1,4 +1,3 @@
-<!--page/tabBar/userCenter/userCenter.wxml-->
 <view class='P-user-center {{state.needAuthorize?"P-user-center-bg":""}}'>
 
  <view class="user-center-bg" >
@@ -60,14 +59,24 @@
 
   <view class='bar-menu'>
     <view  class='bar-menu-item' catchtap="toUrl" data-url="/pages/tabBar/user/invite/invite">
-    
       <view class='bar-menu-item-left'>
-       
         <text>佣金</text>
       </view>
       <view class='bar-menu-item-right'>></view>
     </view>
-    
+     <view  class='bar-menu-item' data-type="1" catchtap="onMessage" d>
+      <view class='bar-menu-item-left'>
+        <text>商家增加提醒</text>
+      </view>
+      <view class='bar-menu-item-right'>{{userInfo.merchants_notice}}</view>
+    </view>
+
+     <view  class='bar-menu-item' data-type="2" catchtap="onMessage" d>
+      <view class='bar-menu-item-left'>
+        <text>店长增加提醒</text>
+      </view>
+      <view class='bar-menu-item-right'>{{userInfo.shop_notice}}</view>
+    </view>
   </view>
 
 

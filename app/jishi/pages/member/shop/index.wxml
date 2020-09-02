@@ -1,38 +1,43 @@
 <view>
-  <view class="shop_head" style="background-image: url({{shop.shop_img}});">
-    <view class="head_imgs" >
-      <image src='{{shop.user.avatarUrl}}'></image>
-    </view>
-    <view class="head_name">{{shop.user.nickName}}</view>
-    <view class="head_community">
-      服务小区：{{shop.community.name}}
-    </view>
-    <view class="head_community">
-      联系电话：{{shop.tel}}
-    </view>
-    <view class="head_community">
-      店铺地址：{{shop.location}}
-    </view>
-    <view class="head_community">
-      店铺名称：{{shop.name}}
-    </view>
-    <view class="head_community">
-      店铺简介：{{shop.desc}}
-    </view>
-  </view>
-  <view class="shop_tabs">
-    <view class="shop_tabs_warp">
-      <view class="warp_title {{tabs_id==1?'warp_title-active':''}}" data-id="1" bindtap="onTabs">
-        全部宝贝
-        <view class="warp_title-active_hr"></view>
-      </view>
-      <!-- <view class="warp_title {{tabs_id==2?'warp_title-active':''}}" data-id="2" bindtap="onTabs">
+	<view class="toCart">
+		<image src="../../../imgs/g-3.png"></image> 
+    <text bindtap="toPay" class="count" wx:if="{{count>0}}">{{count}}</text>
+	</view>
+	<view class="shop_head" style="background-image: url({{shop.shop_img}});">
+		<view class="head_imgs">
+			<image src='{{shop.user.avatarUrl}}'></image>
+		</view>
+
+		<view class="head_name">{{shop.user.nickName}}</view>
+		<view class="head_community">
+			服务小区：{{shop.community.name}}
+		</view>
+		<view class="head_community">
+			联系电话：{{shop.tel}}
+		</view>
+		<view class="head_community">
+			店铺地址：{{shop.location}}
+		</view>
+		<view class="head_community">
+			店铺名称：{{shop.name}}
+		</view>
+		<view class="head_community">
+			店铺简介：{{shop.desc}}
+		</view>
+	</view>
+	<view class="shop_tabs">
+		<view class="shop_tabs_warp">
+			<view class="warp_title {{tabs_id==1?'warp_title-active':''}}" data-id="1" bindtap="onTabs">
+				全部宝贝
+				<view class="warp_title-active_hr"></view>
+			</view>
+			<!-- <view class="warp_title {{tabs_id==2?'warp_title-active':''}}" data-id="2" bindtap="onTabs">
       上新
       <view class="warp_title-active_hr"></view>
       </view> -->
-    </view>
-  </view>
-    <recom recom="{{list}}"></recom>
+		</view>
+	</view>
+	<recom recom="{{list}}"></recom>
 
 
 

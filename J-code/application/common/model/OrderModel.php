@@ -36,11 +36,13 @@ class OrderModel extends Model
     {
         return $this->hasOne('OrderCourierModel', 'order_id', 'id');
     }
+
     public static function GetDataByList($data)
     {
-
-
         $where = [];
+        if (!empty($data['is_admin'])) {
+            $where[] = ['type', 'eq', 1];
+        }
         if (!empty($data['order_id_in'])) {
             $where[] = ['id', 'in', $data['order_id_in']];
         }
@@ -50,6 +52,23 @@ class OrderModel extends Model
             $res = $res->where('create_time', 'between time', $data['time']);
         }
 
+        if (!empty($data['createTime'])) {
+            $res = $res->where('create_time', 'between time', $data['createTime']);
+
+        }
+        if (!empty($data['orderSn'])) {
+            $res = $res->where('id', 'eq', $data['orderSn']);
+
+        }
+
+
+        if (!empty($data['receiverKeyword'])) {
+            $res = $res->
+            whereOr('buyerName', 'like', '%' . $data['receiverKeyword'] . '%')->
+            whereOr('mobile', 'like', '%' . $data['receiverKeyword'] . '%');
+        }
+
+
         if (!empty($data['order_no'])) {
             $res = $res->where('out_trade_no', $data['order_no']);
         }
@@ -58,7 +77,7 @@ class OrderModel extends Model
             $res = $res->where('status', $data['status']);
         }
         $res = $res->where($where)->
-        order('status asc,create_time desc')->
+        order('create_time desc')->
         paginate($data['limit'], false, ['query' => $data['page']]);
         return $res;
 

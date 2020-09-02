@@ -58,6 +58,13 @@
             <image src='/imgs/icon-share-new.png'></image>
             <view class='pro-desc-share-text'>分享</view>
           </view>
+
+
+           <view style="top:30%" class='pro-desc-share-box' 
+           bindtap="toPay" wx:if="{{data.productDetail.status===1}}">
+            <image src='/imgs/g-3.png'></image>
+            <view class='pro-desc-share-text'>结算 {{totalCount}}</view>
+          </view>
         </view>
 
         <!-- 预售时间 -->
@@ -72,7 +79,7 @@
         </view> -->
         <view class='pro-desc-item-box' >
           <view class='pro-desc-item-text'>销量</view>
-          <view class='pro-desc-item-value'>已售{{data.productDetail.sales}}件，仅剩<text>{{data.productDetail.inventory-data.productDetail.sales}}</text>件</view>
+          <view class='pro-desc-item-value'>已售{{data.productDetail.sales}}件，仅剩<text>{{data.productDetail.inventory}}</text>件</view>
           <!-- <view class="pro-desc-item-way">
             <view catchtap="wayClick" data-status="1" class="way-name {{way_status==1?'way-name-active1':''}}">自取</view>
             <view catchtap="wayClick" data-status="2" class="way-name {{way_status==2?'way-name-active2':''}}">物流</view>
@@ -157,27 +164,15 @@
  
 
     <!-- 底部按钮footer container-->
+      <!-- 底部按钮footer container-->
     <view class='pro-footer-container {{state.isIphoneX?"isIphoneX-nav-footer":""}}'>
+    
       <block >
-        <!-- <view class='btn-home' catchtap='onGoToHomePageHandler' wx:if="{{data.productDetail.status==3}}">
-          <image class='btn-home-icon' src='/imgs/icon-home-default.png'></image>
-          <view class='btn-home-text'>首页</view>
-        </view>
-        <view class='btn-home' catchtap='onGoToCartPageHandler' wx:if="{{data.productDetail.status==3}}">
-          <view class='cart-icon-box'>
-            <image class='btn-home-icon' src='/imgs/icon-cart-default.png'></image>
-            <view class='cart-tips-circle' wx:if="{{totalCount>0}}">
-              {{totalCount}}
-            </view>
-          </view>
-          <view class='btn-home-text'>购物车</view>
-        </view> -->
-        
+   
         <!-- 团购商品，库存大于0，活动未结束，活动已开始 -->
         <block >
           <view class='btn-add-cart' catchtap='onOpenShopCartBoxStatusHandler'>加入购物车</view>
-      
-          <view class='btn-buy-now {{data.productDetail.status==2?"btn-buy-now-active":""}}'  catchtap='onNowBuyHandler' >
+          <view class='btn-buy-now' catchtap='onNowBuyHandler' >
             立即购买
           </view>
         </block>
@@ -185,6 +180,8 @@
       </block>
       
     </view>
+<!-- 弹出框 -->
+  
 <!-- 弹出框 -->
     <view class='pro-shop-car-container' wx:if="{{shopCartBoxStatus}}">
       <view class='pro-shop-car-content'>
@@ -194,7 +191,7 @@
           <view class='pro-shop-desc'>
             <view class='pro-shop-desc-price'><text>¥</text><text class='pro-shop-desc-price-big'>{{data.productDetail.price}}</text></view>
             <!-- <view class='pro-shop-sku-name'>{{data.productDetail.sku_name}}</view> -->
-            <view class='pro-shop-sku-name'>库存：{{data.productDetail.inventory}}件</view>
+            <view class='pro-shop-sku-name'>库存：{{ data.productDetail.inventory}}件</view>
          
           </view>
         </view>

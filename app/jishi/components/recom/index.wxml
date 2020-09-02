@@ -3,8 +3,7 @@
     <view class="recom-list">
       <view class="recom-item" wx:for="{{recom}}" :key="index" catchtap="clickToRecom" data-id="{{item.id}}">
         <view class="recom-img">
-        
-          <image src="{{item.images_url}}"></image>
+          <image mode="aspectFill"  src="{{item.images_url}}"></image>
         </view>
         <view class="recom-name">{{item.name}}</view>
         <view class="recom-price">

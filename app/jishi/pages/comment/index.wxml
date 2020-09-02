@@ -1,0 +1,21 @@
+<!-- 评论列表页 -->
+<view>
+  <view>
+    <view class="eva-warp" wx:for="{{eva}}">
+        <view class="eva-content">
+              <view class="eva-content-imgs"><image src="{{item.user.avatarUrl}}"></image></view>
+              <view class="eva-content-right">
+                <view class="eva-content-right-flex">
+                  <view>{{item.user.nickName}}</view>
+                  <view class="create_time">{{item.create_time}}</view>
+                
+                </view>
+                <view class="desc">{{item.desc}}</view>
+                <view class="right-imgs">
+                  <view class="imgs" wx:for="{{item.img_list}}" wx:for-item="val"><image src="{{val}}"></image></view>
+                </view>
+              </view>
+        </view>
+        </view>
+  </view>
+</view>

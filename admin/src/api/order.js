@@ -16,7 +16,6 @@ export function GetIdByDetails(id) {
   })
 }
 
-
 export function deliveryOrder(data) {
   return request({
     url: '/admin/Order/deliveryOrder',
@@ -25,14 +24,19 @@ export function deliveryOrder(data) {
   })
 }
 
+export function PostDataByRefund(data) {
+  return request({
+    url: '/admin/Order/PostDataByRefund',
+    method: 'post',
+    data
+  })
+}
 
-
-
-
-
-
-
-
-
-
+export function GetQueryBydownload(query) {
+  return request({
+    url: '/admin/Order/GetQueryBydownload',
+    method: 'get',
+    params: query
+  })
+}
 

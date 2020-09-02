@@ -1,5 +1,3 @@
-//index.js
-//获取应用实例
 const app = getApp()
 
 const wxApi = require("../../utils/wxApi.js");
@@ -61,70 +59,7 @@ Page({
       url: '/pages/logs/logs',
     })
     return true;
-    let w = 0 // 画布宽度
-    let h = 0 // 画布宽度
-    // 获取canvas标签
-    let ctx = wx.createCanvasContext('mycanvas')
-    // 获取canvas尺寸
-    let query = wx.createSelectorQuery()
-    query.select('#share').boundingClientRect()
-    query.exec(function (rect) {
-      console.log(rect)
-      let res = rect[0]
-      w = res.width
-      h = res.height
-      let baseNum = 300 // 标准画布宽度基数
-      let ratio = w / baseNum // 自适应比例
-      console.log('绘图开始')
-      ctx.setFillStyle('#fff') // 背景颜色
-      ctx.fillRect(0, 0, w, h)
-      let img = {
-        type: 'img',
-        url: '图片链接'
-      }
-      let qrImg = {
-        type: 'qrimg',
-        url: '二维码链接'
-      }
-      // 图片统一转为本地图片
-      let num = 0 // 转为本地图片数量
-      // 将图片转为临时图片
-      // 绘图内容
-      ctx.drawImage(that.data.images_url, 0, 0, w, w)
-      // 二维码
-      ctx.drawImage(that.data.images_url, 209 * ratio, 314 * ratio, 72 * ratio, 72 * ratio)
-      // 。。。中间代码省略
-      ctx.draw(true, setTimeout(function () {  // 加定时器是防止绘图未完成就生成图片导致图片内容不完整
-        // 生成本地图片
-        wx.canvasToTempFilePath({
-          x: 0, y: 0,
-          canvasId: 'customCanvas',
-          success: function (res) {
-            let path = res.tempFilePath
-            console.log(path)
-          },
-          fail: function (res) { }
-        })
-      }, 0))
-    })
-    context.draw();
-    //将生成好的图片保存到本地，需要延迟一会，绘制期间耗时
-    setTimeout(function () {
-      wx.canvasToTempFilePath({
-        canvasId: 'mycanvas',
-        success: function (res) {
-          var tempFilePath = res.tempFilePath;
-          console.log(tempFilePath)
-          that.setData({
-            imagePath: tempFilePath,
-            canvasHidden: true
-          });
-        },
-        fail: function (res) {
-          console.log(res);
-        }
-      });
-    }, 200);
+   
   },
   onChangeShareBoxHandler: function () {
     this.setData({
@@ -137,16 +72,19 @@ Page({
       url: '../logs/logs'
     })
   },
+  //跳转评论列表
+  toggleComment(){
+    wx.navigateTo({
+      url: '/pages/comment/index?goods_id='+this.data.goods_id,
+    })
+  },
 
   
   onLoad: function(e) {
     let goods_id = decodeURIComponent(e.scene);
-
     this.data.goods_id = decodeURIComponent(e.scene)
-
     wx.getSystemInfo({
       success: function (res) {
-        console.log(res)
         that.setData({
           model: res.model,
           screen_width: res.windowWidth / 375,
@@ -156,7 +94,6 @@ Page({
     })
     let user_id = e.user_id;
     if (user_id===undefined){
-      console.log('普通进入')
       var temp={
         is_shop:false,
         user_id
@@ -208,7 +145,6 @@ Page({
       let eva = res.data.eva
       let evaarr=[];
       for(let i=0;i<eva.length;i++){
-        console.log(eva[i])
         eva[i]['img_list'] = eva[i]['img_list'].split(',');
         // evaarr.push(eva[i])
       }
@@ -226,11 +162,9 @@ Page({
       if (data.img_banner !== null) {
         data.img_banner = data.img_banner.split(',')
       }
-      console.log(res.data)
       wx.getImageInfo({
         src: res.data.images_url,
         success:function(res){
-          console.log(res)
           that.setData({
             images_url:res.path
           })
@@ -248,7 +182,6 @@ Page({
     })
   },
   getUserInfo: function(e) {
-    console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,
@@ -268,8 +201,12 @@ Page({
     var mark = goods_id
     var head_price = data.head_price
     var manager_price = data.manager_price
+    var purchasing = data.purchasing
+    var purchasing_status = data.purchasing_status
 
     var obj = {
+      purchasing_status,
+      purchasing,
       goods_id,
       line_price,
       mark,
@@ -308,7 +245,14 @@ Page({
     for (var i = 0; i < carArray.length; i++) {
       totalPrice += carArray[i].price * carArray[i].totalBuyNum;
       totalCount += carArray[i].totalBuyNum
+      if(parseInt(this.data.goods_id)===carArray[i].goods_id){
+        this.setData({
+          'state.totalBuyNum':carArray[i].totalBuyNum
+        })
+        console.log(1,3)
+      }
     }
+    console.log(totalCount,this.data.goods_id)
 
     this.setData({
       totalPrice: totalPrice,
@@ -329,6 +273,7 @@ Page({
         "data.productDetail": this.data.data.productDetail,
         'state.totalBuyNum': this.data.state.totalBuyNum
       })
+      this.calTotalPrice();
     // this.oncomputedHandler();
   },
   // 数量加事件
@@ -430,7 +375,6 @@ Page({
             "state.needOpenSettingBtn": true
           })
         } else {
-          console.log("使用wx.opensetting")
         }
       }
     })
@@ -448,7 +392,6 @@ Page({
         duration: 2000
       });
     }
-    console.log(e)
   },
 
 
@@ -456,14 +399,12 @@ Page({
   onCloseSavePicStatus: function () {
     this.setData({
       "state.savePicBoxStatus": false,
-      // "state.posterId": this.data.state.posterId + this.data.state.openSavePicBoxTimes
     })
   },
   
   onShareAppMessage() {
     let goods_id = this.data.goods_id
     let user=wx.getStorageSync('userinfo')
-    console.log(user)
     return {
       title: this.data.data.productDetail.name,
       path: 'pages/details/index?scene=' + goods_id+'&user_id='+user.id

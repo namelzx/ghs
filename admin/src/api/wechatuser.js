@@ -8,17 +8,13 @@ export function GetDataByList(query) {
   })
 }
 
-
 export function GetOpenidByFind(openid) {
   return request({
     url: '/admin/Wechatuser/GetOpenidByFind',
     method: 'get',
-    params: {openid}
+    params: { openid }
   })
 }
-
-
-
 
 export function PostRoleByUpdate(data) {
   return request({
@@ -73,4 +69,11 @@ export function changeAll(data) {
   })
 }
 
+export function Postwithdrawal(data) {
+  return request({
+    url: '/admin/admin/Postwithdrawal',
+    method: 'post',
+    data
+  })
+}
 

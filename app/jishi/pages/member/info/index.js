@@ -31,6 +31,7 @@ Page({
     vList: [],
     actions:[],
     show:false,
+    banner:[],
     state:{
       communityObj:{},
     },
@@ -80,7 +81,14 @@ Page({
             _this.setData({
               pList: dtemp
             })
-            console.log(_this.data.pList)
+          }
+          if (type === 3) {
+            var dtemp = _this.data.banner;
+            dtemp.push(temp);
+            _this.setData({
+              banner: dtemp
+            })
+            console.log(_this.data.banner,3)
           }
         },
         fail: function (res) {
@@ -121,6 +129,12 @@ Page({
 
   addProduct() {
     let data = this.data.data
+    let ilist = [];
+    for (let i = 0; i < this.data.banner.length; i++) {
+      ilist.push(this.data.banner[i].url)
+    }
+    data.banner = ilist.join(',');
+
     shopModel.PostDataByAdd(data,res=>{
        wx.navigateBack({
         delta: 1,
@@ -178,9 +192,9 @@ Page({
   },
   delVdo(e) {
     console.log(e)
-    let list = this.data.vList
+    let list = this.data.banner
     list.splice(e.detail.index, 1)
-    this.setData({ vList: list })
+    this.setData({ banner: list })
   },
   /**
    * 生命周期函数--监听页面加载
@@ -212,6 +226,19 @@ Page({
         let pList = [{
           url: res.data.shop_img
         }]
+
+        let banner = []
+        if (res.data.banner !== null){
+          let imglsit = res.data.banner.split(',');
+          for (let i = 0; i <imglsit.length;i++) {
+            banner.push(
+              { url:imglsit[i]}
+            )
+          }
+        }
+        this.setData({
+          banner
+        })
         _this.setData({
           'data': res.data,
           'pList': pList,

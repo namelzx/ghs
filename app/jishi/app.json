@@ -7,7 +7,6 @@
     "pages/location/index",
     "pages/location/locationCity/locationCity",
     "pages/location/communitySearch/index",
-    
     "pages/userCenter/pages/login/login",
     "pages/cart/index",
     "pages/purchase/index",
@@ -39,7 +38,8 @@
     "pages/tabBar/user/invite/withdrawalsrecord/index",
     "pages/member/shop/withdraw/record/index",
     "pages/purchase/address/index",
-    "pages/purchase/address/submit/index"
+    "pages/purchase/address/submit/index",
+    "pages/comment/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

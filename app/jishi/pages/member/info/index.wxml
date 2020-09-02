@@ -36,6 +36,15 @@
   </view>
 </view>
 
+  <view class="pro-img-list">
+    <view class="list-title">店铺轮播图</view>
+   
+ <van-uploader   data-suffix=".jpg"  data-type='3' file-list="{{ banner }}" bind:delete="delVdo"    max-count="6"
+ bind:after-read="afterRead" />
+  </view>
+
+
+
 
   <view class="pro-detail-wrap">
     <van-cell-group>

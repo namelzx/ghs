@@ -38,7 +38,12 @@ class Goods extends System
 
 
             $data['code'] = $this->Code($data['id']);
-
+            $purchasing = input('param.purchasing', 0);
+            if ($purchasing > 99) {//开启限购
+                $data['purchasing_status'] = 1;
+            }else{
+                $data['purchasing_status'] = 0;
+            }
             $this->PostDataUpdate($data);
             return json(['msg' => '更新成功', 'data' => '', 'code' => 20000], 200);
         }

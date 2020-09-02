@@ -1,4 +1,3 @@
-/* page/tabBar/userCenter/userCenter.wxss */
 .P-user-center{
   min-height: 100vh;
   font-family: PingFangSC-Medium;

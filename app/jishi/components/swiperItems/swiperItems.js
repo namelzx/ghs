@@ -30,7 +30,7 @@ Component({
     },
     autoplay:{
       type: Boolean,
-      value: false
+      value: true
     }
   },
 

@@ -53,6 +53,19 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
   
+
+  toPay(){
+    if(this.data.totalCount===0){
+      wx.showToast({
+        title: '购物车没有商品,先挑选一些吧~',
+        icon:'none'
+      })
+      return;
+    }
+    wx.navigateTo({
+      url: '/pages/member/shop/purchase/index?shop_id=' + this.data.shop_id+'&type=2',
+    })
+  },
   //事件处理函数
   bindViewTap: function () {
     wx.navigateTo({
@@ -68,7 +81,7 @@ Page({
   onLoad: function (options) {
 
     let goods_id = decodeURIComponent(options.scene);
-    this.data.carArray = wx.getStorageSync('cart');
+    this.data.carArray = wx.getStorageSync('shop_cart');
     this.data.goods_id = goods_id
     this.getInfo();
     if (app.globalData.userInfo) {
@@ -105,6 +118,16 @@ Page({
     goodsModel.GetDataByInfo(this.data.goods_id, res => {
       var data = res.data;
       let eva = res.data.eva
+      let item=wx.getStorageSync('shop_cart')
+      if(item.length>0){
+      item.forEach(element => {
+        if(element.goods_id===data.id){
+          this.setData({
+            'state.totalBuyNum':element.totalBuyNum
+          })
+        }
+      });
+    }
       let evaarr = [];
       for (let i = 0; i < eva.length; i++) {
         console.log(eva[i])
@@ -129,9 +152,12 @@ Page({
     })
   },
   onOpenShopCartBoxStatusHandler: function () {
-    wx.showToast({
-      title: '当前商品不可加入购物车',
-      icon:'none'
+    // wx.showToast({
+    //   title: '当前商品不可加入购物车',
+    //   icon:'none'
+    // })
+    this.setData({
+      shopCartBoxStatus:!this.data.shopCartBoxStatus
     })
   },
   //立即购买
@@ -165,14 +191,10 @@ Page({
       images_url,
       selected: false,
       moveState: false,
-      
     };
     wx.setStorageSync('shopbuy', [obj]) 
     wx.navigateTo({
       url: '/pages/member/shop/purchase/index?shop_id=' + data.shop_id,
-      success: function(res) {},
-      fail: function(res) {},
-      complete: function(res) {},
     })
   },
   getUserInfo: function (e) {
@@ -187,6 +209,7 @@ Page({
   addCart() {
     var that = this;
     let data = that.data.data.productDetail
+
     var totalBuyNum = that.data.state.totalBuyNum; //数量
     var price = data.price; //当前商品价格
     var goods_id = data.id; //当前商品id
@@ -194,9 +217,11 @@ Page({
     var images_url = data.images_url
     var name = data.name;
     var mark = goods_id
+    
 
     var obj = {
       goods_id,
+      shop_id: data.shop_id,
       line_price,
       mark,
       name,
@@ -205,12 +230,10 @@ Page({
       images_url,
       selected: false,
       moveState: false,
-
     };
-
     var carArray1 = this.data.carArray.filter(item => item.goods_id != goods_id)
     carArray1.push(obj)
-    wx.setStorageSync('cart', carArray1)
+    wx.setStorageSync('shop_cart', carArray1)
     this.setData({
       carArray: carArray1,
     })
@@ -220,8 +243,23 @@ Page({
   calTotalPrice: function () {
 
     var carArray = this.data.carArray;
+    console.log(this.data.data.productDetail)
+    console.log(carArray)
     if (carArray.length < 1) {
-      carArray = wx.getStorageSync('cart')
+      carArray = wx.getStorageSync('shop_cart')
+
+      
+      let item=wx.getStorageSync('shop_cart')
+      if(item.length>0){
+      item.forEach(element => {
+        if(element.goods_id===this.data.data.productDetail.id){
+          this.setData({
+            'state.totalBuyNum':element.totalBuyNum
+          })
+          console.log('jinlay了')
+        }
+      });
+    }
     }
 
     if (carArray.length < 1) {
@@ -247,13 +285,41 @@ Page({
   // 数量减事件
   onNumDescHandler: function (e) {
     let index = e.currentTarget.dataset.index;
+
+    if(this.data.state.totalBuyNum<0){
+      wx.showToast({
+        title: '你要添加商品吗?',
+      })
+      return 
+    }
+ 
+
+    let item=wx.getStorageSync('shop_cart')
+
+    
+    if(this.data.state.totalBuyNum===0){
+      item.forEach(element => {
+        console.log(element)
+        if(element.goods_id===this.data.data.productDetail.id){
+          let index= item.indexOf(element)
+          item.splice(index,1)
+          wx.showToast({
+            title: '商品移除',
+          })
+          this.data.state.totalBuyNum=1
+        }
+      });
+      wx.setStorageSync('shop_cart', item)
+      return;
+    }
     this.data.data.productDetail.inventory++;
+
     this.data.state.totalBuyNum--
+  
     this.setData({
       "data.productDetail": this.data.data.productDetail,
       'state.totalBuyNum': this.data.state.totalBuyNum
     })
-    // this.oncomputedHandler();
   },
 
   // 数量加事件
@@ -375,8 +441,8 @@ Page({
       }
     }
     // 我们的价格
-    if (productDetail.line_price) {
-      let our_price = productDetail.line_price;
+    if (productDetail.price) {
+      let our_price = productDetail.price*100;
       ctx.setFillStyle("#FF5e53");
       ctx.setTextBaseline('bottom')
       ctx.setTextAlign('right')
@@ -399,7 +465,7 @@ Page({
 
       ctx.fillText("¥", ((385) * picRadio * WidthRadio), (838 * picRadio * WidthRadio));
       let prefixWidth = ctx.measureText(`¥`).width;
-      let market_price = productDetail.line_price;
+      let market_price = productDetail.line_price*100;
 
       ctx.fillText(market_price / 100, ((385) * picRadio * WidthRadio + prefixWidth), (838 * picRadio * WidthRadio));
       let marketPriceWidth = ctx.measureText(`${market_price / 100}`).width;
@@ -410,22 +476,7 @@ Page({
       ctx.stroke()
     }
 
-    if (productDetail.sales) {
-      let sell_count = productDetail.sales;
-
-      let marketPriceWidth = ctx.measureText(`${sell_count / 100}`).width;
-      ctx.setFillStyle('#ff5e53')
-      // ctx.fillRect((230 * picRadio * WidthRadio), (888 * picRadio * WidthRadio), ((290) * picRadio * WidthRadio), (88 * picRadio * WidthRadio))
-      ctx.setStrokeStyle('#ff5e53')
-      this.drawRoundRect(ctx, (230 * picRadio * WidthRadio), (888 * picRadio * WidthRadio), ((290) * picRadio * WidthRadio), (88 * picRadio * WidthRadio), 44 * picRadio * WidthRadio);
-      ctx.stroke()
-      ctx.fill()
-      ctx.setFillStyle("#fff");
-      ctx.setFontSize(16 * picRadio);
-      ctx.setTextBaseline('bottom')
-      ctx.setTextAlign('center')
-      ctx.fillText(`已售${sell_count}件`, (375 * picRadio * WidthRadio), (950 * picRadio * WidthRadio));
-    }
+    
 
     path = temp.code;
     if (path) {
@@ -469,6 +520,7 @@ Page({
         _this.WidthRadio = res.windowWidth / 750;
       }
     })
+  
   },
   //点击保存到相册
 

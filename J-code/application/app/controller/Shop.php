@@ -48,6 +48,7 @@ class Shop extends Base
             ajax_return_ok($res);
         } else {
             $temp = [
+                'banner' => $data['banner'],
                 'community_id' => $data['community_id'],
                 'name' => $data['name'],
                 'user_id' => $data['user_id'],
@@ -140,7 +141,7 @@ class Shop extends Base
     public function GetMoneyByLog()
     {
         $data = input('param.');
-        $res = ShopMoneyLogModel::where('shop_id', $data['shop_id'])->order('id desc')-> select();
+        $res = ShopMoneyLogModel::where('shop_id', $data['shop_id'])->order('id desc')->select();
         ajax_return_ok($res);
     }
 }

@@ -10,6 +10,7 @@ namespace app\admin\controller;
 
 
 use app\admin\model\ShopModel;
+use app\admin\model\UserModel;
 use app\common\model\WithdrawalModel;
 use EasyWeChat\Factory;
 
@@ -28,7 +29,7 @@ class Shopwithdrawal extends System
     }
 
     /**
-     * 审核
+     * 提现审核
      */
     public function PostDataByAudit()
     {
@@ -47,23 +48,56 @@ class Shopwithdrawal extends System
 
         $app = Factory::payment($config);
 
-        if ($data['status'] === 1) {
+        $user = UserModel::where('id', $data['user_id'])->find();
 
-            $res = WithdrawalModel::where('id', 'in', $data['ids'])->data([$data['field'] => $data['status']])->update();
-            ajax_return_ok($data);
+        if ($data['type'] === 1) {
 
-        } else {
-            $arr = [];
-            $all = WithdrawalModel::where('id', 'in', $data['ids'])->select();
-            foreach ($all as $i => $item) {
-                ShopModel::where('user_id', $item['user_id'])->setInc('balance', (float)$item['money']);
+            if ($data['status'] === 1) {
+                $pass = time() . make_password(6);
+                $res = $app->transfer->toBalance([
+                    'partner_trade_no' => $pass, // 商户订单号，需保持唯一性(只能是字母或者数字，不能包含有符号)
+                    'openid' => $user['openid'],
+                    'check_name' => 'NO_CHECK', // NO_CHECK：不校验真实姓名, FORCE_CHECK：强校验真实姓名
+                    're_user_name' => '梁泽祥', // 如果 check_name 设置为FORCE_CHECK，则必填用户真实姓名
+                    'amount' => (float)$data['money'] * 100, // 企业付款金额，单位为分
+                    'desc' => '提现', // 企业付款操作说明信息。必填
+                ]);
+                if (!empty($res['payment_no'])) {
+                    WithdrawalModel::where('id', 'in', $data['id'])->data(['status' => $data['status']])->update();
+                    ajax_return_ok($res);
+                } else {
+
+                    ajax_return_error($res['err_code_des']);
+                }
+
             }
-            ajax_return_ok($all);
+        } else {
+            if ($data['status'] === 1) {
+                $pass = time() . make_password(6);
+                $res = $app->transfer->toBalance([
+                    'partner_trade_no' => $pass, // 商户订单号，需保持唯一性(只能是字母或者数字，不能包含有符号)
+                    'openid' => $user['openid'],
+                    'check_name' => 'NO_CHECK', // NO_CHECK：不校验真实姓名, FORCE_CHECK：强校验真实姓名
+                    're_user_name' => '', // 如果 check_name 设置为FORCE_CHECK，则必填用户真实姓名
+                    'amount' => (float)$data['money'] * 100, // 企业付款金额，单位为分
+                    'desc' => '提现', // 企业付款操作说明信息。必填
+                ]);
+                if (!empty($res['payment_no'])) {
 
+                    WithdrawalModel::where('id', 'in', $data['id'])->data(['status' => $data['status']])->update();
+                    ajax_return_ok($res);
+                } else {
+                    ajax_return_error($res['err_code_des']);
+
+                }
+
+
+            }
         }
     }
 
-    public function GetOpenidByFind()
+    public
+    function GetOpenidByFind()
     {
         $data = input('param.');
         $res = WithdrawalModel::where('openid', $data['openid'])->find();

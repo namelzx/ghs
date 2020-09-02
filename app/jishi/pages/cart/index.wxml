@@ -3,8 +3,6 @@
 
        <!-- 购物车凑单 -->
       
-
-
     <!-- 购物车列表不为空 -->
     <view class='cart-has' wx:if="{{products.length > 0}}">
       <view class='cart-products'>
@@ -20,7 +18,7 @@
 
          <view class="cart-pro-right">
           <view class="cart-pro-pic-box">
-             <view class="cart-pro-limit-bottom" wx:if="{{item.sku_stock>=10&&item.limit_buy}}">限购{{item.limit_buy}}件</view>
+             <view class="cart-pro-limit-bottom" wx:if="{{item.purchasing_status!==1&&item.purchasing}}">限购{{item.purchasing}}件</view>
              <view class="cart-pro-limit-bottom" wx:if="{{item.sku_stock<10}}">仅剩{{item.sku_stock}}件</view>
              <image class='cart-pro-pic' src='{{item.images_url}}'></image>
           </view>
@@ -43,7 +41,7 @@
                 <view class='cart-pro-actions'>
                   <view class='action-desc {{item.totalBuyNum==1?"disabled":" "}}' data-index="{{index}}" data-type='now' catchtap='onNumDescHandler'>-</view>
                   <view class='action-num'>{{item.totalBuyNum}}</view>
-                  <view class='action-add ' data-index="{{index}}" catchtap='onNumAddHandler'>+</view>
+                  <view class='action-add ' wx:if="{{item.totalBuyNum<item.purchasing}}" data-index="{{index}}" catchtap='onNumAddHandler'>+</view>
                 </view>
               </view>
             </view>

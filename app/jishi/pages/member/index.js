@@ -101,11 +101,9 @@ Page({
     var _this=this;
 
     let info = wx.getStorageSync('userinfo')
-    console.log(info)
     shopmodel.GetUserIdByInfo(info.id, res => {
       console.log(res)
       if (res.data === null) {
-    
 
         wx.showModal({
           title: '提示',
@@ -121,22 +119,9 @@ Page({
           }
         })
 
-        // Dialog.confirm({
-        //   title: '标题',
-        //   message: '弹窗内容'
-        // }).then(() => {
-        //   // on confirm
-        
-        // }).catch(() => {
-        //   // on cancel
-        //   wx.switchTab({
-        //     url: '/pages/index/index',
-        //   })
-        // });
-
-       
-
       }
+
+  
     })
     wxApi.getSetting().then(res => {
       console.log(res.authSetting["scope.userInfo"])

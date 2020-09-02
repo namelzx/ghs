@@ -80,7 +80,7 @@
     <view class="evaluate"  wx:if="{{eva.length>0}}">
       <view class="evaluate-title">
         <view class="evaluate-title-name">商品评论</view>
-        <view class="evaluate-title-right">
+        <view class="evaluate-title-right" bindtap="toggleComment">
           <view>查看更多</view>
           <view class="icon"><van-icon name="arrow" /></view>
         </view>
@@ -93,10 +93,7 @@
                 <view>{{item.user.nickName}}</view>
                 <view class="desc">{{item.desc}}</view>
                 <view class="right-imgs">
-
-
                   <view class="imgs" wx:for="{{item.img_list}}" wx:for-item="val"><image src="{{val}}"></image></view>
-                
                 </view>
               </view>
         </view>
@@ -200,7 +197,7 @@
             <view class='pro-shop-desc-price'><text>¥</text><text class='pro-shop-desc-price-big'>{{data.productDetail.price}}</text></view>
             <!-- <view class='pro-shop-sku-name'>{{data.productDetail.sku_name}}</view> -->
             <view class='pro-shop-sku-name'>库存：{{data.productDetail.inventory}}件</view>
-            <!-- <view class='pro-sell-count margin' wx:if="{{data.productDetail.sell_count > 0 }}">已售{{data.productDetail.sell_count}}件</view> -->
+            <!-- <view class='pro-sell-count margin' wx:if="{{data.productDetail.purchasing_status!==1 }}">限购{{data.productDetail.purchasing}}件</view> -->
           </view>
         </view>
 
@@ -213,17 +210,17 @@
 
         <view class='pro-shop-buy-num'>
           <view class='pro-shop-buy-num-text'>购买数量
-            <!-- <text>{{"库存"+data.productDetail.stock}}</text> -->
+          
           </view>
           <view class='pro-shop-buy-tips'>
-            <view class='limit-buy-text' wx:if="{{data.productDetail.limit_buy==state.totalBuyNum}}">每人限购{{data.productDetail.limit_buy}}件</view>
+            <view class='limit-buy-text'>每人限购{{data.productDetail.purchasing}}件</view>
             <view class='pro-shop-buy-actions'>
               <view class='action-desc-box' data-index="{{index}}" catchtap='onNumDescHandler'>
                 <view class='action-desc'>-</view>
               </view>
               <view class='action-num'>{{state.totalBuyNum}}</view>
-              <view class='action-add-box' data-index="{{index}}" catchtap='{{data.productDetail.limit_buy==state.totalBuyNum?"":"onNumAddHandler"}}'>
-                <view class='action-add {{data.productDetail.limit_buy==state.totalBuyNum?"disabled":""}}'>+</view>
+              <view class='action-add-box' data-index="{{index}}" catchtap='{{data.productDetail.purchasing==state.totalBuyNum?"":"onNumAddHandler"}}'>
+                <view class='action-add {{data.productDetail.purchasing==state.totalBuyNum?"disabled":""}}'>+</view>
               </view>
               
             </view>

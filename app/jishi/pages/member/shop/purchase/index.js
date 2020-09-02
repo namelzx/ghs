@@ -50,7 +50,12 @@ let pageObj = {
       title: '订单确认',
     });
 
+
     let queryObj = wx.getStorageSync('shopbuy');
+    if(parseInt(options.type)===2){
+      this.data.cart_type=2
+      queryObj=wx.getStorageSync('shop_cart')
+    }
     let arryProducts = []
     let arryTime = [];
 
@@ -165,106 +170,7 @@ let pageObj = {
       "state.switchHeight": !this.data.state.switchHeight
     });
   },
-  // 获取配送费接口 目前没用上
-  onFetchFree: function () {
-    let _this = this;
-    let id = this.data.data.id;
-    let url = `${config.ApiRoot}/freight/calculate`;
-    let arr = [];
-    this.data.data.products.forEach(item => {
-      arr.push(item.goods_id)
-    })
-    let data = {
-      url,
-      method: "POST",
-      data: {
-        goods_ids: arr
-      }
-    }
-    userMs.request(data)
-      .then(res => {
-        const {
-          data,
-          code,
-          msg
-        } = res.data
-        if (code == 10000) {
-
-          _this.setData({
-            "data.fee": data.fee,
-          })
-
-          this.oncomputedHandler();
-        } else {
-          throw res;
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
-      .finally(res => {
-        wx.hideLoading();
-      })
-  },
-
-  // 获取可用红包请求
-  onFetchPackageAbleListHandler: function () {
-    if (!this.data.state.address) {
-      return false;
-    }
-    let _this = this;
-    let id = this.data.data.id;
-    let url = `${config.ApiRoot}/red-envelop/available-items`;
-    let queryObj = {
-      store_id: this.data.state.address.id
-    };
-    let arr = [];
-    this.data.data.products.forEach(item => {
-      let obj = {
-        activity_goods_id: item.activity_goods_id,
-        goods_id: item.goods_id,
-        sku_id: item.sku_id,
-        number: item.num,
-        type: item.type
-      }
-      arr.push(obj)
-    })
-    queryObj.goods = arr;
-    if (wx.getStorageSync("communityObj")) {
-      queryObj.adcode = JSON.parse(wx.getStorageSync("communityObj")).adcode
-    }
-
-    let data = {
-      url,
-      method: "POST",
-      data: queryObj
-    }
-    userMs.request(data)
-      .then(res => {
-        const {
-          data,
-          code,
-          msg
-        } = res.data
-        if (code == 10000) {
-          let canUsePackageNum = 0;
-          data.forEach(item => {
-            item.deadlineUtil = util.formatTimeToDay(new Date(item.deadline * 1000));
-            let matchArr = this.splitIntFloat(item.amount / 100);
-            item.amountInt = matchArr[1];
-            item.amountFloat = matchArr[2] ? matchArr[2] : "";
-            item.available && ++canUsePackageNum;
-          })
-          this.setData({
-            "data.packageList": data,
-            "data.canUsePackageNum": canUsePackageNum
-          })
-        }
-      }).catch(err => {
-        console.log(err)
-      });
-
-  },
+  
   // 切割整数小数部分函数
   splitIntFloat: util.splitIntFloat,
   /**
@@ -364,6 +270,10 @@ let pageObj = {
     let userinfo = wx.getStorageSync('userinfo')
     this.payingStatus = true;
     let cart = wx.getStorageSync('shopbuy')
+    if(parseInt(this.data.cart_type)===2){
+      cart=wx.getStorageSync('shop_cart')
+      wx.removeStorageSync('shop_cart')
+    }
     let queryObj = {
       pay_type: 1,
       totalPrice: this.data.state.goodsPrice ,
@@ -417,9 +327,15 @@ let pageObj = {
 
         },
         fail(res) {
-          wx.redirectTo({
-            url: '/pages/userCenter/pages/orderDetail/orderDetail?id=' + paydata.id
+          // wx.redirectTo({
+          //   url: '/pages/userCenter/pages/orderDetail/orderDetail?id=' + paydata.id
+          // })
+          orderModel.GetIdByDelete(paydata.id,res=>{
+            wx.navigateBack({
+              delta: 1
+             })
           })
+        
         }
       })
 

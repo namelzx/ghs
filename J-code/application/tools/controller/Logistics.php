@@ -30,7 +30,7 @@ class Logistics
     {
 
 
-    $requestData= "{'OrderCode':'','ShipperCode':'ZTO','LogisticCode':'75339364131325'}";
+    $requestData= "{'OrderCode':'','ShipperCode':'','LogisticCode':'292810233476'}";
 
         $datas = array(
             'EBusinessID' => EBusinessID,

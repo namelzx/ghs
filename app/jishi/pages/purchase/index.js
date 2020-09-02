@@ -124,6 +124,8 @@ let pageObj = {
       this.setData({
         "state.address": JSON.parse(communityObj)
       })
+      let userinfp=wx.getStorageSync('userinfo')
+      console.log(userinfo)
       // 必须本地先选择了地址，因为可用红包需要判断门店id
       // this.onFetchPackageAbleListHandler();
     }
@@ -160,7 +162,7 @@ let pageObj = {
         "state.isIphoneX": app.globalData.isIphoneX,
       })
       wx.requestSubscribeMessage({
-        tmplIds: ['gHQSOcCng-4XY0DlM2b7dZlifhDeu24qoKiAcfbFa5s', 'e8BiV9VVmwgyroSogGOJuWjK5sTXecEi-ZfTEey-w44', 'X0uUIhn5jENF4vHQ2m-69RzcEwyd9NMDGHvQxWiwLGs', 'wVyeppelYymqlhqmveaTIiA_S7tIled9l_1cETl5o-0'],
+        tmplIds: ['gHQSOcCng-4XY0DlM2b7dZlifhDeu24qoKiAcfbFa5s', 'e8BiV9VVmwgyroSogGOJuWjK5sTXecEi-ZfTEey-w44', 'wVyeppelYymqlhqmveaTIiA_S7tIled9l_1cETl5o-0'],
         success: function (e) {
           console.log(e)
         }, fail(e) {
@@ -304,7 +306,14 @@ let pageObj = {
 
   formSubmit: function(e) {
     // this.onGotoProductDetail();
- 
+    wx.requestSubscribeMessage({
+      tmplIds: ['X0uUIhn5jENF4vHQ2m-69RzcEwyd9NMDGHvQxWiwLGs'],
+      success: function (e) {
+        console.log(e)
+      }, fail(e) {
+        console.log(e)
+      }
+    })  
     this.onCheckValueHandler();
   },
 
@@ -408,9 +417,12 @@ let pageObj = {
         },
         fail(res) {
           _this.data.ispay = true;
-          wx.redirectTo({
-            url: '/pages/userCenter/pages/orderDetail/orderDetail?id=' + paydata.id
+          orderModel.GetIdByDelete(paydata.id,res=>{
+            console.log('删除订单')
           })
+         wx.navigateBack({
+          delta: 1
+         })
         }
       })
 

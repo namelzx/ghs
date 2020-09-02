@@ -50,21 +50,21 @@ class Goods extends Base
             $createCode = new createCode();
             $code = $createCode->Code($res['id']);
             GoodsModel::where('id', $res['id'])->data(['code' => $code])->update();
-        }else{
-            $temp=[
-                'images_url'=>$data['images_url'],
-                'img_banner'=>$data['img_banner'],
-                'img_list'=>$data['img_list'],
-                'inventory'=>$data['inventory'],
-                'line_price'=>$data['line_price'],
-                'price'=>$data['price'],
-                'sellpoint'=>$data['sellpoint'],
-                'setlinePrice'=>$data['setlinePrice'],
-                'shop_id'=>$data['shop_id'],
-                'tel'=>$data['tel'],
-                'videosrc'=>$data['videosrc']
+        } else {
+            $temp = [
+                'images_url' => $data['images_url'],
+                'img_banner' => $data['img_banner'],
+                'img_list' => $data['img_list'],
+                'inventory' => $data['inventory'],
+                'line_price' => $data['line_price'],
+                'price' => $data['price'],
+                'sellpoint' => $data['sellpoint'],
+                'setlinePrice' => $data['setlinePrice'],
+                'shop_id' => $data['shop_id'],
+                'sales' => $data['sales'],
+                'videosrc' => $data['videosrc']
             ];
-            $res = GoodsModel::where('id',$data['id'])->data($data)->update();
+            $res = GoodsModel::where('id', $data['id'])->data($data)->update();
             $createCode = new createCode();
             $code = $createCode->Code($data['id']);
             GoodsModel::where('id', $data['id'])->data(['code' => $code])->update();

@@ -6,10 +6,10 @@
         <text>￥{{info.balance}}</text>
     </view>
 
-    <view class="item">
+    <!-- <view class="item">
         <view>最少提现</view>
-        <text>￥1.00</text>
-    </view>
+        <text>￥10.00</text>
+    </view> -->
 
     <view class="item">
         <view>请输入提现金额</view>

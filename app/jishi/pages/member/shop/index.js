@@ -17,6 +17,10 @@ Page({
    * 页面的初始数据
    */
   data: {
+    curImgIndex:1,
+    banner:[],
+    count:0,
+    shop_id:0,
     tabs_id:1,
     list:[],
     shop:{},
@@ -32,7 +36,11 @@ Page({
       tabs_id: e.target.dataset.id
     })
   },
-
+  handleIndexChange(e) {
+    this.setData({
+      curImgIndex: e.detail.current + 1
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -53,7 +61,8 @@ Page({
         },1000)
       }
       _this.setData({
-        list:res.data.data
+        list:res.data.data,
+        shop_id:user_id
       })
       console.log(res.data.data.name)
       
@@ -64,10 +73,23 @@ Page({
       user_id: this.data.listQuery.user_id
     }
     shopModel.GetShoplistInfo(temp, res => {
-      console.log(res,111)
       _this.setData({
         shop: res.data
       })
+      let banner = []
+      if (res.data.banner !== null){
+        let imglsit = res.data.banner.split(',');
+        for (let i = 0; i <imglsit.length;i++) {
+          banner.push(
+            { url:imglsit[i]}
+          )
+        }
+      }
+      this.setData({
+        banner
+      })
+   
+      console.log(banner)
       wx.setNavigationBarTitle({
         title: res.data.name
       })
@@ -86,9 +108,29 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    let cart=wx.getStorageSync('shop_cart')
+    let count=0;
+    cart.forEach(element => {
+      count=count+element.totalBuyNum
+    });
+    this.setData({
+      count
+    })
     
   },
 
+  toPay(){
+    if(this.data.count===0){
+      wx.showToast({
+        title: '购物车没有商品,先挑选一些吧~',
+        icon:'none'
+      })
+      return;
+    }
+    wx.navigateTo({
+      url: '/pages/member/shop/purchase/index?shop_id=' + this.data.shop_id+'&type=2',
+    })
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */

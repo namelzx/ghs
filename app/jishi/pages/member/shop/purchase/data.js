@@ -1,5 +1,6 @@
 module.exports = {
   ispay:true,
+  cart_type:1,
   data: {
     ispay:true,
     way_status: 1, //1自提,2物流

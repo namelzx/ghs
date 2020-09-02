@@ -1,4 +1,6 @@
 /* pages/product/index.wxss */
+@import '/style/iconfont.wxss';
+@import '/style/weiui.wxss'; 
 
 page {
   background: #f7f7f7;
@@ -90,4 +92,55 @@ height: 75px !important;
 .van-uploader__upload{
   width: 75px !important;
    height: 75px !important;
+}
+.iconfont {
+  display: inline-block;
+  padding: 8px 8px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.wrapper {
+  padding: 5px;
+}
+
+.iconfont {
+  display: inline-block;
+  padding: 8px 8px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.toolbar {
+  box-sizing: border-box;
+  /* border: 1px solid #ccc; */
+  border-bottom: 0;
+  font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+}
+
+
+.ql-container {
+  box-sizing: border-box;
+  padding: 12px 15px;
+  width: 92%;
+  min-height: 30vh;
+  height: auto;
+  margin:12px 15px;
+  margin-top: 0;
+
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  /* border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc; */
+  background: #fff;
+  margin-top: 20px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.ql-active {
+  color: #06c;
 }

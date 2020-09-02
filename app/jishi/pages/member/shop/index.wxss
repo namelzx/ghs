@@ -1,40 +1,44 @@
 /* pages/member/shop/index.wxss */
-.shop_head{
+.shop_head {
   height: 500rpx;
-  /* background: #f87aeeab; */
-  /* background-size: 100% 100%; */
   background-size: cover;
   overflow: hidden;
-  background-repeat:no-repeat;
+  background-repeat: no-repeat;
 }
-.head_imgs{
+
+.head_imgs {
   width: 130rpx;
   height: 130rpx;
   background: #ffffff;
   border-radius: 50%;
   margin: 30rpx auto 20rpx;
 }
-.head_imgs image{
+
+.head_imgs image {
   width: 100%;
   height: 100%;
   border-radius: 50%;
 }
-.head_name{
+
+.head_name {
   text-align: center;
   color: #ffffff;
   font-size: 30rpx;
   margin-bottom: 20rpx;
 }
-.head_community{
+
+.head_community {
   text-align: center;
   color: #ffffff;
   font-size: 24rpx;
   margin-bottom: 10rpx;
 }
-.shop_tabs{
+
+.shop_tabs {
   background: #ffffff;
 }
-.shop_tabs_warp{
+
+.shop_tabs_warp {
   padding-top: 30rpx;
   padding-bottom: 20rpx;
   display: flex;
@@ -44,15 +48,18 @@
   margin: 0 auto;
 
 }
-.shop_tabs_warp .warp_title{
+
+.shop_tabs_warp .warp_title {
   color: #bebebe;
 }
-.shop_tabs_warp .warp_title-active{
+
+.shop_tabs_warp .warp_title-active {
   color: #333333;
   font-weight: bold;
   position: relative;
 }
-.warp_title-active .warp_title-active_hr{
+
+.warp_title-active .warp_title-active_hr {
   position: absolute;
   bottom: -15rpx;
   left: 0;
@@ -61,4 +68,62 @@
   width: 80rpx;
   height: 6rpx;
   background: rgb(255, 153, 0);
+}
+
+
+
+.index-container {
+  background: #f1f1f1;
+}
+
+.swiper-wrap {
+  /* margin: 14rpx 24rpx;
+  border-radius: 25rpx; */
+  overflow: hidden;
+  position: relative;
+}
+
+.swiper-img {
+  width: 100%;
+  height: 500rpx;
+}
+
+.img-counter {
+  position: absolute;
+  bottom: 20rpx;
+  right: 22rpx;
+  background: #00000060;
+  font-size: 24rpx;
+  padding: 0rpx 20rpx;
+  color: #fff;
+  border-radius: 20rpx;
+}
+
+swiper {
+  height: 500rpx;
+}
+
+.toCart {
+  font-size: 20rpx;
+  color: #fff;
+  position: fixed;
+  right: 10rpx;
+  top: 45%;
+}
+.count{
+  position: absolute;
+  color: #333333;
+  top: 0;
+  font-size: 26rpx;
+  color: #fff;
+  background:red ;
+  padding-left: 5rpx;
+  padding-right: 5rpx;
+  border-radius: 10rpx;
+  right: 30%;
+}
+
+.toCart image {
+  width: 80rpx;
+  height: 80rpx;
 }

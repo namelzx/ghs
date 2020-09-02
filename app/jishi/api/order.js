@@ -78,6 +78,19 @@ class OrderModel extends HTTP {
   }
 
 
+  GetIdByDelete(id, res) {
+    var params = {
+      url: 'order/GetIdByDelete',//接口路径
+      method: 'get', //请求方式
+      data: { id },
+      success: res
+    }
+    this.request(params)
+  }
+
+  
+
+
   PayLog(data, res) {
     var params = {
       url: 'order/PayLog',//接口路径

@@ -21,7 +21,6 @@ class User extends System
         $where = [];
         if (!empty($data['nickName'])) {
             $where[] = ['nickName', 'like', '%' . $data['nickName'] . '%'];
-
         }
         $res = UserModel::where($where)->paginate($data['limit'], false, ['query' => [$data['page']]]);
         ajax_return_ok($res);

@@ -55,7 +55,7 @@ class Banner extends System
     public function GetIdByDel()
     {
         $data = input('param.');
-        $res = CommunityModel::where('id', $data['id'])->delete();
+        $res = BannerModel::where('id', $data['id'])->delete();
         return json(['msg' => '删除成功', 'data' => $res, 'code' => 20000], 200);
 
     }

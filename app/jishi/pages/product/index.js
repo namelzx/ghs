@@ -1,9 +1,6 @@
 // pages/product/index.js
 
 import Toast from '../../vant-weapp/dist/toast/toast';
-
-
-
 import {
   GoodsModel
 } from '../../api/goods.js'
@@ -19,6 +16,11 @@ Page({
    * 页面的初始数据
    */
   data: {
+    readOnly: false,
+    placeholder: '开始输入...',
+    editorHeight: 300,
+    keyboardHeight: 0,
+    isIOS: false,
     pList: [],
     vList: [ ],
     data:{
@@ -39,7 +41,33 @@ Page({
     desc: '',
     stock: '',
   },
-
+  onStatusChange(e) {
+    const formats = e.detail
+    console.log(formats)
+    this.setData({ formats })
+  },
+  onEditorReady() {
+    const that = this
+    wx.createSelectorQuery().select('#editor').context(function (res) {
+      that.editorCtx = res.context;
+      wx.showLoading({
+        title: '加载内容中...',
+      })
+      setTimeout(function(){
+        let data = that.data.data.sellpoint;
+        wx.hideLoading();
+        that.editorCtx.setContents({
+          html: data,
+          success: (res) => {
+            console.log(res)
+          },
+          fail: (res) => {
+            console.log(res)
+          }
+        })
+      },1000)
+    }).exec()
+  },
   afterRead(event) {
     //启用
     var _this=this;
@@ -242,11 +270,22 @@ Page({
     console.log(e)
     this.setData({ 'data.name': e.detail.value})
   },
+  setlinesales(e) {
+    console.log(e)
+    this.setData({ 'data.sales': e.detail.value})
+  },
 
+  
 
   setPrice(e) {
     console.log(e)
     this.setData({ 'data.price': e.detail.value })
+  },
+
+
+  setskuName(e) {
+    console.log(e)
+    this.setData({ 'data.sku_name': e.detail.value })
   },
 
 
@@ -264,8 +303,9 @@ Page({
 
 //商品特色
   setDesc(e) {
+    let {detail}=e
     this.setData({ 
-      'data.sellpoint': e.detail.value
+      'data.sellpoint': detail.html
        })
   },
 
@@ -285,9 +325,9 @@ Page({
   },
   delVdo (e) {
     console.log(e)
-    let list = this.data.vList
+    let list = this.data.iList
     list.splice(e.detail.index, 1)
-    this.setData({ vList: list })
+    this.setData({ iList: list })
   },
   /**
    * 生命周期函数--监听页面加载
@@ -328,7 +368,13 @@ Page({
           'data.price': res.data.price,
           'data.line_price': res.data.line_price,
           'data.sellpoint': res.data.sellpoint,
-          'data.inventory': res.data.inventory
+          'data.inventory': res.data.inventory,
+          'data.name': res.data.name,
+          'data.sales': res.data.sales,
+          'data.tel': res.data.tel,
+          'data.sku_name':res.data.sku_name
+
+          
         })
       })
     }

@@ -95,6 +95,10 @@ Route::group('api/app/', function () {
 
     Route::get('Goods/GetDataByGooslist', 'app/Goods/GetDataByInfo');//获取详情
 
+    Route::get('Goods/GetGoodsEvaByList', 'app/Eva/GetGoodsEvaByList');//获取商品评价
+
+
+
 
     //小区管理
     Route::get('Community/GetDataBylist', 'app/Community/GetDataBylist');//获取小区
@@ -126,7 +130,7 @@ Route::group('api/app/', function () {
      */
 
     Route::rule('tools/GetCityByName', 'tools/Citytools/GetCityByName'); /* 通过城市和区获取地址id*/
-    
+
     Route::rule('city/GetByCitylist', 'app/Region/GetByCitylist'); /* 获取用户地址*/
 
     Route::rule('Useraddress/PostDataByAdd', 'app/Useraddress/PostDataByAdd'); /* 添加地址*/
@@ -153,6 +157,8 @@ Route::group('api/app/', function () {
     Route::rule('order/PostDataByUpdate', 'app/order/PostDataByUpdate'); /* 修改订单状态*/
 
     Route::rule('order/GetShopOrderByUpdate', 'app/order/GetShopOrderByUpdate'); /* 用户签收*/
+
+    Route::rule('order/GetIdByDelete', 'app/order/GetIdByDelete'); /* 删除订单*/
 
 
     Route::rule('order/GetUserIdByList', 'app/order/GetUserIdByList'); /* 获取用户订单*/
@@ -204,6 +210,12 @@ Route::group('api/app/', function () {
      * 收藏
      */
     Route::rule('Coll/GetCollGoods', 'api/Collection/GetCollGoods'); /* 获取分销订单*/
+
+
+    /**
+     * 通知
+     */
+    Route::rule('Notice/GetDataByNotice', 'app/notice/GetDataByNotice'); /* 获取分销订单*/
 
 
 });

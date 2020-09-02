@@ -82,10 +82,10 @@ Page({
       })
       return false
     }
-    if (money < 1) {
+    if (money < 10) {
       wx.showModal({
         title: '提示',
-        content: '满1元可提现',
+        content: '满10元可提现',
         showCancel: false
       })
       return false

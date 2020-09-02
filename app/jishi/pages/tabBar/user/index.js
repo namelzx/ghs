@@ -1,6 +1,4 @@
-// page/tabBar/userCenter/userCenter.js
-// const pageContorlMixin = require("../../../class/pageControl.js");
-// let util = require("../../../utils/util.js");
+
 const wxApi = require("../../../utils/wxApi.js");
 //获取应用实例
 const app = getApp()
@@ -13,6 +11,14 @@ import {
 } from '../../../api/user.js'
 
 let usermodel = new UserModel();
+
+
+
+import {
+  NoticeModel
+} from '../../../api/notice.js'
+
+let noticeModel = new NoticeModel();
 let pageObj = {
 
   /**
@@ -42,7 +48,32 @@ let pageObj = {
     });
 
 
+
     this.getSystemInfoHandler();
+  },
+  onMessage(e){
+    let that=this;
+    let userinfo=wx.getStorageSync('userinfo')
+
+    console.log(this.data.userInfo)
+    var temp={
+      user_id:userinfo.id,
+      type:e.currentTarget.dataset.type
+    }
+    noticeModel.GetDataByNotice(temp,res=>{
+      console.log(res)
+      wx.requestSubscribeMessage({
+        tmplIds: res.data,
+        success: function (e) {
+          console.log(e)
+          that.getuser()
+        }, fail(e) {
+          console.log(e)
+        }
+      })  
+     this.getuser();
+    })
+     
   },
   // 获取设备信息，设备宽
   getSystemInfoHandler: function () {
@@ -87,9 +118,10 @@ let pageObj = {
     this.setData({
       "state.canLookOtherStore": wx.getStorageSync("last_user_store_id") ? true : false,
     });
-
+    
 
     setTimeout(() => {
+      this.getuser();
       //判断是否授权 设置导航背景颜色
       if (this.data.state.needAuthorize) {
         wx.setNavigationBarColor({
@@ -103,6 +135,15 @@ let pageObj = {
         });
       }
     }, 600);
+  },
+  getuser(){
+    let user=wx.getStorageSync('userinfo')
+    usermodel.GetUserByInfo(user.id,res=>{
+      this.setData({
+        userInfo:res
+      })
+      wx.setStorageSync('userinfo', res)
+    })
   },
   //跳转去团长端 加盟页面
   onGoToMiniProgram: function () {
@@ -127,6 +168,9 @@ let pageObj = {
   onFetchUserData: function () {
     let _this = this;
     let userinfo=wx.getStorageSync('userinfo')
+    this.setData({
+      userInfo
+    })
     wx.getUserInfo({
       success: function (res) {
         res.userInfo.id = userinfo.id
@@ -138,16 +182,7 @@ let pageObj = {
           console.log(_this.data.data.userInfo)
         })
         
-        // var city = res.userInfo.city
-        // var country = res.userInfo.country
-        // var nickName = res.userInfo.nickName
-        // var province = res.userInfo.province
-        // that.setData({
-        //   city: city,
-        //   country: country,
-        //   nickName: nickName,
-        //   province: province
-        // })
+        
       }
     })
   

@@ -27,9 +27,16 @@
   padding: 0 10rpx;
 }
 
-.recom-img image {
+.recom-img .img {
+  /* width: 100%;
+  height: 328rpx; */
+  
+     background-size:100% 100%;
+      -moz-background-size:100% 100%;
   width: 100%;
-  height: 328rpx;
+  height: 340rpx;
+  border-radius: 15rpx 15rpx 0 0;
+  overflow: hidden;
 }
 
 .recom-name {
